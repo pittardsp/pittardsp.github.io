@@ -1,0 +1,20 @@
+<h2>Immersion</h2>
+<p>Congratulations on completing your first "real" lab. Part of the process of learning R involves a certain degree of immersion which will always involve introduction to new concepts even as we are explaining and considering another. In my experience this is the best way to learn although it can be confusing at times. This is preferable to a controlled situation wherein we introduce only topics and ideas we have first thoroughly explained. Were we to take that approach, the class would be much longer than a semester ! 
+<hr>
+<h2>Learning by Context</h2>
+
+<p>As an example some of you had questions about the "cat" command that appeared in Question 8.5 of the lab. The idea was to get you to do "?cat" to find out more about it, (which many of you did). Of course, by pure context, you should be able to figure out that it does some type of formatted printing. R has different functions to do the same thing and this can be confusing but it is also a big part of what makes it so flexible and, consequently, a favored language of data scientists and statisticians. 
+
+<hr>
+<h2>Rstudio</h2>
+
+<p>Relative to RStudio vs using the base R console. You will discover through use that RStudio has many capabilities that remove the need for you to have knowledge of "command line"
+knowledge. As some of you discovered you can remove variables from your environment using the "History" pane in RStudio although you can do the same thing using the "rm" command.
+If we were just going to be R "users" only with no concern for function writing then we might not even learn about the things mentioned in the lab. However, having a balanced knowledge
+of working at the base R console as well as Rstudio is a powerful combination. 
+
+<hr>
+<h2>Week 3 Preview</h2>
+<p>Next week we will look at vectors and matrices. As a preview, one of the biggest strengths of R is that is supports "vectors" which are data structures that allow us to store related
+values in a single variable. As an example the following two examples will create a 10 element numeric vector:
+

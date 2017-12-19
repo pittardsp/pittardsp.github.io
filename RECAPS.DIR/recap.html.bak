@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon"
+  href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span
+class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand"
+href="/bios560rf2013/">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#info">Weekly Recaps</a></li>
+  <li class="active"><a href="./recap.html">2</a></li>
+  <li><a href="./recap3.html">3</a></li>
+  <li><a href="./recap4.html">4</a></li>
+ <li><a href="./recap5.html">5</a></li>
+<li><a href="./recap7.html">7</a></li>
+<li><a href="./recap8.html">8</a></li>
+<li><a href="./recap9.html">9</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2><a href="#2">Week 2 Recap</a></h2>
+<h3>Immersion</h3>
+<p>Congratulations on completing your first "real" lab. Part of the process of learning R involves a certain degree of immersion which will always involve introduction to new concepts even as we are explaining and considering another. In my experience this is the best way to learn although it can be confusing at times. This is preferable to a controlled situation wherein we introduce only topics and ideas we have first thoroughly explained. Were we to take that approach, the class would be much longer than a semester ! 
+<hr>
+<h3>Learning by Context</h3>
+
+<p>As an example some of you had questions about the "cat" command that appeared in Question 8.5 of the lab. The idea was to get you to do "?cat" to find out more about it, (which many of you did). Of course, by pure context, you should be able to figure out that it does some type of formatted printing. R has different functions to do the same thing and this can be confusing but it is also a big part of what makes it so flexible and, consequently, a favored language of data scientists and statisticians. 
+
+<hr>
+<h3>Rstudio</h3>
+
+<p>Relative to RStudio vs using the base R console. You will discover through use that RStudio has many capabilities that remove the need for you to have knowledge of "command line"
+knowledge. As some of you discovered you can remove variables from your environment using the "History" pane in RStudio although you can do the same thing using the "rm" command.
+If we were just going to be R "users" only with no concern for function writing then we might not even learn about the things mentioned in the lab. However, having a balanced knowledge
+of working at the base R console as well as Rstudio is a powerful combination. 
+
+<hr>
+<h3>Week 3 Preview</h3>
+<p>Next week we will look at vectors and matrices. As a preview, one of the biggest strengths of R is that is supports "vectors" which are data structures that allow us to store related
+values in a single variable. As an example the following two examples will create a 10 element numeric vector:
+
+<pre>
+mynormvar = rnorm(10)    # Takes 10 values from a Normal distribution of 0 mean and standard deviation of 1
+
+myhrvar = c(79.88, 70.91, 76.63, 81.02, 76.22, 74.44, 76.49, 70.33, 77.61, 81.09)  # 10 resting heart rate values
+
+height = c(76.5, 78.1, 83.0, 61.2, 73.5, 46.1, 65.2, 80.4, 69.5, 65.8)   # 10 height measurements in inches
+
+cor(height,myhrvar)    # Correlation between heights and Heart rates
+ 
+plot(height,myhrvar,col="red",pch=18,cex=2,main="Heart Rate vs. Height",ylab="BPM")
+
+</pre>
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="js/jquery.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-transition.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-alert.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-modal.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-dropdown.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-scrollspy.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-tab.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-tooltip.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-popover.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-button.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-collapse.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-carousel.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-typeahead.js">
+</script>
+</body>
+</html>

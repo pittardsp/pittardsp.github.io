@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="/">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#info">Weekly Recaps</a></li>
+  <li><a href="./recap.html">2</a></li>
+  <li><a href="./recap3.html">3</a></li>
+  <li><a href="./recap4.html">4</a></li>
+<li><a href="./recap5.html">5</a></li>
+<li><a href="./recap7.html">7</a></li>
+<li><a href="./recap8.html">8</a></li>
+<li class="active"><a href="./recap9.html">9</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2><a href="#2">Week 9 Recap</a></h2>
+<h3>Graphics</h3>
+<p>In week 9 we looked at the available graphics systems in R. While there are four of them we will concentrate only on two of them:
+Base Graphics and Lattice Graphics. These are the two most popularly referenced packages when building plots with R. However, ggplot is a very nice package and warrants attention - just not in this class. </p>
+
+<p>In terms of Base graphics we learned that it contains both high and low level functions which makes it easy to create a plot using
+a specific function (e.g. hist, plot, barplot) or by "building" a layered plot using primitive functions such as points, lines, and abline. Regardless of approach it is also easy to annotate an existing plot using functions such as text, mtext, arrows, and other functions that allow us to draw on top of what is already there. For some this is a tedious way to do things although for others it is preferred since they can build their plots in stages.</p>
+
+<p>We also learned about "panels" and how they relate to the basic plot window within R. Panels allow us to display relationships between continuous variable across different category values. As an example we could inspect the MPG vs Wt relationship across the three cylinder groups by using Base graphics. The following will create three separate panels each of which contains the MPG vs wt relationship for the 4,6, and 8 categories. In week 10 we will learn about the lattice package and how it implements paneling.</p>
+
+<pre>
+par(mfrow=c(1,3))
+
+fourcyl=mtcars[mtcars$cyl==4,]
+
+sixcyl=mtcars[mtcars$cyl==6,]
+
+eightcyl=mtcars[mtcars$cyl==8,]
+
+plot(fourcyl$wt,fourcyl$mpg,main="MPGvsWtfor4Cyl",ylim=c(0,40))
+
+plot(sixcyl$wt,sixcyl$mpg,main="MPGvsWtfor6Cyl",ylim=c(0,40))
+
+plot(eightcyl$wt,eightcyl$mpg,main="MPGvsWtfor8Cyl", ylim=c(0,40))
+
+</pre> 
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="recap4_files/jquery.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-transition.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-alert.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-modal.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-dropdown.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-scrollspy.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tab.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tooltip.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-popover.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-button.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-collapse.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-carousel.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-typeahead.html">
+</script>
+
+
+</body></html>

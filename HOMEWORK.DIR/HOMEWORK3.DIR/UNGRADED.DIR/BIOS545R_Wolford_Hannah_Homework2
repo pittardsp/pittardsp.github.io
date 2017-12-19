@@ -1,0 +1,124 @@
+url <- "http://steviep42.bitbucket.org/YOUTUBE.DIR/P00000001-ALL.csv"
+download.file(url,"P00000001-ALL.csv")
+pres.data <- read.table("P00000001-ALL.csv", header = TRUE, sep = ",", row.names = NULL)
+names(pres.data) <- c(names(pres.data)[-1], "x")
+pres.data <- pres.data[, -ncol(pres.data)]
+1.
+ls(pres.data)
+sort(tapply(pres.data$contb_receipt_amt, pres.data$cand_nm, FUN=sum), decreasing=FALSE)
+2.
+biggest.donors <- function(candidate.name, x=3) {
+  if(is.character(candidate.name)) {
+    if(x%%1==0) {
+      hold <- split(pres.data, pres.data$cand_nm)
+      candidate.donors <- hold[[candidate.name]]
+      orderedcand.donors <- candidate.donors[rev(order(candidate.donors$contb_receipt_amt)),]
+      top.donors <- head(orderedcand.donors, x)
+      return(top.donors)
+  }
+      else {
+        print("The argument x must be an integer")
+      }
+    }
+    else {
+    print("The argument candidate.name must be a character")
+  }
+}
+
+biggest.donors(candidate.name = "Trump, Donald J.", x=2)
+biggest.donors(candidate.name = 3, x=2)
+biggest.donors(candidate.name = "Trump, Donald J.", x=2.2)
+3.
+create.dna <- function(seqlength=20, dnaprob=c(.25, .25, .25, .25)) {
+  if (seqlength >0 & dnaprob[1]>=0 & dnaprob[2]>=0 & dnaprob[3]>=0 & dnaprob[4]>=0) {
+    if(sum(dnaprob)==1 & dnaprob[1]<=1 & dnaprob[2]<1 & dnaprob[3]<1 & dnaprob[4]<1) {
+  dna.vec <- c("A","G","C","T")
+  my.vec <- sample(dna.vec, seqlength, replace=TRUE, prob=dnaprob)
+  frequencies <- table(my.vec)
+  prob.frequencies <- frequencies/sum(frequencies)
+  compressed <- paste(my.vec, collapse="")
+  dna.list <- list(dna.seq.compressed=compressed, dna.seq.separated=my.vec, sampling.probabilities=dnaprob, observed.frequencies=prob.frequencies)
+  return(dna.list)
+    }
+    else { print("The individual probabilities must be a decimal less than one and sum to one")
+    }
+  }
+    else { print("The sequence length and probabilites must be a positive number")
+    }
+}
+create.dna()
+4.
+
+prop_matrix <- function(my.matrix, margin=1) {
+    if (margin==1) {
+      row.sum <- rowSums(my.matrix, na.rm=TRUE)
+      output.matrix <- my.matrix[1,]/row.sum[1]
+    for(ii in 2:nrow(my.matrix)) {
+        row.prop <- my.matrix[ii,]/row.sum[ii]
+        output.matrix <- rbind(output.matrix, row.prop)
+    }
+      return(output.matrix)
+    }
+  if (margin==2) {
+    col.sum <- colSums(my.matrix, na.rm=TRUE)
+    output.matrix <- my.matrix[,1]/col.sum[1]
+    dim(output.matrix) <- c(nrow(my.matrix), 1)
+    for(ii in 2:ncol(my.matrix)) {
+      col.prop <- my.matrix[,ii]/col.sum[ii]
+      dim(col.prop) <- c(nrow(my.matrix), 1)
+      output.matrix <- cbind(output.matrix, col.prop)
+    }
+    return(output.matrix)
+  }
+  else { print("Please enter either 1 or 2 for the margin argument")
+  }
+  }
+
+x <- matrix(c(1,2,3, 4), 2, 2)
+prop_matrix(x, 2)
+x
+
+5.
+margin_matrix <- function(my.matrix, margin=12) {
+  if(margin==1) {
+    row.sum <- rowSums(my.matrix, na.rm=TRUE)
+    dim(row.sum) <- c(nrow(my.matrix), 1)
+    output.matrix <- cbind(my.matrix, row.sum)
+    return(output.matrix)
+  }
+  if(margin==2) {
+    col.sum <- colSums(my.matrix, na.rm=TRUE)
+    output.matrix <- rbind(my.matrix, col.sum)
+    return(output.matrix)
+  }
+  if(margin==12) {
+    row.sum <- rowSums(my.matrix, na.rm=TRUE)
+    dim(row.sum) <- c(nrow(my.matrix), 1)
+    hold.matrix <- cbind(my.matrix, row.sum)
+    col.sum <- colSums(hold.matrix, na.rm=TRUE)
+    output.matrix <- rbind(hold.matrix, col.sum)
+    return(output.matrix)
+  }
+  else{ print("Please enter either 1, 2 or 12 for the margin argument")}
+}
+
+mymat <- matrix(1:4, 2, 2)
+margin_matrix(mymat, 11)
+6.
+transmission_preds <- glm(am~mpg+wt,data=mtcars)
+myf <- function(model, incr=.1) {
+  vec <- vector()
+  vecincr <- seq(.1, .9, incr)
+  for(ii in 1:length(vecincr)) {
+    as.vector(transmission_preds$fitted.values)
+    (newpreds <- ifelse(as.vector(transmission_preds$fitted.values) >= vecincr[ii],1,0))
+    my.matrix <- table(our_preds=newpreds,actual=transmission_preds$y)
+    misclass <- sum(my.matrix[1,2], my.matrix[2,1])
+    vec <- append(vec, misclass, after=length(vec))
+    
+  }
+  names(vec) <- vecincr
+  return(vec)
+}
+
+myf(transmission_preds)

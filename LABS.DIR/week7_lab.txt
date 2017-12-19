@@ -1,0 +1,317 @@
+# WEEK 7 LABS FUNCTIONS 
+
+1.0) LET'S SEE SOME FUNCTIONS DEFINED WITHIN R 
+
+        ls     # Enter at console as is
+
+        var    # Enter at console as is
+
+
+1.1) DEFINE A VERY BASIC FUNCTION 
+
+my.func <- function(somenum) {
+   my.return.val = sqrt(somenum)
+   return(my.return.val)
+}
+
+my.func(10)
+
+mycomputation = my.func(10)
+
+1.2)  LET'S CREATE ANOTHER FUNCTION 
+
+pythag <- function(a,b) {
+    c = sqrt(a^2 + b^2)
+
+    return(c) # You should have ONLY ONE return statement in any function
+}
+  
+pythag(4,5)  # Call with explicit values
+
+x = 4 	# Set some variables
+y = 5
+
+pythag(x,y)   # This is "call by reference"
+
+pythag(a = 4, b = 5) # We can set values explicitly in the function call - very formal
+
+
+1.3) HOW ABOUT MAKING PYTHAG RETURN A LIST ?
+
+pythag <- function(a,b) {
+    c = sqrt(a^2 + b^2)
+    myreturnlist = list(hypoteneuse = c, sidea = a, sideb = b) 
+    return(myreturnlist)
+}
+
+pythag(3,4)   # We get back a list
+ 
+
+1.4) PUT SOME  DEFAULT VALUES IN PYTHAG  
+
+pythag <- function(a=4, b=5) {
+    c = sqrt(a^2 + b^2)
+    myreturnlist = list(hypoteneuse = c, sidea = a, sideb = b)
+    return(myreturnlist)
+}
+
+pythag()  # Note what happens if we don't supply values
+
+
+2.0) LET'S MAKE A FUNCTION TO DETERMINE IF A NUMBER IS ODD OR EVEN. 
+
+is.odd <- function(someval) {
+     retval = 0  # Set the return value to a default
+
+     if (someval %% 2 != 0) {
+        retval = TRUE
+     } else {
+        retval = FALSE
+     }  
+     return(retval)
+}
+
+is.odd(3)
+
+2.1) BUT is.odd DOESN'T WORK FOR VECTORS. FIX THIS
+
+is.odd <- function(someval) {
+  retvec = vector()
+  for (ii in 1:length(someval)) {
+    if (someval[ii] %% 2 != 0) {
+        retvec[ii] = TRUE
+    } else {
+        retvec[ii] = FALSE
+    }
+  }
+  return(retvec)
+} 
+
+is.odd(3)
+
+numbers = c(9,9,4,4,6,10,7,18,2,10)
+is.odd(numbers)
+
+numbers[is.odd(numbers)]   # Very useful
+
+
+3.0) WRITE A FUNCTION THAT TAKES A VECTOR OF X-VALS, GENERATES SOME Y-VALS (y = x^2) AND PLOTS X VS. Y
+
+myplotter <- function(xvals) {   # begin function
+
+# Function to print y = x^2
+# Input: xvalues
+# Output: A plot and the xvals and yvals used to make that plot
+
+   yvals = vector()   # setup a blank vector to hold y-values
+
+   for (ii in 1:length(xvals)) {   # begin for loop
+     yvals[ii] = xvals[ii]^2
+   }                               # end for loop
+
+   plot(xvals, yvals, main="Super Cool Data Plot",type="l",col="blue")
+  
+}  # End function 
+
+myplotter(seq(-3,3))
+
+
+3.1) WE COULD ADD IN "ARGUMENTS" TO INFLUENCE THE COLOR OF THE PLOT.
+
+myplotter <- function(xvals, plotcolor="blue") {
+
+# Function to print y = x^2
+# Input: xvalues
+# Output: A plot and the xvals and yvals used to make that plot
+
+   yvals = vector()
+   for (ii in 1:length(xvals)) {
+     yvals[ii] = xvals[ii]^2
+   }
+  
+   plot(xvals, yvals, main="Super Cool Data Plot",type="l",col=plotcolor)
+   retlist = list(x=xvals, y=yvals)
+   return(retlist)
+}
+
+xvals = seq(-3,3)
+
+myplotter(xvals,plotcolor="red")
+
+
+4.0) NOW WE WORK WITH THE MULTIPLE-BRANCH IF STATEMENT. WE WANT TO SCORE SOME EXAMS
+
+score = c(74,68,98,90,100,67,59)
+
+mygrader <- function(somescores) {
+
+  for (ii in 1:length(somescores)) {    # Begin for loop
+    if (score[ii] >= 100) {             # Begin if
+        grade = "A+"
+    } else if (score[ii] >= 90 & score[ii] < 100 ) {
+        grade = "A"
+    } else if (score[ii] >= 80 & score[ii] < 90) {
+        grade = "B"
+    } else if (score[ii] >= 70 & score[ii] < 80) {
+        grade = "C"
+    } else if (score[ii] >= 60 & score[ii] < 70) {
+        grade = "D"
+    }
+    else {
+      grade = "F"
+    }              # End if         
+    print(grade)   # return the student's grade
+
+  }  # End for loop
+
+}  # End function
+
+mygrader(score)
+
+
+4.1) NOW WE MODIFY THIS TO RETURN A VECTOR
+
+score = c(74,68,98,90,100,67,59)
+
+mygrader <- function(somescores) {
+
+   gradevec = vector() # setup a blank vector to contain grades
+
+   for (ii in 1:length(somescores)) {
+
+     if (somescores[ii] >= 100) {
+         gradevec[ii] = "A+"
+     } else if (somescores[ii] >= 90 & somescores[ii] < 100 ) {
+         gradevec[ii] = "A"
+     } else if (somescores[ii] >= 80 & somescores[ii] < 90) {
+         gradevec[ii] = "B"
+     } else if (somescores[ii] >= 70 & somescores[ii] < 80) {
+         gradevec[ii] = "C"
+     } else if (somescores[ii] >= 60 & somescores[ii] < 70) {
+         gradevec[ii] = "D"
+     }
+     else {
+         gradevec[ii] = "F"
+     }                         # End if statement
+
+   }   # End For Loop 
+
+   return(gradevec)   # return the student's grade
+
+}   # End function definition
+
+mygrader(score)
+
+5.0) MIN / MAX EXAMPLE
+
+mymin <- function(somevector) {
+
+# Function to find the minimum value in a vector
+# Input: A numeric vector
+# Output: A single value that represents the minimum
+
+  mymin = somevector[1] # Set the minimum to an arbitrary value
+
+# Now loop through the entire vector. If we find a value less than 
+# mymin then we set mymin to be that value.
+
+  for (ii in 1:length(somevector)) {
+    if (somevector[ii] < mymin) {
+      mymin = somevector[ii]
+    }
+  }  # End for loop
+  return(mymin)
+}    # End function
+
+set.seed(188)
+x = rnorm(1000)  # 1,000 random elements from a N(20,4)
+
+mymin(x)
+
+
+# 5.1 ACCOMMODATE A MIN OR MAX ARGUEMENT
+
+myextreme <- function(somevector, action="min") {
+  
+  if (action == "min") {
+    myval = somevector[1] # Set the minimum to an arbitrary value
+    
+    for (ii in 1:length(somevector)) {
+      if (somevector[ii] < myval) {
+        myval = somevector[ii]
+      }
+    }
+    
+  } else {   # If action is not "min" then we assume the "max" is wanted
+    
+    myval = somevector[1] # Set the minimum to an arbitrary value
+    
+    for (ii in 1:length(somevector)) {
+      if (somevector[ii] > myval) {
+        myval = somevector[ii]
+      }
+    }
+  }
+  return(myval)
+}
+
+set.seed(123)
+testvec = rnorm(10000)
+
+myextreme(testvec,"min")
+
+myextreme(testvec,"max")
+
+min(testvec)
+
+max(testvec)
+
+
+# 6.0) HERE WE WORK WITH DATA FRAMES. WE SPLIT IT ON A GIVEN FACTOR
+# THIS WILL DO THE SPLIT AND PRINT OUT SOME SAMPLED NUMBER OF RECORDS
+# FOR EACH SPLIT
+
+myfunc <- function(somedf, somefac) {
+  
+  # Function to split a data frame by a given factor
+  # Input: A data frame, a factor
+  # Output: Sampled records from each splot
+  
+  mysplits = split(somedf,somefac)  # Split the data frame by somefac
+  
+  for (ii in 1:length(mysplits)) {  # loop through the splits
+    tempdf = mysplits[[ii]]        # Create a variable to hold each split 
+    
+    recstosample = sample(1:nrow(tempdf),2,F)  # Sample from the split
+    print(tempdf[recstosample,])
+  }
+}
+
+
+myfunc(mtcars, mtcars$cyl)
+
+# 6.1 THIS RETURNS A LIST THAT CONTAINS THE SAMPLED NUMBER OF RECORS
+# FROM EACH SPLIT
+
+myfunc <- function(somedf, somefac) {
+  
+  # Function to split a data frame by a given factor
+  # Input: A data frame, a factor
+  # Output: A list containing the sampled records from each split
+  
+  retlist = list()    # Empty list to return the sampled records  
+  mysplits = split(somedf,somefac)  # Split the data frame by somefac
+  
+  for (ii in 1:length(mysplits)) {  # loop through the splits
+    tempdf = mysplits[[ii]]        # Create a variable to hold each split 
+    
+    recstosample = sample(1:nrow(tempdf),2,F)  # Sample from the split
+    retlist[[ii]] = tempdf[recstosample,]
+  }
+  return(retlist)
+}
+
+myfunc(mtcars, mtcars$cyl)  # Cylinders
+
+myfunc(mtcars, mtcars$am)   # Transmission Type
+

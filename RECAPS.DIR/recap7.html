@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="/">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#info">Weekly Recaps</a></li>
+  <li><a href="./recap.html">2</a></li>
+  <li><a href="./recap3.html">3</a></li>
+  <li><a href="./recap4.html">4</a></li>
+<li><a href="./recap5.html">5</a></li>
+<li class="active"><a href="./recap7.html">7</a></li>
+<li><a href="./recap8.html">8</a></li>
+<li><a href="./recap9.html">9</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2><a href="#2">Week 7 Recap</a></h2>
+<h3>Functions</h3>
+<p>Functions represent the transition from being a user of R to being a programmer of R. Writing functions, even simple ones, is a good way to build a library of utilities that can help make your life easier. Once you have written a segment of code that solves a problem you should turn it into a function for later use. Too many people type the same things over and over when it would be easier to create a function to contain some logic that could be used in general and/or by others. Think about like this - almost every command in R is a function thus creating functions is a "natural" thing to do in R. As we mentioned in class you can see how some of the internal R functions are defined simply by typing their name without the parentheses. While this might help give you ideas for writing your own functions it is better to look at code written by other users who have been doing it for a while. Today's lecture was full of examples that you could easily adapt for your own purposes and extend. Another thing to understand is that functions usually contain control structures such as those we considered in Week 6. In fact it is relatively uncommon to have lengthy for-loops or if-else statements that are NOT contained in functions. As an example, in Week6 we looked at an if-else structure used to grade a vector of scores:</p>
+
+<pre>
+score = c(74,68,98,90,100,67,59)
+
+for (ii in 1:length(score)) {
+  if (score[ii] >= 100) {
+      grade = "A+"
+  } else if (score[ii] >= 90 & score[ii] < 100 ) {
+      grade = "A"
+  } else if (score[ii] >= 80 & score[ii] < 90) {
+      grade = "B"
+  } else if (score[ii] >= 70 & score[ii] < 80) {
+      grade = "C"
+  } else if (score[ii] >= 60 & score[ii] < 70) {
+      grade = "D"
+  }
+  else {
+    grade = "F"
+  }
+  print(grade)
+}
+</pre>
+
+<p>It really doesn't take that much more effort to turn this into a function. As we discussed in class its also a good thing to do to return 
+a usable structure such as a vector. When thinking about writing a function you should ALWAYS ask yourself 1) What are the input(s) to the function and 2) What are the output(s). In this case we know we want to process a vector of scores and we now want to return a vector of letter grades. Since we want to return a vector its a good idea to initialize a blank vector for later user in the function:</p>
+<br>
+
+<pre>
+mygrader <- function(somescores) {
+
+ gradevec = vector() # setup a blank vector to contain grades
+
+ for (ii in 1:length(somescores)) {
+
+  if (somescores[ii] >= 100) {
+      gradevec[ii] = "A+"
+  } else if (somescores[ii] >= 90 & somescores[ii] < 100 ) {
+      gradevec[ii] = "A"
+  } else if (somescores[ii] >= 80 & somescores[ii] < 90) {
+      gradevec[ii] = "B"
+  } else if (somescores[ii] >= 70 & somescores[ii] < 80) {
+      gradevec[ii] = "C"
+  } else if (somescores[ii] >= 60 & somescores[ii] < 70) {
+      gradevec[ii] = "D"
+  }
+  else {
+      gradevec[ii] = "F"
+  }                         # End if statement
+
+ }   # End For Loop 
+
+  return(gradevec)   # return the student's grade
+
+}   # End function definition
+
+</pre>
+<br>
+<p>This version of the function is pretty solid although we could improve it in several ways not the least of which would be to add if statements to make sure that the user has given us a numeric vector. We might also add an argument that would allow us to curve grades by some factor. We might also generate a plot of grades using the letter grades as labels. The list goes on.</p>
+
+<p>Relative to the assignment given in the lab I wanted to provide some possible solutions. </p>
+<pre>
+
+myseries <- function(x,n) {
+
+# Input(s): x - a single numeric value, n - a single numeric value
+# Output: A single value that represents the sum of x^1 + x^2 + x^2 + ... x^n
+
+  mysum = 0   # Setup a variable to accumulate things 
+  for (ii in 1:n) {
+    mysum = mysum + x^ii
+  }
+  return(mysum)
+}
+
+# This next solution is very similar except we use the sum function to do the adding each time we move through the loop
+
+myseries <- function(x,n) {
+  mysum = 0
+  for (ii in 1:n) {
+    mysum = sum(mysum, x^ii)
+  }
+  return(mysum)
+}
+</pre>
+
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="recap4_files/jquery.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-transition.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-alert.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-modal.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-dropdown.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-scrollspy.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tab.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tooltip.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-popover.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-button.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-collapse.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-carousel.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-typeahead.html">
+</script>
+
+
+</body></html>

@@ -1,0 +1,123 @@
+---
+title: "Exercise"
+author: "Steve Pittard"
+date: "January 27, 2016"
+output: pdf_document
+---
+
+## Computing with Loops
+
+### Create a for loop that, given a numeric vector, prints out the number, its square, and cube on one line:
+
+```{r}
+set.seed(123)
+xvec <- rnorm(10)
+```
+
+So some example output might look like the following. You can use the **cat** function to do the printing of the numbers. There are examples of this function being used in the class material.
+
+```{r echo=FALSE}
+for (ii in 1:length(xvec)) {
+  cat(xvec[ii],xvec[ii]^2,xvec[ii]^3,"\n")
+}
+
+```
+
+
+### Use a while loop to accomplish the same thing
+
+```{r echo=FALSE}
+len <- length(xvec)
+ii <- 1
+while (ii <= len) {
+  cat(xvec[ii],xvec[ii]^2,xvec[ii]^3,"\n")
+  ii <- ii + 1
+}
+
+```
+
+
+## Comparing Vectors
+
+As mentioned in class we usually use for loops that involve use of if statements to make some decision as we work through a vector or a matrix. For example consider two vectors. Both of the them will contain the same number of elements but their respective values will be different.
+
+```{r}
+set.seed(123)
+vec1 <- rnorm(20)
+vec1
+
+set.seed(147)
+vec2 <- rnorm(20)
+vec2
+
+# This is easy if we use some of the things we have learned
+
+vec3 <- as.numeric(vec1 >= vec2)
+```
+
+
+We could write some code involving a for loop and some if statements to create a new vector called say vec3 whose elements contain a 1 or a 0 depending on whether a given element in vec1 is greater or equal to the comparable element in vec2. Implement this technique using a for loop
+ 
+## Computing the sum of a series
+
+Here are some exercises that will help you understand looping stuctures. Consider the following function. $h(x,n) =  1 + x + {x}^2 + ..... + {x}^n = \sum_{i=0}^{n}{x^i}$ 
+Given a specific value for n implement this function using a for loop. So if we set n equal to 4 then the sum would be:
+
+```{r echo=FALSE}
+n <- 4
+sum <- 1
+for (ii in 1:n) {
+  sum <- sum + ii^ii
+}
+sum
+```
+
+## Comparing Matrices
+
+Let's extend these ideas by doing something similar two matrices. We setup an empty matrix called mat3 to the hold the results of the following comparisons. For each element in mat1 we compare it to the same element in mat2. If the element value from mat1 is >= the one on mat2 then we put a 1 in the
+same element of mat3. 
+
+```{r}
+
+set.seed(123)
+mat1 <- matrix(rnorm(16),4,4)
+
+set.seed(321)
+mat2 <- matrix(rnorm(16),4,4)
+
+```
+
+Now, something like this would be easy using some of the techniques we've already learned. 
+
+```{r}
+mat3 <- matrix(as.numeric(mat1 >= mat2),4,4)
+mat3
+
+```
+
+But write for loop structure that accomplishes the same thing. You will need two for loops - one for the rows and one for the columns. This means you will need a subscript variable for rows (ii) and one for columns (jj). You will need to initialize a matrix which is the same size of mat1 (or mat2). Set all elements to zeros.
+
+```{r eval=FALSE}
+for (1 to the number of rows in mat1)         
+  for (1 to the number of columns in mat1)    
+     if (mat1 element >= mat2 element)
+         set mat3 element to 1
+         else set it to 0
+   }
+}
+```
+
+
+```{r echo=FALSE}
+numofelements <- nrow(mat1)*ncol(mat1)
+mat3 <- matrix(rep(0,numofelements),4,4)
+
+for (ii in 1:nrow(mat1)) {
+  for (jj in 1:ncol(mat2)) {
+    if (mat1[ii,jj] >= mat2[ii,jj]) {
+      mat3[ii,jj] <- 1
+    }
+  }
+}
+```
+

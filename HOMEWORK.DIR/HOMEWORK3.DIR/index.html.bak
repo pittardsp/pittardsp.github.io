@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Untitled</title>
+	<meta name="generator" content="BBEdit 10.5" />
+</head>
+<body>
+
+<h1>BIOS560R - Homework #3</h1>
+<ul>
+<li><b>Due by 11:59 PM on 02/25/14</b>
+<li><b>Late penalty of 10% per day applies to late submissions</b>
+<li>Note that your figures do not have to match the exact dimensions depicted here. However
+the resulting code should generate a readable graphic that is easy to see.
+<li>For purposes of this exercise you might find it helpful to work either on a large
+display or run R outside of R Studio since the graphics pane can be sometimes behave
+strangely if it isn't sized correctly. However this is just a suggestion and not a requirement.
+</ul>
+<hr>
+<h2>Problem 1 (35 points) </h2>
+<p>Please refer to the following graphic, which represents a single plot composed of
+two panels. Use Base Graphics commands (e.g. abline, mtext, text, etc) to construct a replica of this graphic. <b>The data
+source is the infamous mtcars data frame.</b> Create 
+a single function that I can call, which will produce the plot. Don't
+worry so much about matching the exact color of gray used in the legend though pick 
+something close. Keep the following in mind: </p>
+
+<ul>
+<li>In the first plot we are coloring the data based on where it falls in the quartiles of 
+MPG, (the Y axis), whereas in the second plot we are coloring the data relative to weight,
+(the X axis). 
+<li>The colors used for the data correspond to "black","red","blue", and
+"green".
+<li>The dashed lines on the graph that indicate the quartiles are intentionally different.
+<li>You can use the quantile or fivenum function to obtain the quartile values.
+<li>You might find it useful to cut up the MPG and weight variables into intervals to help 
+with assigning colors. 
+</ul>
+<img src="problem1.png">
+<hr>
+<h2>Problem 2a (15 points) </h2>
+<p>Please refer to the following graphic. Use Base Graphics to construct a replica of 
+the graphic below. Please provide R expressions that will generate the plot. Explore the 
+options and arguments available to you in the boxplot command. You will need to read in 
+the sparrows data set to be used when creating the graph.</p>
+
+<pre>
+url = "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/Sparrows.txt"
+sparrows = read.table(url,header=T)
+
+# Some observer guys measured some attributes of some sparrows
+
+head(sparrows)
+  Species    Sex Wingcrd Tarsus Head Culmen Nalospi   Wt Observer Age
+1    SSTS   Male    58.0   21.7 32.7   13.9    10.2 20.3        2   0
+2    SSTS Female    56.5   21.1 31.4   12.2    10.1 17.4        2   0
+3    SSTS   Male    59.0   21.0 33.3   13.8    10.0 21.0        2   0
+4    SSTS   Male    59.0   21.3 32.5   13.2     9.9 21.0        2   0
+5    SSTS   Male    57.0   21.0 32.5   13.8     9.9 19.8        2   0
+
+</pre>
+<p>The numbers in red in the top margin are the number of observations in the box plot beneath
+it. You can get this information from the the call to the boxplot function itself. Refer
+to the lab / lecture for more information. Note also that the boxes are of varying width,
+which is to reflect the number of observations in that particular boxplot. Spend time with the
+boxplot command to figure out how to get this effect.</p>
+<p>The color scheme in the boxplot is produced by experimentation with one of the color
+packages we discussed in class. I used a "Blue" palette to create this. Do some research
+on creating a "Color Ramp" to create a graduated color scheme as 
+in the plot. Do *not* pick your colors by hand or hardcode the colors yourself.</p>
+
+<center><img src="problem_box2.png"></center>
+
+<h2>Problem 2b (15 points) </h2>
+Please refer to the graphic below. Use lattice graphics to construct a replica of 
+the graphic. You can provide either a function or standalone commands. However,
+your code must be self contained. That is, I have to be able to run it (of course). 
+Note that we are plotting the Diamond Price vs. the carat size and 
+conditioning that by Diamond Color (D,E,F,G,H,I,J), which produces the seven panels.
+Note that Diamond Colors here are refereed to by letters as opposed to color names.
+Furthermore we are looking at the group interaction of Diamond Quality, which is 
+represented in the panels and legend by five different colors. </p>
+
+<p>To work this problem correctly look at the various arguments for the lattice commands. 
+Look at the lecture examples for lattice. There is more than one 
+way to get the plot as desired but these arguements will help you. Note also that you 
+should let xyplot select the colors for you. You should not have to specify colors by 
+hand in any way. lattice will "give" you most ,if not all, of what you need so if you
+find yourself working too hard to get the graphic then you are not using the power of 
+the lattice package.</p>
+
+<h3>Notes:</h3>
+<pre>
+url = "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/my.diamonds.csv"
+myd = read.csv(url,header=T,sep=",")
+
+Format:
+     A data frame with 1,000 rows and 10 variables
+Details:
+
+        • price. price in US dollars (\$326-\$18,823)
+        • carat. weight of the diamond (0.2-5.01)
+        • cut. quality of the cut (Fair, Good, Very Good, Premium,
+          Ideal)
+        • colour. diamond colour, from J (worst) to D (best)
+        • clarity. a measurement of how clear the diamond is (I1
+          (worst), SI1, SI2, VS1, VS2, VVS1, VVS2, IF (best))
+        • x. length in mm (0-10.74)
+        • y. width in mm (0--58.9)
+        • z. depth in mm (0-31.8)
+        • depth. total depth percentage = z / mean(x, y) = 2 * z / (x +
+          y) (43-79)
+        • table. width of top of diamond relative to widest point
+          (43-95)
+</pre>
+
+<br>
+</pre>
+
+<center><img src="Problem3.3.png"></center>
+<hr>
+<h2>Problem #3 (35 points) </h2>
+<p>Write a function called plot.ci that plots confidence intervals as described herein.</p>
+
+We covered some of this during the lecture on vectors. Look at the "Supplemental" information
+on bootstrapping with the replicate command. I talked briefly about bootstrapping wherein 
+we take a sample of a larger
+population, create a distribution of means, (or confidence intervals in this case), by
+sampling with replacement. This gives us 100 rows of confidence intervals.
+We have a suspected mean that might or might not be contained with in each of the 100 
+intervals. (Check below where I present the test data). You create a matix wherein each row contains the confidence intervals. So you will need to loop through these rows to determine if it containts the test
+mean under consideration. </p>
+
+<p>If it does then we want to plot a blue line segment. (There is in fact a "segement"
+function). If it isn't then we want to plot 
+a red line segment. The graphic will look like the one below. Hint: create a plot of 
+type="n" and then create horizontal line segements corresponding to the length of the 
+interval. You will have to set your xlimits to represent the extremes of all the 
+intervals plus some "buffer" room (see the plot). If you don't then not all of the intervals 
+will fit. Also with each successive interval, (row in the confidence interval matrix), 
+you will have to move "up" vertically by some constant spacing value to prevent overplotting. 
+I need to see some separation in your intervals. If the intervals are overplotted and its a 
+big mess I can't give you full credit.</p>
+
+<p>This basically means that you
+have to set your ylim accordingly also. This will require experimentation. you might
+find it useful, at least for purposes of testing, to add in an argument called "index"
+that sets the spacing factor. Use this to help compute a proper ylim, (even though you 
+don't need to list y limits), and also to increment vertically in the loop.</p>
+
+<pre>
+
+# Here is your test data. Don't put anything in your function that is hard coded to this data.
+
+set.seed(199)
+x = rnorm(100,10)
+smean = mean(x)
+
+sci = replicate(100,t.test(sample(x,rep=T))$conf.int)
+sci = t(sci)
+> head(sci)
+      [,1]  [,2]
+[1,] 9.874 10.27
+[2,] 9.749 10.12
+[3,] 9.822 10.17
+[4,] 9.960 10.36
+[5,] 9.929 10.31
+[6,] 9.914 10.23
+
+> smean    # suspected mean
+[1] 10.04
+
+
+# YOU WRITE THE FOLLOWING FUNCTION
+
+> plot.ci(sci, smean)   
+[1] 65 78 88 89       
+                      
+                      
+# Note that, in addition to the confidence interval plot, it should also return a vector
+# corresponding to the rows of sci that do not contain the suspected mean.  
+# In the graphic below the vertical line represents the suspected mean value.
+
+</pre>
+<img src="extracredit.png">
+
+<pre>
+
+# I WILL ALSO TEST IT ON THIS DATA:
+
+set.seed(430)
+x = rnorm(100,10)
+smean = mean(x)
+sci = replicate(100,t.test(sample(x,rep=T))$conf.int)
+sci = t(sci)
+
+> smean
+[1] 10.1
+
+</pre>
+</body>
+
+</body>
+</html>

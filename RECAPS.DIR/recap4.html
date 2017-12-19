@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="/">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#info">Weekly Recaps</a></li>
+  <li><a href="./recap.html">2</a></li>
+  <li><a href="./recap3.html">3</a></li>
+  <li class="active"><a href="./recap4.html">4</a></li>
+<li><a href="./recap5.html">5</a></li>
+<li><a href="./recap7.html">7</a></li>
+<li><a href="./recap8.html">8</a></li>
+<li><a href="./recap9.html">9</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2><a href="#2">Week 4 Recap</a></h2>
+<h3>Factors and Lists</h3>
+
+<p>This week we covered lists and factors which are important types. While factors are fairly straight forward, both conceptually and practically, lists represent a data type that isn't as obvious to understand as are the other data types such as vectors, matrices, and dataframes. Where lists do show up frequently are in the results from various statisical functions that R provides. As our in-class example demonstrated we get back lists from a linear regression or a Chi Square test. This makes sense in many ways since statistical functions need to return a lot of information, (e.g. results, diagnostics, error terms, intermediate computations) all within a single structure. And since lists represent the only type of base R data structure that will accommodate information of differing types, we need to use them in such cases. Just as a reminder, something as simple as this t.test returns a significant amount of information:</p>
+
+<pre>
+( myttest = t.test(mtcars$mpg) )
+
+	One Sample t-test
+
+data:  mtcars$mpg
+t = 18.8569, df = 31, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 17.91768 22.26357
+sample estimates:
+mean of x 
+ 20.09062 
+
+names(myttest)
+[1] "statistic"   "parameter"   "p.value"     "conf.int"    "estimate"   
+[6] "null.value"  "alternative" "method"      "data.name"   
+
+myttest$p.value
+[1] 1.526151e-18
+
+myttest$conf.int
+[1] 17.91768 22.26357
+attr(,"conf.level")
+[1] 0.95
+
+</pre>
+
+<h3>apply commands</h3>
+
+I mentioned these in the review last week but wanted to dig a little deeper this week. There are a variety of commands in R that have some variation of the word "apply" within their name: apply, tapply, sapply, lapply. These commands, while sharing a similar purpose, exist to operate on different types of data. I readily acknowledge that having these different commands can be confusing, and I cannot provide an explanation as to why there isn't a single integrated apply command that will accommodate different input types. My guess is that they added them over time. There is an addon package called "plyr" which seeks to provide a single interface to manipulating data but you will still need to understand the above commands since you are quite likely to encounter them when reading existing R code. I will attempt to provide a brief summary here of what is going on. As the semester progresses you will see more examples which will help you understand how they work. for now I will summarize apply and sapply.
+
+<h4>apply:</h4>
+
+<p><strong>apply</strong> is used to evalaute a function (built-in or even one that you have written) on the columns or rows of a matrix. It is a substitute for writing a for-loop. So we could do:</p>
+<pre>
+
+mymat = matrix(rnorm(25),5,5)
+mymat
+           [,1]       [,2]         [,3]        [,4]       [,5]
+[1,] -0.2535432  0.7927872 -0.297595140  1.06669867 -0.6918667
+[2,] -0.9311483  1.5508725 -0.023561964  0.04190551  0.2550659
+[3,]  1.1007635 -0.2332405 -0.001881569  0.84589333  1.4851316
+[4,]  0.1885696  0.1045578 -1.371205766  0.40117119 -1.3238177
+[5,]  0.2006289  1.8323407 -0.911528757 -0.10459268  1.7274098
+
+apply(mymat,1,mean)
+[1]  0.1232962  0.1786267  0.6393333 -0.4001450  0.5488516
+
+# This might be more convenient to doing:
+
+resvec = vector()
+for (ii in 1:nrow(mymat)) {
+     resvec[ii] = mean(mymat[ii,])
+}
+resvec
+
+# And you can supply your own functions if you wish
+
+mycenterfunc <- function(x) {
+   mycenter = x - mean(x)
+   return(mycenter)
+}
+
+apply(mymat,1,mycenterfunc)
+           [,1]       [,2]       [,3]       [,4]       [,5]
+[1,] -0.3768393 -1.1097751  0.4614302  0.5887146 -0.3482227
+[2,]  0.6694910  1.3722457 -0.8725738  0.5047028  1.2834891
+[3,] -0.4208913 -0.2021887 -0.6412148 -0.9710608 -1.4603804
+[4,]  0.9434025 -0.1367212  0.2065601  0.8013161 -0.6534443
+[5,] -0.8151629  0.0764392  0.8457983 -0.9236727  1.1785582
+
+</pre>
+<hr>
+<p>R has some shortcut functions that can also be accomplished with apply although the shortcut functions can be much faster when working on larger matricies. The shortcut functions I'm talking about are rowSums, colSums, rowMeans, and colMeans. So check this out:</p>
+<hr>
+<pre>
+rowSums(mymat) is equivalent to apply(mymat, 1, sum)
+
+rowMeans(mymat) is equivalen to apply(mymat, 1, mean)
+
+colSums(mymat) is equivalent to apply(mymat, 2, sum)
+
+colMeans(mymat) is equivalent to apply(mymat, 2, mean)
+
+</pre>
+
+<hr>
+<h3>sapply</h3>
+
+<p>sapply will take vectors or lists as input and attempt to return a "simplified" version, (hence the "s" in the name), of the output which usually means you get back a vector. However, depending on what function you are attempting to apply you could get back a matrix or a list.</p>
+<br>
+<pre>
+sapply(mtcars,class)  # applies the "class" function to each column of the data frame.
+
+      mpg       cyl      disp        hp      drat        wt      qsec        vs 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+       am      gear      carb 
+"numeric" "numeric" "numeric"  
+
+# the for loop approach would look like:
+
+
+retvec = vector()                    # Make an empty vector
+
+# Loop through all the columns
+
+for (ii in 1:ncol(mtcars)) {
+   retvec[ii] = class(mtcars[,ii])
+}
+names(retvec) = names(mtcars)
+retvec
+
+  mpg       cyl      disp        hp      drat        wt      qsec        vs 
+"numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
+       am      gear      carb 
+"numeric" "numeric" "numeric" 
+</pre>
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="recap4_files/jquery.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-transition.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-alert.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-modal.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-dropdown.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-scrollspy.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tab.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tooltip.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-popover.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-button.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-collapse.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-carousel.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-typeahead.html">
+</script>
+
+
+</body></html>

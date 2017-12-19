@@ -1,0 +1,342 @@
+# Week 9 - Graphics Part 1
+
+# slide 19
+
+plot(0:10, 0:10, type="n", xlab="X", ylab="Y", axes=FALSE)
+
+abline(h=seq(0,10,2),lty=3,col="gray90")
+
+abline(v=seq(0,10,2),lty=3,col="gray90")
+
+text(5,5, "Plot Stuff Here", col="red", cex=1.5)
+
+box("plot", col="red", lty = "dotted")
+
+box("inner", col="blue", lty = "dashed")
+
+mtext("South Margin",1,cex=1.2,col="blue")
+
+mtext("West Margin",2,cex=1.2,col="green")
+
+mtext("North Margin",3,cex=1.2,col="orange")
+
+mtext("East Margin",4,cex=1.2,col="purple")
+
+title("An Example Plot")
+
+# slide 21
+
+plot(mtcars$wt, mtcars$mpg, main="MPG vs. Weight")
+
+# Slide 22
+
+plot(mtcars$mpg, main="MPG", type="l",xlab="Car Number",ylab="MPG")
+
+plot(mtcars$mpg, main="MPG", type="b",xlab="Car Number",ylab="MPG")
+
+# Slide 23
+
+par(mfrow=c(1,2)) # One row and two columns
+
+plot(mtcars$mpg, main="MPG", type="l",xlab="Car Number",ylab="MPG")
+
+plot(mtcars$mpg, main="MPG", type="b",xlab="Car Number",ylab="MPG")
+
+# Slide 24
+
+par(mfrow=c(2,2))
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="p")
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="l")
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="h")
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="o")
+
+legend("topleft",legend=c("Test Legend"),cex=0.8)
+
+# Slide 26 
+
+unique(mtcars$cyl)   # We have three categories so let's create 3 plots
+
+par(mfrow=c(1,3))   # One row and three columns
+
+fourcyl   = mtcars[mtcars$cyl == 4,]
+sixcyl    = mtcars[mtcars$cyl == 6,]
+eightcyl  = mtcars[mtcars$cyl == 8,] 
+
+plot(fourcyl$wt, fourcyl$mpg, main = "MPG vs Wt 4 Cyl", ylim=c(0,40))
+plot(sixcyl$wt, sixcyl$mpg, main = "MPG vs Wt 6 Cyl", ylim=c(0,40))
+plot(eightcyl$wt, eightcyl$mpg, main = "MPG vs Wt 8 Cyl", ylim=c(0,40))
+
+par(mfrow=c(1,1)) # Reset the plot window
+
+# Slide 28
+
+par(mfrow=c(1,3))   # One row and three columns
+mysplits = split(mtcars, mtcars$cyl)
+
+for (ii in 1:length(mysplits)) {
+    plot(mysplits[[ii]]$wt, mysplits[[ii]]$mpg, 
+    ylim = c(0,40),
+    main=paste("MPG vs weight for",names(mysplits[ii])))
+}
+
+# Better yet we could make this into a function
+
+cyl.plot <- function(df, fac, numrows=1, numcols=3) {
+  par(mfrow=c(numrows,numcols))
+  mysplits = split(df,fac)
+  for (ii in 1:length(mysplits)) {
+    plot(mysplits[[ii]]$wt, mysplits[[ii]]$mpg,
+         ylim = c(0,40),
+         main=paste("MPG vs weight for",names(mysplits[ii])))
+  }
+}
+cyl.plot(mtcars,mtcars$cyl)
+
+par(mfrow=c(1,1))
+
+# Slide 29
+
+
+plot(mtcars$wt, mtcars$mpg, xlab = "Weight / 1,000", ylab = "MPG",
+     xlim = c(0,10), ylim = c(0,40))
+
+# Slide 30
+
+plot(mtcars$wt, mtcars$mpg, xlab = "Weight / 1,000", ylab = "MPG",
+     xlim = c(0,10), ylim = c(0,40))
+
+
+legend("topright", inset=0.05, "My Data", pch=1, col="black")
+
+# Could use specific coordinates also
+
+legend(6.5,35, inset=0.05, "My Data", pch=1, col="black")
+
+# Slide 32
+
+plot(mtcars$wt, mtcars$mpg, 
+               xlab = "Weight / 1,000",
+               main = "MPG vs. WT")
+
+abline(v=c(2,3,4,5),lty=2,col="gray90")  
+
+# Draws vertical dashed lines at 2,3,4,5 
+
+abline(h=c(10,15,20,25,30), lty=2, col="gray90") 
+
+# Horizontal lines at 10,15,20,25,30
+
+# Could do:
+
+abline(v=c(2,3,4,5),lty=2,col="gray90")
+
+abline(h=seq(10,30,5),lty=2,col="gray90")
+
+# Slide 34
+
+plot(mtcars$wt, mtcars$mpg,main="MPG vs WT", col="red",
+               xlab="Weight in lbs/1,000",
+               ylab="Miles per Gallon", 
+               pch = 3)
+
+
+legend("topright", inset=0.05, "My Data", pch = 3, col="red")
+
+grid(col="blue")
+
+# Slide 35 
+
+example(pch)
+
+# Slide 36
+
+plot(mtcars$wt, mtcars$mpg, type="n", main="MPG vs. Weight")  # A null plot
+
+auto = mtcars[mtcars$am == 0,]
+manu = mtcars[mtcars$am == 1,]
+
+points(auto$wt, auto$mpg, pch = 0)
+points(manu$wt, manu$mpg, pch = 1)
+
+legend("topright", inset=0.05, c("manual","auto"), 
+        pch = c(1,0))
+
+# Slide 38 
+
+plot(mtcars$wt, mtcars$mpg, pch=mtcars$am, 
+     main="MPG vs. Weight", sub="Different plot chars")
+
+legend("topright", inset=0.05, c("manual","auto"), 
+        pch = unique(mtcars$am))
+
+
+# Slide 42
+
+plot(mtcars$wt,mtcars$mpg,type="n",xlab="Weight in lbs/1,000",
+     ylab="MPG", main="MPG vs. Weight")
+
+# Let's get records for each category
+
+above.mean = mtcars[mtcars$wt >= mean(mtcars$wt),]
+
+below.mean = mtcars[mtcars$wt < mean(mtcars$wt),]
+
+# Use the points command to plot each group 
+
+points(below.mean$wt,below.mean$mpg,col="red")
+
+points(above.mean$wt,above.mean$mpg,col="blue")
+
+# Draw a vertical line where the mean(wt) is
+
+abline(v=mean(mtcars$wt),lty=2,col="gray90")
+
+# Slide 44
+
+colvec = vector()       
+meanwt = mean(mtcars$wt)
+for (ii in 1:nrow(mtcars)) {
+  if (mtcars[ii,'wt'] >= meanwt) {
+     colvec[ii] = "blue"
+  } else {
+     colvec[ii] = "red"
+  }
+}
+colvec
+
+plot(mtcars$wt,mtcars$mpg,col=colvec)
+
+# Slide 46
+
+plot(mtcars$wt, mtcars$mpg, main="Mileage vs. Car Weight",
+               xlab="Weight", 
+               ylab="Mileage", 
+               pch=18, col="blue")
+
+
+text(mtcars$wt, mtcars$mpg, # Note we cannot use the formula in text
+      row.names(mtcars),    # Get the row names
+      cex=0.6,              # Scaling of the font size
+      pos=4,   	           # 1=below, 2=left, 3=above, 4=right 
+      col="red")
+
+# Slide 48
+
+plot(mtcars$wt, mtcars$mpg, main="Mileage vs. Car Weight",
+               xlab="Weight", 
+               ylab="Mileage", 
+               pch=18, col="blue")
+
+
+text(mtcars$wt, mtcars$mpg, # Note we cannot use the formula in text
+      row.names(mtcars),    # Get the row names
+      cex=0.6,              # Scaling of the font size
+      pos=4,   	           # 1=below, 2=left, 3=above, 4=right 
+      col="red")
+
+mtext("This is the bottom margin",1)
+
+mtext("This is the left side margin",2)
+
+mtext("This is the top margin",3)
+
+mtext("This is the right side margin",4)
+
+# Slide 50 - Supplemental 
+
+plot(mtcars$mpg ~ mtcars$wt,cex=0.8,
+    pch=21,col="blue",bg="red",
+    xlab="Wt in Lbs/1,000",
+    ylab="Miles Per Gallon")
+
+title(main="The mtcars data set wt vs. MPG")
+
+# Next draw a vertical line at the mean of the weight
+
+abline(v=mean(mtcars$wt),lty=2,col="blue")
+
+# Next draw a horizontal line at the man of the MPG
+
+abline(h=mean(mtcars$mpg),lty=2,col="blue")
+
+points(mean(mtcars$wt),       # Draws a diamond at the common mean
+       mean(mtcars$mpg),
+       pch=23,col="black",
+       bg="brown",
+       cex=2)
+
+# Slide 52 - Supplemental
+
+text(mean(mtcars$wt),min(mtcars$mpg),
+     paste("Mean:",round(mean(mtcars$wt),2)),pos=4)
+
+text(min(mtcars$wt),mean(mtcars$mpg),
+    paste("Mean:",round(mean(mtcars$mpg),2)),adj=c(0,1))
+
+
+
+text(3.2,10.4,paste("Mean:",round(mean(mtcars$wt),2)),pos=4)
+
+text(2,20.09,paste("Mean:",round(mean(mtcars$mpg),2)))
+
+
+# Slide 54
+
+length(colors())  # The colors function returns a vector of colors
+
+colors()[1:5]
+
+# Slide 55
+
+grep("yellow",colors(),value=TRUE)
+ 
+grep("purple",colors(),value=TRUE)
+
+# Slide 57
+
+table(mtcars$cyl)
+
+barplot(table(mtcars$cyl), axes=T, main = "Cylinder Barplot")
+
+# Slide 58
+
+barplot(table(mtcars$cyl), axes=T, 
+        main = "Cylinder Barplot", col=heat.colors(3))
+
+# Slide 59
+
+barplot(table(mtcars$cyl,mtcars$am), legend = T, beside = T, col=heat.colors(3), main='Cylinder Count by Transmission Type')
+
+
+# Slide 60
+
+barplot(table(mtcars$cyl,mtcars$am),legend = T, 
+        beside = F, col=heat.colors(3),
+        main='Cylinder Count by Transmission Type',ylim=c(0,25))
+
+# Slide 61
+
+barplot(table(mtcars$cyl,mtcars$am),legend = T, 
+        beside = F, col=heat.colors(3),
+        main='Cylinder Count by Transmission Type',
+        xlim=c(0,25),horiz=T)
+
+# Slide 63
+
+mycols = rainbow(2)
+
+mycols
+
+# Remember that the transmission types are indicated by a 0 (auto) or
+# 1 (manual). We need to take this into account when indexing into the 
+# mycols vector. Basically, we add 1 to the transmission since there is
+# no element 0 of the mycols vector.
+
+plot(mtcars$wt, mtcars$mpg, col = mycols[mtcars$am+1], pch=19)
+
+legend("topright",c("Auto","Manual"),col=mycols,pch=19)
+

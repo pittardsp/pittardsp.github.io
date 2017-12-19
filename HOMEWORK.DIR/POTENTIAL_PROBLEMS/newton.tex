@@ -1,0 +1,9 @@
+mynewton <- function(n, guess) {
+  tolerance = 0.0001
+  diff = n-(guess^2)
+  while (diff >= 0.001) {
+    guess = (n/guess + guess)/2
+    diff = n-(guess^2)
+  }
+  return(guess)
+}

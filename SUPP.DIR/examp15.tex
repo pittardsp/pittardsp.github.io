@@ -1,0 +1,36 @@
+\documentclass[a4paper]{article}
+\title{Sweave Example 1} 
+\author{Steve}
+\usepackage{Sweave} 
+\begin{document}
+\input{examp15-concordance}
+\maketitle
+\section{Section 1}
+This is section one. Blah, blah, etc.
+\begin{Schunk}
+\begin{Sinput}
+> my.lm = lm(mpg~wt,data=mtcars)
+\end{Sinput}
+\end{Schunk}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 37.2851 & 1.8776 & 19.86 & 0.0000 \\ 
+  wt & -5.3445 & 0.5591 & -9.56 & 0.0000 \\ 
+   \hline
+\end{tabular}
+\end{table} 
+
+\section{Section 2}
+Here we do some regression
+\begin{Schunk}
+\begin{Sinput}
+> plot(my.lm)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{examp15-002}
+\end{document}

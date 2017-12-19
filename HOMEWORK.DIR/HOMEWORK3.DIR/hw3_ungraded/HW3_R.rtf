@@ -1,0 +1,142 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fnil\fcharset134 STHeitiSC-Light;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 HW
+\f1  3: Graph\
+\
+Q1: \
+myplot<-function(Left=T)\{\
+if (Left==T)\{ \
+## Pic 1: \
+Q=plot(mtcars$wt, mtcars$mpg, ylab="MPG", xlab="Weight /1,000", main="MPG vs. Weight",pch=20 )\
+# calculate the quantile value, save in verctor q. \
+q=as.numeric(quantile(mtcars$mpg, na.rm=TRUE))\
+# seperate data into four diff intervals by quantile value. \
+inter1=mtcars[mtcars$mpg<=q[2],]\
+inter2=mtcars[mtcars$mpg>q[2] & mtcars$mpg<=q[3],]\
+inter3=mtcars[mtcars$mpg>q[3] & mtcars$mpg<=q[4],]\
+inter4=mtcars[mtcars$mpg>q[4] ,]\
+# color diff group\
+points(inter1$wt, inter1$mpg, pch=20, col="black")\
+points(inter2$wt, inter2$mpg, pch=20, col="red")\
+points(inter3$wt, inter3$mpg, pch=20, col="green")\
+points(inter4$wt, inter4$mpg, pch=20, col="blue")\
+# abline \
+abline(h=q[1], lty=1, col="gray")\
+abline(h=q[2], lty=2, col="gray")\
+abline(h=q[3], lty=3, col="gray")\
+abline(h=q[4], lty=4, col="gray")\
+abline(h=q[5], lty=5, col="gray")\
+# add text\
+text(4.5, q,c("0%","25%","50%","75%","100%"))\
+# write legend\
+legend("topright", bg="gray", title="Quantiles", pch=20, \
+       col=c("black","red","green","blue"), c("0-25","25-50","50-75","75-100"))\
+\
+\}else\{\
+  ## Pic 2\
+  plot(mtcars$wt, mtcars$mpg, ylab="MPG", xlab="Weight /1,000", main="MPG vs. Weight" )\
+  # calculate the quantile value, save in verctor q. \
+  q=as.numeric(quantile(mtcars$wt, na.rm=TRUE))\
+  q=round(q,1)\
+  # seperate data into four diff intervals by quantile value. \
+  inter1=mtcars[mtcars$wt<=q[2],]\
+  inter2=mtcars[mtcars$wt>q[2] & mtcars$wt<=q[3],]\
+  inter3=mtcars[mtcars$wt>q[3] & mtcars$wt<=q[4],]\
+  inter4=mtcars[mtcars$wt>q[4] ,]\
+  # color diff group\
+  points(inter1$wt, inter1$mpg, pch=20, col="black")\
+  points(inter2$wt, inter2$mpg, pch=20, col="red")\
+  points(inter3$wt, inter3$mpg, pch=20, col="green")\
+  points(inter4$wt, inter4$mpg, pch=20, col="blue")\
+  # abline and text\
+  abline(v=q[1], lty=1, col="gray")\
+  abline(v=q[2], lty=2, col="gray")\
+  abline(v=q[3], lty=3, col="gray")\
+  abline(v=q[4], lty=4, col="gray")\
+  abline(v=q[5], lty=5, col="gray")\
+  # add text\
+  mtext(q,side=3,at=q)\
+  # write legend\
+  legend("topright", bg="gray", title="Quantiles", pch=20, col=c("black","red","green","blue"), c("0-25","25-50","50-75","75-100"))\
+  \
+\}\
+return(Q)\
+\}\
+# if want to have both graphs at the same time: \
+par(mfrow=c(1,2))\
+myplot(Left=T)\
+myplot(Left=F)\
+\
+\
+\
+Q2: \
+url = "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/Sparrows.txt"\
+sparrows = read.table(url,header=T)\
+# test data first 100. \
+p=as.vector(table(sparrows$Observer))\
+boxplot(Wt~Observer, data=sparrows, notch=T, main="Sparrow Weight by Observer",\
+        xlab="Observer Number", ylab="Sparrow Weight",\
+        width=p,col=colorRampPalette(c("white","blue"))(7))\
+grid(col="gray")\
+tmpar=boxplot(Wt~Observer, data=sparrows, notch=T, main="Sparrow Weight by Observer",\
+              xlab="Observer Number", ylab="Sparrow Weight",\
+              width=p,col=colorRampPalette(c("white","blue"))(7))\
+mtext(at=c(1:7),tmpar$n,side=3,col="red")\
+\
+\
+\
+\
+Q3:\
+\
+library(lattice)\
+url = "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/my.diamonds.csv"\
+myd = read.csv(url,header=T,sep=",")\
+\
+xyplot(price~carat|factor(color), data=myd, pch=19, \
+       main="Diamond Price vs Carat Size", ylab="price", xlab="carat", \
+       grid=T, layout=c(3,4),\
+       groups=factor(cut), \
+       auto.key=list(title="Diamond Quality", cex=0.6, colums=1, corner=c(0.75,0.75)))\
+\
+
+\f0 \
+Q
+\f1 4:\
+\
+
+\f0 set.seed(124)\
+x = rnorm(100,10)\
+smean = mean(x)\
+sci = replicate(100,t.test(sample(x,rep=T))$conf.int)\
+sci = t(sci)\
+\
+\
+plot.ci<-function(mymat, num)\{\
+\
+l=max(mymat)-min(mymat)+0.1*2\
+gap=(l-0.005*2)/99\
+plot(seq((min(mymat)-0.1),(max(mymat)+0.1),0.1),seq((min(mymat)-0.1),(max(mymat)+0.1), 0.1), type="n",\
+     main="Confidence Intervals", axes=FALSE, frame.plot=TRUE, ylab="", xlab="")\
+Axis(side=1)\
+\
+\
+abline(v=num, col="black")\
+outside=rep(0,100)\
+for(i in 1:100)\{\
+  if(mymat[i,1]>num | mymat[i,2]<num)\{\
+    segments(mymat[i,1], min(mymat)-0.1+0.005+(i-1)*gap, mymat[i,2], min(mymat)-0.1+0.005+(i-1)*gap, col="red")\
+    outside[i]=i\
+  \} else \{\
+    segments(mymat[i,1], min(mymat)-0.1+0.005+(i-1)*gap, mymat[i,2], min(mymat)-0.1+0.005+(i-1)*gap, col="blue")\
+  \}\
+\}\
+result=outside[outside!=0]\
+return(result)\
+\}\
+\
+plot.ci(sci, smean)\
+}

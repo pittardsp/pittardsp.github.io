@@ -1,0 +1,399 @@
+# WEEK 6 LABS CONTROL STRUCTURES
+
+VECTORS:
+
+1.0) GET STARTED WITH SOME BASIC FOR LOOPS 
+
+	x = 1:3
+	for (ii in 1:length(x)) {
+  		print(ii)
+	}	
+
+	x = 10:12
+	for (ii in 1:length(x)) {
+	  cat("The value of x element number",ii,"is",x[ii],"\n")
+	}
+
+1.1) PLOT THE NORMAL CURVE
+
+	y = vector()
+	x = seq(-3,3,by=0.005)      # seq let's us specify and increment
+	for (ii in -3:length(x)) {
+	  y[ii] = dnorm(x[ii])
+	}
+
+	length(x)
+	plot(x,y,main="A Great Looking Normal Distribution",type="l")	
+
+
+1.2)  LET'S ADD UP SOME NUMBERS
+
+	x = 1:3
+
+	# Here is what is happening as the loop is executing:
+
+	mysum = 0
+	for (ii in 1:length(x)) {
+	  mysum = mysum + x[ii]
+	  cat("ii is currently",ii,"and mysum is",mysum,"\n")
+	}
+
+1.3) COMPUTE SOME AVERAGES
+
+	x = rnorm(1000,20,4)  # 1,000 random elements from a N(20,4)
+
+	mysum = 0
+	for (ii in 1:length(x)) {
+	  mysum = mysum + x[ii]
+	}
+
+	avg = mysum / length(x)
+	cat("The average of this vector is:",avg,"\n")
+
+1.4) FIND THE MINIMUM VALUE IN A VECTOR
+
+	set.seed(188)
+	x = rnorm(1000)  # 1,000 random elements from a N(20,4)
+
+	mymin = x[1]  	# Set the min to the first element of x. Unless we are
+			# very lucky then this will change as we walk through
+			# the vector
+
+	for (ii in 1:length(x)) {
+	  if (x[ii] < mymin) {
+	     mymin = x[ii]
+	  }
+	}
+	mymin
+
+QUESTION: HOW WOULD YOU CHANGE THIS TO FIND THE MAX VALUE ?
+
+# DATA FRAMES
+
+2.0) FOR LOOPS WITH DATA FRAMES
+
+	Frank = c(40,30)
+	John = c(42,31.5)
+	Lisa = c(38,26.5)
+#
+	tt = data.frame(rbind(Frank,John,Lisa))
+	names(tt)=c("Hours","Wage")
+	
+	tt
+
+	for (row in 1:nrow(tt)) {
+	  pay.check = tt[row,'Hours'] * tt[row,'Wage']
+	  cat(rownames(tt)[row]," gets $",pay.check," this week \n")
+	}
+		
+
+2.1) COMPUTE THE MEAN MPG FROM MTCARS
+
+	mpgsum = 0
+	for (row in 1:nrow(mtcars)) {
+	  mpgsum = mpgsum + mtcars[row,"mpg"]
+	}
+	mpgmean = mpgsum/nrow(mtcars)   # Divide the sum by the # of records
+
+	cat("Mean MPG for all cars is:",mpgmean,"\n")
+
+	all.equal(mpgmean,mean(mtcars$mpg))
+
+EXERCISE: PUT IN SOME STATEMENTS ABOVE TO ALSO GET THE MEAN wt and hp
+
+2.2) LOOPING THROUGH SPLITS
+
+	mysplit = split(mtcars, mtcars$cyl)  # Splits data frame by cylinder type (4,6,8)
+
+	str(mysplit) # mysplit is a list with three elements
+
+	mysplit[1]  	# Prints the NAME and VALUE of element 1
+	mysplit[[1]] 	# Prints the VALUE of element 1 - which is a data frame
+
+
+	for (ii in 1:length(mysplit)) {
+	   print(nrow(mysplit[[ii]]))
+	}
+
+	lapply(mysplit, nrow)
+
+2.3) THIS COMPUTES THE MEAN FOR EACH CYLINDER GROUP
+
+	mysplit = split(mtcars,mtcars$cyl)
+
+	for (ii in 1:length(mysplit)) {
+	   splitname = names(mysplit[ii])
+	   cat("mean for",splitname,"cylinders is",mean(mysplit[[ii]]$mpg),"\n")
+	}
+
+# EQUIVALENT TO
+
+	lapply(mysplit, function(x) mean(x$mpg))	
+
+
+2.4) LOOP THROUGH EACH SPLIT AND EXTRACT ALL MANUAL TRANSMISSION CARS. WE CREATE AN EMPTY LIST
+     TO CONTAIN THE RESULTS OF THE subset
+
+	data(mtcars)
+
+	mysplit = split(mtcars,mtcars$cyl)
+
+	mylist = list() # Setup a blank list to contain the subset results
+
+	for (ii in 1:length(mysplit)) {
+	  mylist[[ii]] = subset(mysplit[[ii]], am == 1)
+	}
+
+	mylist
+
+EXERCISE: REWORK 2.4 USING BRACKET NOTATION INSTEAD OF THE subset FUNCTION
+
+
+# SAME AS 
+
+	lapply(mysplit, subset, am == 1)
+
+
+2.5) WHAT ABOUT LOOPING OVER EACH SPLIT AND SAMPLING TWO RECORDS FROM EACH GROUP ?
+
+	for (ii in 1:length(mysplits)) {
+	    recs = sample(1:nrow(mysplits[[ii]]),2,F)
+	    print(mysplits[[ii]][recs,])
+	}	
+
+EXERCISE:  CREATE A LIST TO HOLD THE SAMPLED RECORDS.
+
+2.6) LET'S SAY WE WANT TO PLOT MPG VS. WEIGHT FOR EACH CYLINDER GROUP. CHECK IT OUT:
+
+	mysplits = split(mtcars, mtcars$cyl)
+
+	par(mfrow=c(1,3))    # This relates to plotting
+
+	for (ii in 1:length(mysplits)) {
+	  hold = mysplits[[ii]]
+	  plot(hold$wt, hold$mpg, pch = 18, main=paste("MPG vs. Weight for",
+	  names(mysplits[ii]), "cyl",sep=" "))
+	}	
+
+2.7) OUR LOOP INDICES DO NOT HAVE TO BE NUMERIC. CONSIDER THE MTCARS DATA FRAME. WE CAN USE 
+THE NAMES OF THE COLUMNS TO LOOP THROUGH THINGS:
+
+
+	for (colname in names(mtcars)) {
+	  cat("column ",colname," of mtcars has a class of ",class(mtcars[,colname]),"\n") 
+	}
+
+
+# MATRICES
+
+3.0) LETS LOCATE AND PRINT EACH ELEMENT OF A MATRIX USING FOR LOOPS
+
+
+	set.seed(123)
+
+	mymat = matrix(round(rnorm(6),2),3,2)
+
+	for (row in 1:nrow(mymat)) {
+	  for (col in 1:ncol(mymat)) {
+	   cat("The value at row",row ,"and column",col ,"is",mymat[row,col],"\n")
+          }
+	}
+
+EXERCISE: MAKE THE OUTER LOOP REFER TO THE COLUMNS AND THE INNER LOOP REFER TO THE ROWS
+
+3.1) LET'S SUM ALL THE ROWS
+
+	rowtotal = 0                  # initialize a variable to hold row total
+	for (row in 1:nrow(mymat)) {
+	  for (col in 1:ncol(mymat)) {
+	    rowtotal = rowtotal + mymat[row,col]
+	  }
+	  print(rowtotal)
+	  rowtotal = 0
+	}
+
+3.2) WE'LL CREATE A NEW MATRIX BASED ON AN EXISTING ONE:
+
+	set.seed(123)
+
+	mymat = matrix(round(rnorm(6),2),3,2)
+
+	newmat = matrix(rep(0,6),3,2) # Setup a new mat of the same size
+
+	for (col in 1:ncol(mymat)) {
+	  for (row in 1:nrow(mymat)) {
+	    newmat[row,col] = mymat[row,col] - mean(mymat[,col])
+   	  }
+	}
+	newmat
+
+# IF STATEMENTS
+
+4.0) FAMILIARIZE YOURSELF WITH THE BASICS OF THE IF STATEMENT
+
+	x = 3
+
+	x
+
+	if (is.numeric(x)) {
+	   print("x is a number")
+	} 
+
+	if (x != 3) {
+	     print("x is not equal to 3")
+	} else {
+	    print("guess what ? x is in fact equal to 3")
+	}
+
+4.1) A SLIGHTLY MORE INVOLVED EXAMPLE
+
+ 	some.num = 3               
+
+	if (some.num < 3) {        # A more involved if statement
+	     print("Less than 3")
+	} else if (some.num > 3) {
+	     print("Greater than 3")
+	} else {
+	     print("Must be equal to 3")
+	}
+
+4.2) IF STATEMENTS ARE USED FOR ERROR CHECKING
+
+
+	x=4 ; y=5
+
+	if (!is.numeric(x) | !is.numeric(y)) {         # THIS BRANCH CHECKS FOR ERRORS
+	   stop("I need numeric values to do this")
+	} else {					# THIS BRANCH DOES THE PROCESSING
+	   if (x == y) {
+	       print("Equal")
+	   } else {
+	      print("Not equal")
+	   }
+	}
+
+# COMPARE TO THIS WHERE WE INTRODUCE A NON VALID INPUT
+
+	x=4 ; y="5"
+
+	if (!is.numeric(x) | !is.numeric(y)) {
+	   stop("I need numeric values to do this")
+	} else {
+	   if (x == y) {
+	      print("Equal")
+           } else {
+	      print("Not equal")
+	   }
+	}
+EXERCISE: HOW WOULD YOU TEST EACH VARIABLE INDIVIDUALLY ?
+
+4.3) TRY THIS MULI-BRANCH IF STATEMENT
+
+score = c(74,68,98,90,100,67,59)
+
+for (ii in 1:length(score)) {
+  if (score[ii] == 100) {
+      grade = "A+"
+  } else if (score[ii] >= 90) {
+      grade = "A"
+  } else if (score[ii] >= 80) {
+      grade = "B"
+  } else if (score[ii] >= 70) {
+      grade = "C"
+  } else if (score[ii] >= 60) {
+      grade = "D"
+  }
+  else {
+    grade = "F"
+  }
+  print(grade)
+}
+
+
+# IF LOOPS WITHIN FOR LOOPS
+
+4.4) HERE WE PRINT OUT TRUE FOR THE EVEN NUMBERS AND FALSE FOR THE ODD    
+
+	set.seed(123)
+	x = round(runif(10,1,20))
+
+	for (ii in 1:length(x)) {
+	    if (x[ii] %% 2 == 0) {
+	      print(TRUE)
+	    }
+            else {
+              print(FALSE)
+            }
+        }
+
+4.5) INSTEAD OF PRINTING THE TRUE/FALSE VALUE WE FILL A VECTOR WITH THIS INFORMATION. THIS IS
+     SIMILAR TO WHAT HAPPENS WITH THE BRACKET NOTATION APPROACH
+
+	set.seed(123)
+	x = round(runif(10,1,20))
+
+	logvec = vector()            # Setup an empty vector
+	for (ii in 1:length(x)) {
+	  if (x[ii] %% 2 == 0) {
+            logvec[ii] = TRUE
+          }
+          else {
+            logvec[ii] = FALSE
+          }
+        }
+        logvec 
+
+
+4.6) IF WE NEED TO BREAK OUT OF A LOOP WE CAN USE "break" OR "next
+
+# Break out of the loop if we encounter a bad value
+
+	my.vec = c(1,2,3,NA,5,6,7,8,9,10)
+
+	for (ii in 1:length(my.vec)) {
+	    if (is.na(my.vec[ii])) {
+       	      break
+            }
+            cat("element is ",ii,"\n")
+         }
+
+# We can also skip over a bad element
+
+	my.vec = c(1,2,3,NA,5,6,7,8,9,10)
+
+	for (ii in 1:length(my.vec)) {
+          if (is.na(my.vec[ii])) {
+            next
+          }
+          cat("element is ",ii,"\n")
+        }
+
+5.0) WE WILL USE THE FOR-IF COMBO TO PROCESS ELEMENTS ACCORDING TO THEIR VALUE AS DETERMINED BY A FUNCTION
+
+x    |  <= 0     > 0
+-----------------------
+f(x) |  x^2      x^3
+
+set.seed(123)
+myvec = round(rnorm(10,1,2),2)
+
+for (ii in 1:length(myvec)) {
+   if (myvec[ii] <= 0) {
+     myvec[ii] = myvec[ii]^2
+   } else {
+     myvec[ii] = myvec[ii]^3
+   }
+}
+
+5.1) WE WILL REPEAT THE ABOVE EXCEPT WE WILL NOW USE ifelse STATEMENTS
+
+
+x    |  <= 0      > 0
+-----------------------
+f(x) |  x^2       x^3
+
+set.seed(123)
+myvec = round(rnorm(10,1,2))
+
+ifelse( myvec <= 0, myvec^2, myvec^3 )
+

@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage{amsmath}
+\title{Manual of coolpkg}
+\author{John Doe}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+\section{Introduction}
+Some introduction to my coolpkg.
+\section{Results}
+Some data analysis results. Below is an example of the lm function.
+<<>>=
+my.lm = lm(mpg~wt, data=mtcars)
+print(my.lm)
+@
+<<fig=TRUE>>=
+par(mfrow=c(2,2))
+plot(my.lm)
+@
+
+<<fig=TRUE>>=
+par(mfrow=c(1,1))
+plot(mtcars$wt,mtcars$mpg)
+@
+\section{Conclusion}
+Conclusion texts are here.
+\end{document} 

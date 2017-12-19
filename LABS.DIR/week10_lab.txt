@@ -1,0 +1,243 @@
+# Week 10 - Graphics part II
+
+# 02
+
+myt = tapply(mtcars$mpg, mtcars$cyl, mean)  
+
+# tapply produces a table
+
+barplot(myt, main = "Mean MPG per Cylinder Group", col=heat.colors(3))
+
+# 03 
+
+myt = tapply(mtcars$mpg, mtcars$carb, mean)
+
+       1        2        3        4        6        8 
+25.34286 22.40000 16.30000 15.79000 19.70000 15.00000 
+
+barplot(myt, main = "Mean MPG per Carb group", 
+             col= terrain.colors(length(myt)),legend=T)
+
+# 04
+
+barplot(rev(sort(myt)), main = "Mean MPG per Carb group", 
+            col= terrain.colors(length(myt)),legend=T)
+
+# 06
+
+mycols = colorRampPalette(c("red","blue"))( 6 ) 
+
+# 07
+
+barplot(rev(sort(myt)), 
+        main = "Mean MPG per Carb group", col=mycols, legend=T)
+
+# 08
+
+myt = tapply(mtcars$mpg, mtcars$cyl, mean)  
+
+# tapply produces a table
+
+barplot(rev(sort(myt)), main = "Mean MPG per Cylinder Group",   col=heat.colors(3))
+
+
+# 09
+
+myt = tapply(mtcars$mpg, mtcars$cyl, mean)  
+
+# tapply produces a table
+
+temp = barplot(myt, main = "Mean MPG per Cylinder Group",
+                    col=heat.colors(3))
+
+temp        # These represent the X coordinates for each bar
+
+#     x    y   text
+
+text(0.7, 10, 26.66)    # We put up the means one by one
+
+text(1.9, 10, 19.74)
+
+text(3.1, 10, 15.10)
+
+
+# 11
+
+# This will put up the text in one go
+
+
+temp = barplot(myt, main = "Mean MPG per Cylinder Group",
+                    col=heat.colors(3))
+
+text(temp,10,round(myt,2))
+
+
+# 15
+
+fivenum(mtcars$mpg)
+
+boxplot(mtcars$mpg, main="MPG Boxplot",xlab="MPG",col="aquamarine")
+
+# 16 
+
+boxplot(mpg~am, data = mtcars, main="MPG / Transmission",
+                col=heat.colors(2), names=c("auto","manual"))
+
+legend(0.5,33,c("Auto","Manual"),fill=heat.colors(2))
+
+# 18
+
+boxplot(mpg~cyl,data=mtcars,main="MPG by Cylinders",
+        col=rainbow(3), horizontal=TRUE, 
+        names=c("Four","Six","Eight"))
+
+# 21
+
+boxplot(mpg~cyl, main="MPG vs. Cylinder", data=mtcars, 
+         notch=TRUE, col=terrain.colors(3))
+
+# 22
+
+boxplot(mtcars$mpg, main="MPG Boxplot",xlab="MPG",col="aquamarine")
+
+
+# 23
+
+hold = boxplot(mtcars$mpg, main="MPG Boxplot",
+               xlab="MPG",col="aquamarine")
+hold
+
+
+# 24 
+
+text(1,10.4,10.4)
+text(1,15.35,15.35)
+text(1,19.20,19.20)
+text(1,22.8,22.8)
+text(1,33.9,33.9)
+
+# OR could put up text in one go
+
+text(1,hold$stats[,1],hold$stats[,1])
+
+# 25
+
+tmpvar = boxplot(mpg~cyl,data=mtcars)
+
+# 26
+
+tmpvar$stats
+
+tmpvar$stats[3,]
+
+mtext(at=1:3, text=tmpvar$stats[3,])
+
+# same as doing the following:
+
+mtext(at=1, text=tmpvar$stats[3,1], side=3) # top margin
+mtext(at=2, text=tmpvar$stats[3,2], side=3) # top margin
+mtext(at=3, text=tmpvar$stats[3,3], side=3) # top margin
+
+
+# LATTICE GRAPHICS
+
+
+# 31
+
+library(lattice)  # Required for all lattice plot commands
+
+xyplot(mpg~wt|factor(carb), data=mtcars, pch=19,
+       main="MPG vs Wt per Carb #", type=c("p","g"))
+
+
+# 38  Factor review
+
+mtcars$am = factor(mtcars$am, labels=c("auto","manual"))
+
+mtcars$am
+
+levels(mtcars$am)
+
+# 41
+
+xyplot(mpg ~ wt, data = mtcars, pch = 19, main = "MPG vs. Weight")
+
+# 43
+
+ xyplot(mpg ~ wt, data = mtcars, pch = 19, 
+        main = "MPG vs. Weight", type=c("p","g"))
+
+# 45
+
+xyplot(mpg ~ wt | factor(cyl), data = mtcars, pch=16, 
+       main = "MPG vs. wt by Cylinder Group"))
+
+
+# 47
+
+xyplot(mpg ~ wt | factor(cyl), data = mtcars, pch=16, type=c("p","g"),
+       main = "MPG vs. wt by Cylinder Group", layout=c(1,3))
+
+
+# 51
+
+xyplot(mpg~wt|factor(cyl),data = mtcars,layout=c(3,1))
+
+# 52
+
+histogram(~mpg, data = mtcars, main = "MPG for all groups")
+
+# 53
+
+histogram(~mpg | factor(cyl), data = mtcars, layout = c(3,1))
+
+# 56
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), type=c("p","g"),
+       main="MPG vs. Wt", auto.key=TRUE)
+
+# 57
+
+xyplot(mpg~wt, data=mtcars, groups=cyl, main="MPG vs. Wt", auto.key=TRUE)
+
+
+# 58
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), 
+       main="MPG vs. Wt", 
+       auto.key=list(title="Transmission Type",cex=0.6,columns=2))
+
+# 59
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), main="MPG vs. Wt", pch=19,
+       auto.key = list(title="Transmission Type",
+                       cex=0.6,columns=2,space="right"))
+
+# 60
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), main="MPG vs. Wt", 
+       pch=19, type=c("p","g"),
+       auto.key = list(title="Transmission Type", cex=0.6, columns=2,
+       corner=c(1,1))
+
+# 61
+
+xyplot(mpg ~ wt | factor(cyl), data=mtcars, 
+        pch=16,layout=c(3,1), main="MPG vs Wt per Cylinder",
+        type=c("p","g"))
+
+
+# 62
+
+xyplot(mpg ~ wt | factor(cyl), data=mtcars, 
+       pch=16,layout=c(3,1),
+       groups = factor(am,labels=c("Auto","Manual")),
+       type=c("p","g"),auto.key = TRUE)
+
+# 63
+
+ xyplot(mpg ~ wt | factor(cyl), data=mtcars, 
+        main = "MPG vs Wt per cylinder Group",
+        groups = factor(am), pch=21, type=c("p","g"), 
+        layout = c(1,3), auto.key=list(columns=2))
+

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="/">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#info">Weekly Recaps</a></li>
+  <li><a href="./recap.html">2</a></li>
+  <li><a href="./recap3.html">3</a></li>
+  <li><a href="./recap4.html">4</a></li>
+<li><a href="./recap5.html">5</a></li>
+<li><a href="./recap7.html">7</a></li>
+<li class="active"><a href="./recap8.html">8</a></li>
+<li><a href="./recap9.html">9</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2><a href="#2">Week 8 Recap</a></h2>
+<h3>Functions</h3>
+<p>We looked at various aspects of functions this week including scope, argument matching, and debugging. While some of these topics might seem more academic than practical they are in fact quite practical and have potential impact on your work. Knowing how variables within functions interact with variables outside of the function is essential if you are going to write good code. Lots of people get confused by how it works although the basic rule is that any variable within an R function takes priority over any variable of the same name located in the global environment. One way to avoid this issue is to name your variables with a specific description. This way you don't wind up being confused.</p>
+
+<p>One topic that we didn't cover in class that is very important is the concept of anonymous functions. You've seen these previously but may not be aware of them. They show up usually when one of the "apply" commands are being used. As an example let's say we have a matrix like this:
+
+<pre>
+> mymat = matrix(1:9,3,3)
+> mymat
+     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9
+</pre>
+<p>Let's say we wanted to "scale" the rows of this matrix. This would involve taking each element in each row and subtracting it from the mean of that row and then dividing by the standard deviation of that row. We could accomplish this by doing:
+<pre>
+> apply(mymat, 1, function(x) (x - mean(x))/sd(x))
+     [,1] [,2] [,3]
+[1,]   -1   -1   -1
+[2,]    0    0    0
+[3,]    1    1    1
+</pre>
+
+<p>Notice that the function we use here doesn't even have a name ! In this case we refer to the function as an "anonymous" function because it pretty much exists anonymously and only for the duration of the apply call. Other languages support this concept also. The idea is that you just want to do a "one off" function and don't want to be bothered with having to declare it independently. In terms of clarity this might produce some confusion on the part of the newcomer since it seems to violate the "rules" for creating functions such as declaring a name and having a return statement. Just keep in mind that this is simply an accommodation - one is not obligated to use this approach. Consider that you could just as easily do the following: </p>
+
+
+<pre>
+myscale <- function(vals) {
+ rows = (vals - mean(vals))/sd(vals) 
+ return(rows)
+}
+
+apply(mymat,1,myscale)
+     [,1] [,2] [,3]
+[1,]   -1   -1   -1
+[2,]    0    0    0
+[3,]    1    1    1
+</pre>
+
+<p>However, in this case the function is no longer anonymous since we have actually given our function a name. In terms of preference it is up to you to decide which approach you want. Some R "geeks" like to use the apply approach with anonymous functions although that sometimes makes it hard to understand what the person is doing especially if the function is very long. But in this case its pretty easy to see what is happening.</p>
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="recap4_files/jquery.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-transition.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-alert.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-modal.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-dropdown.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-scrollspy.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tab.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tooltip.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-popover.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-button.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-collapse.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-carousel.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-typeahead.html">
+</script>
+
+
+</body></html>

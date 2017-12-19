@@ -1,0 +1,288 @@
+BIOS560R WEEK #4 LAB – MATRICES, LISTS, FACTORS, and DATAFRAMES (if we get to them)
+
+PROBLEM 1) GIVEN THE FOLLOWING MATRIX USE THE apply COMMAND TO FIND THE QUANTILE OF ALL
+ROWS:
+
+set.seed(123)
+x=matrix(rnorm(25),5,5)
+x
+            [,1]       [,2]       [,3]       [,4]       [,5]
+[1,] -0.56047565  1.7150650  1.2240818  1.7869131 -1.0678237
+[2,] -0.23017749  0.4609162  0.3598138  0.4978505 -0.2179749
+[3,]  1.55870831 -1.2650612  0.4007715 -1.9666172 -1.0260044
+[4,]  0.07050839 -0.6868529  0.1106827  0.7013559 -0.7288912
+[5,]  0.12928774 -0.4456620 -0.5558411 -0.4727914 -0.6250393
+
+
+apply(x,1,quantile)
+
+1.1) USE THE APPLY FUNCTION TO FIND THE RANGE OF EACH COLUMN
+
+apply(x,2,range)
+
+1.2) USE THE APPLY FUNCTION TO FIND THE COLUMN THAT HAS THE MOST VALUES LESS THAN 0.5
+
+apply(x < 0.5,2,sum)
+max(apply(x < .5,2,sum))
+which(apply(x < .5,2,sum) == max(apply(x < .5,2,sum)))
+
+
+1.3) GIVEN THIS SYSTEM OF EQUATIONS SOLVE FOR X1 AND X2. THAT IS SOLVE THE EQUATION
+Ax = b WHERE A IS THE MATRIX CONTAINING THE COEFFICIENTS FOR THE EQUATIONS AND  B IS
+THE VECTOR B. (YOU WILL NEED TO CREATE THE MATRIX A and VECTOR B)
+
+ x1 + 3x2 = 7
+2x1 + 4x2 = 10
+
+LISTS
+
+PROBLEM 2) GIVEN THE FOLLOWING STRING USE THE STRPLIT FUNCTION TO SEPARATE IT USING 
+SPACE AS A DELIMITER. STORE THE RESULTS INTO A VARIABLE CALLED MY.S
+
+	my.string = c("This is the first string", 
+				  "And here is the second one")
+	
+	my.s = strsplit(my.string,"")
+
+2.1) HOW MANY ELEMENTS ARE THERE IN THE RESULTING LIST ? USE THE SAPPLY COMMAND
+
+	sapply(my.s, length)
+
+
+2.2) USE THE NAMES FUNCTION TO GIVE THE LIST ELEMENTS MEANINGUL NAMES:
+
+	names(my.s) = c("S1","S2")
+
+2.3) Use the single bracket and double bracket notation to access the 1st, 3rd, and 
+5th sub-element of the first element.
+
+	my.s[[1]][1]
+	
+	my.s[[1]][3]
+
+	my.s[[1]][5]
+
+2.4) USE THE $ NOTATION TO ACCESS THE SAME SUBELEMENTS AS ABOVEo
+
+my.s$S1[1]
+my.s$S1[3]
+my.s$S1[5]
+
+
+2.5) IMAGINE THAT YOU WISH TO CREATE A LIST TO STORE INFORMATION ON AN 
+EMPLOYEE: NAME, AGE, SOCIAL SECURITY NUMBER, GENDER, AND SALARY. CREATE THIS LIST 
+STRUCTURE WITH SOME EXAMPLE DATA FOR AN EXAMPLE EMPLOYEE: 
+
+	emp1 = list(name = "John Doe", age=32, 
+				ssn="289-09-9890", gender = "m", salary = 48000)
+
+2.6) USE THE SAPPLY COMMAND TO DETERMINE WHAT THE CLASS OF EACH ELEMENT IS 
+
+	sapply(emp1, class)
+
+
+2.7) USE THE SAPPLY COMMAND TO PRINT ONLY THE NUMERIC ELEMENTS. IGNORE THE NON NUMERIC 
+ELEMENTS.
+
+	sapply(emp1, function(x) { if (is.numeric(x)) print(x)})
+
+2.8) USE THE UNLIST FUNCTION TO CREATE A VECTOR CALLED MY.VEC THAT CONTAINS THE ELEMENTS 
+OF EMP1
+
+	my.vec = unlist(emp1)
+
+2.9) CREATE THE LIST FAMILY1 AS INDICATED IN THE LECTURE. PROVIDE A ONE LINE R EXPRESSION THAT GIVES
+THE MEAN OF THE "agesofkids" ELEMENT.
+
+family1 = list(husband="Fred", wife="Wilma", numofchildren=3, agesofkids=c(8,11,14))
+
+mean(family1$agesofkids)
+
+2.10) WHAT WOULD BE THE SUM OF ALL THE CHILDREN'S AGES 
+
+	sum(family1$agesokids)
+
+3.5) WITH THE FOLLOWING MATRIX PERFORM A CHISQ TEST. INSPECT THE CONTENTS OF "mychi" USING
+THE VARIOUS INFORMATIONAL FUNCTIONS: str, typeof, names. HOW WOULD YOU RETRIEVE THE "stdres"
+ELEMENT ?
+
+x <- matrix(c(12, 5, 7, 7), ncol = 2)
+
+mychi = chisq.test(x) 
+
+mychi$stdres
+
+
+3.5) RUN THE FOLLOWING CODE TO CREATE A THREE ELEMENT LIST OF RANDOM NUMBERS:
+
+	dat = NULL
+	for (i in 1:3) {
+	   dat[[i]] = rnorm(runif(1)*1000, mean=i, sd=i)
+	}
+	names(dat) = paste("dat", 1:3)
+
+3.6) DEFINE THE FUNCTION AS INDICATED ON SLIDE 19. YOU CAN PASTE THIS IN AT THE > PROMPT
+
+my.func <- function(x) {
+                retlist = NULL
+                retlist$length = length(x)
+                retlist$mean = mean(x)
+                retlist$var = var(x)
+                return(retlist)
+        }
+
+3.7) NOW LETS APPLY THIS FUNCTION TO EACH ELEMENT OF THE LIST. 
+ 
+	sapply(dat, my.func)
+
+FACTORS
+
+PROBLEM 4.0) EXECUTE THE FOLLOWING COMMANDS TO GENERATE A VECTOR OF NUMBERS FROM A UNIFORM 
+DISTRIBUTION.
+
+	my.numbers = as.integer(runif(200,1,6))
+
+# APPLY THE UNIQUE FUNCTION TO THIS VECTOR TO SEE HOW MANY UNIQUE VALUES IT TAKES.
+
+	unique(my.numbers)
+
+4.1) CREATE A TABLE SUMMARY OF THIS VECTOR TO GET THE COUNTS OF THIS DATA.
+
+	table(my.numbers)
+
+4.2) LET'S CREATE A FACTOR VERSION OF THIS DATA AND APPLY LABELS TO THE DATA SO IT 
+WILL MAKE BETTER SENSE.
+
+	factor(my.numbers,labels=c("I","II","III","IV","V"))
+
+4.3) NOW LET'S STORE THESE INTO A NEW VARIABLE CALLED "MY.FACTORS":
+
+	my.factors = factor(factor(my.numbers,labels=c("I","II","III","IV","V"))
+
+4.4)  NEXT, LET'S USE THE TABLE COMMAND TO SUMMARIZE THE COUNT INFORMATION:
+
+	table(my.factors)
+
+4.5) LET'S EXPERIMENT WITH THE CUT COMMAND TO CHOP UP SETS OF CONTINUOUS DATA 
+INTO INTERVALS.
+
+	cut(0:25,breaks=4)
+
+4.6) THE INTERVALS DON'T BEGIN EXACTLY ON ZERO. HOW COULD WE FIX THIS ? 
+
+	cut(0:25,breaks=quantile(0:25),include.lowest=T)
+	
+	# Or we could use the following approach:
+	
+	range(0:25)
+	
+	range(0:25)/4
+	
+	cut(0:25,breaks=c(0,6.25,12.50,18.75,25),include.lowest=T)
+
+# NOTE TOO THAT WE COULD ALSO USE THE "RIGHT" ARGUMENT TO INDICATE WHETHER OR NOT 
+# WE WANT THE INTERVALS TO INCLUDE THE RIGHT MOST VALUE IN THE INTERVAL OR THE LEFT.
+
+	cut(0:25,breaks=c(0,6.25,12.50,18.75,25),right=F)
+
+
+PROBLEM 4.7) : LET'S SIMULATE THE EXAM DATA DISCUSSED IN CLASS AND CHOP IT UP INTO 
+GRADE CATEGORIES:
+
+	set.seed(123)
+	
+	exam.score = runif(25,50,100)
+	
+	cut(exam.score,breaks=c(50,60,70,80,90,100))
+	
+	cut(exam.score,breaks=c(50,60,70,80,90,100),
+				   labels=c("F","D","C","B","A"))
+	
+	my.table = table(cut(exam.score,breaks=c(50,60,70,80,90,100),
+					  labels=c("F","D","C","B","A")))
+	
+	
+	library(lattice)
+	
+	barchart(my.table, main="Grade BarChart",
+					   col=terrain.colors(5))
+
+DATA FRAME EXERCISES (IF WE GET THIS FAR IN CLASS) IF NOT THEN WE WILL WORK NEXT WEEK
+
+
+PROBLEM 5.0) PLEASE ENTER THE FOLLOWING VECTORS:
+
+	names = c("P1","P2","P3","P4","P5")
+	temp = c(98.2,101.3,97.2,100.2,98.5)
+	pulse = c(66,72,83,85,90)
+	gender = c("M","F","M","M","F")
+
+5.1 CREATE A DATA FRAME CALLED MY_DF THAT HAS AS COLUMNS THE ABOVE VECTORS. 
+
+	my_df = data.frame(names, temp, pulse, gender)
+
+How many rows does it have ? 
+
+	nrow(my_df)
+
+How many columns does it have ?
+
+	ncol(my_df)
+
+What are the names of the columns ?
+
+	names(my_df)
+
+5.2	 DETERMINE THE CLASS OF EACH COLUMN/VARIABLE
+
+	sapply(my_df, class)
+	
+5.3 CHANGE THE ROWNAMES OF THE DATAFRAME TO BE P1, P2, .. P5
+
+	rownames(my_df) = paste("P",1:5,sep="")
+
+PROBLEM 6.0) WITH RESPECT TO THE MTCARS DATA FRAME, WHICH IS BUILT IN TO R, LET'S DO 
+SOME SUBSETTING TO EXTRACT DATA. EXTRACT THE 11TH COLUMN
+
+	mtcars[,11]
+
+Extract the 2nd through 4th columns
+
+	mtcars[,2:4]
+
+Extract the 1st through 10th rows and the 5th though 11th columns
+
+	mtcars[1:10,5:11]
+
+Extract all columns except the 3rd, 5th, and 7th 
+
+	mtcars[,c(-3,-5,-7)] 
+
+PROBLEM 7.0 LET'S EXTRACT SOME DATA BASED ON LOGICAL CONDITIONS. EXTRACT ALL RECORDS FOR 
+WHICH THE TRANSMISSION TYPE (INDICATED BY COLUMN AM) IS EQUAL TO 0
+
+	mtcars[mtcars$am == 0, ]
+
+7.1) EXTRACT ALL RECORDS / ROWS WHERE THE MPG IS GREATER THAN OR EQUAL TO 30
+	
+	mtcars[mtcars$mpg >= 30.0,]
+                
+7.2) FOR COLUMNS 2 THROUGH 6 EXTRACT ALL RECORDS / ROWS WHERE THE MPG IS >= 30.
+
+	mtcars[mtcars$mpg >= 30.0,2:6]
+
+7.3) EXTRACT ALL RECORDS FOR WHICH MPG IS >= 30 AND THE NUMBER OF CYLINDERS ARE LESS 
+THAN 6
+
+	mtcars[mtcars$mpg >= 30.0 & mtcars$cyl < 6,]
+
+PROBLEM 8.0 LET'S RECODE SOME VARIABLES. LET'S TAKE THE "AM" COLUMN AND MAKE THAT MORE 
+UNDERSTANDABLE.
+
+	mtcars$am = factor(mtcars$am, labels=c("auto","manual"))
+
+8.1) Use the table command to summarize the counts of automatic transmissions vs cylinder 
+type:
+
+	table(mtcars$am, mtcars$cyl)
+

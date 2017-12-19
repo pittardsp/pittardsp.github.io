@@ -1,0 +1,21 @@
+\documentclass{article}
+
+\title{My Article}
+\author{John Doe}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+\section{First Section}
+
+# R code goes into "chunks"
+<<>>=
+
+@
+
+
+\section{Second Section}
+
+\section{Third Section}
+
+\end{document}

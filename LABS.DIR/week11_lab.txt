@@ -1,0 +1,315 @@
+# BIOS560R - Week 11
+
+# 03
+
+letters[1:10]                   # Built in letters char vector
+
+# sample 20 times from the 1st 10 letters with replacement
+
+set.seed(222)
+
+(my.sample = sample(letters[1:10],20,replace=TRUE) )
+
+table(my.sample)
+my.sample
+
+# 04
+
+prop.table(table(my.sample))
+
+sum(prop.table(table(my.sample)))
+
+
+# 05
+
+set.seed(123)
+
+coinsamp = sample(c('H','T'),1000,T)
+
+table(coinsamp)
+ 
+# 06
+
+set.seed(123)
+
+coinsamp = sample(c('H','T'),1000,T,prob=c(.70,.30))
+
+chisq.test(table(coinsamp),p=c(0.5,0.5))
+
+
+# 07
+
+table(mtcars$am)
+
+table(mtcars$cyl)
+
+
+# 08
+
+table(mtcars$am,mtcars$cyl)
+    
+table(Trans=mtcars$am,Cyl=mtcars$cyl)
+    
+# 09
+
+mytable = table(mtcars$am, mtcars$cyl)
+
+barplot(mytable, main="Transmission by Cylinder Groups", 
+        ylab="Number of Cars",col=heat.colors(2))
+
+legend(1.2,14,fill=heat.colors(2),c("Automatic","Manual"))
+
+
+# 10
+
+mtcars = transform(mtcars, am = factor(am,labels=c("Automatic","Manual")))
+
+my.table = table(mtcars$am,mtcars$cyl)
+           
+
+par(mfrow=c(1,2))
+
+barplot(my.table,legend=T,col=c("red","blue","green"),
+          xlab="Transmission Type",ylim=c(0,20))
+
+# Here we get a Mosaic Plot
+
+plot(my.table,col=c("red","blue","green"),main="Mosaic Plot",
+      xlab="Trans Type", ylab="Number of Gears")
+
+# Slide 12 - 15
+##### WARNING 
+## THIS EXAMPLE COULD TAKE A WHILE
+## MAYBE SKIP AND COME BACK LATER
+##
+
+url = "http://www.bimcore.emory.edu/BIOS560R/DATA.DIR/chi_crimes.csv"
+chi = read.table(url,header=T,sep=",")
+nrow(chi)
+
+crime.table = table(chi$Arrest,chi$Ward)
+
+names(chi)
+
+crime.table = table(chi$Arrest,chi$District) 
+
+
+barplot(crime.table,col=c("gray","black"),
+        ylim=c(0,25000), 
+        main="Arrests by Chicago District for 2012")
+
+legend(15,24000,fill=c("black","grey"),c("arrest","noarrest"))
+
+#
+####
+
+# SLIDE 17
+
+my.cut = cut(mtcars$mpg,breaks=quantile(mtcars$mpg),
+          labels=c("Bad","Not Good","Good","Great"),include.lowest=T)
+
+my.cut
+
+table(MPG=my.cut,Cyl=mtcars$cyl)
+
+# 18
+
+plot(table(MPG=my.cut,mtcars$cyl),col=terrain.colors(3),
+     main="Gas Rating by Cylinder Group")
+
+# 20
+
+mtcars = transform(mtcars, am = factor(am,labels=c("Automatic","Manual")))
+
+my.table = table(mtcars$am,mtcars$cyl)
+
+# 21
+
+??margins
+
+# 22
+
+addmargins(my.table,1)      # Place the sums of each column as a new row
+
+addmargins(my.table,2)    # Place sums of each row as a new column
+             
+addmargins(my.table,c(1,2)) 
+
+
+# 24
+
+prop.table(my.table,1)    
+
+
+#25
+
+library(lattice)
+barchart(prop.table(my.table),auto.key=list(columns=3), main="Transmissions by Cylinders (Proportion)")
+
+# 26
+
+my.3d.table = table(mtcars$am,mtcars$gear,mtcars$cyl)
+
+# 27
+
+ftable(my.3d.table)
+
+# 28
+
+barchart(my.3d.table,layout=c(1,3),auto.key=list(title="Cylinders",columns=3))
+
+
+# 29
+
+xtabs(~am,mtcars)     # Transmission type by number of cylinders
+
+                      # Number in each cylinder group 
+xtabs(~cyl,mtcars) 
+
+# 30
+
+xtabs(~am + cyl, mtcars)     # Transmission type by number of cylinders
+     
+
+xtabs(~cyl + am, mtcars)     # Number of cylinders by transmission type
+  
+
+# 31
+
+xtabs(~gear + cyl + am, mtcars)
+
+# 33
+
+xtabs(~gear + cyl, mtcars)
+  
+xtabs(~gear + cyl, mtcars, subset=mpg < 20)
+
+# 34
+
+tapply(mtcars$mpg, mtcars$am, mean)
+
+tapply(mtcars$mpg, list(Transmision=mtcars$am, Cyl=mtcars$cyl), mean)
+           
+# 35
+
+tapply(mtcars$mpg, list(mtcars$am, mtcars$vs), mean)  
+
+# 36
+
+aggregate(mtcars['mpg'],list(Transmission=mtcars$am),mean)
+
+aggregate(mtcars[c('mpg','hp')],list(Transmission_Type=mtcars$am),mean)
+
+aggregate(mtcars[c('mpg','hp')],
+          list(Transmission_Type = mtcars$am,
+          Cylinders = mtcars$cyl),mean)
+
+# 38
+
+aggregate(mpg ~ am, mtcars, mean)
+
+aggregate(mpg ~ am + cyl, mtcars, mean)
+
+# 39
+
+aggregate( cbind(mpg,wt,hp) ~ am + cyl, mtcars, mean)
+
+# 40
+
+aggregate( mtcars[c('mpg','wt','hp')],
+           list(trans=mtcars$am, cyl=mtcars$cyl), mean)
+
+# 41
+
+my.snps = read.table("http://www.bimcore.emory.edu/nsnps.csv",header=F,sep=" ")
+
+names(my.snps)=c("X1","X2","SNP1","SNP2")
+
+new.snps = cbind(my.snps,co=sample(c("case","control"),30,TRUE))
+
+head(new.snps)
+    
+# Let's summarize the mean of X1 and X2 across the "co" column
+
+aggregate(cbind(X1,X2)~co,new.snps,mean)
+
+# 42
+
+aggregate(cbind(X1,X2)~SNP1,new.snps,mean)
+
+# 44
+
+install.packages("reshape")
+
+library(reshape)
+
+data(smiths)
+
+
+#46
+
+melt(smiths)
+
+#47
+
+melt(smiths,measure.var=c("time","age","weight","height"))
+
+# 48
+
+my.df = data.frame(id=paste("P",1:4,sep=""),
+                     age=c(30.0,36.0,43.0,29.0),
+                     pulse=c(78.2,74.4,82.3,91.9),
+                     height=c(72,68,69,71),
+                     group=c("ctrl","ctrl","treat","treat"))
+
+my.df
+
+# 49
+
+my.melt = melt(my.df)
+
+# 50
+
+melt(my.df) 
+
+# Would be the same as
+
+melt(my.df, id.vars = c("id","group"))
+
+# Would be the same as
+
+melt(my.df, id.vars = c("id","group"), 
+       measure.vars = c("age","pulse","height"))
+
+# Would be the same as
+
+melt(my.df, measure.vars = c("age","pulse","height"))
+
+# 51
+
+cast(my.melt, group~variable, mean)
+
+# 52
+
+cast(my.melt, group~variable, mean)
+
+cast(my.melt, group~variable, mean, subset=variable==c("height","age"))
+
+# 53
+
+url = "http://www.bimcore.emory.edu/BIOS560R/DATA.DIR/sixsmiths.csv"
+
+sixsmiths = read.table(url,header=T,sep=",")
+
+# 54
+
+my.melt = melt(sixsmiths,id.vars=c("subject","time"))
+
+# 55
+
+cast(my.melt,time~variable,mean)
+
+cast(my.melt,time~variable,mean,subset=variable==c("weight"))
+  
+
+

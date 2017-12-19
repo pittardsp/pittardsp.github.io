@@ -1,0 +1,379 @@
+# BIOS560R Week 12 Pittard
+
+# Slide 08
+
+x = seq(-3, 3, by=0.05) 
+y = dnorm(x)
+ 
+# Now we plot the data
+ 
+par(mfrow=c(1,2)) # Set the plot region to be one row and two columns
+
+plot(x, y, xlim=c(-3,3), ylim=c(0,0.4), main="Normal Curve", col="blue") 
+
+plot(x,y,xlim=c(-3,3),ylim=c(0,0.4),main="Normal Curve",col="blue",type="l") 
+
+# Slide 09
+
+par(mfrow=c(1,1))
+
+tmp = x[(x >= -2) & (x <= 2)] 
+plot(tmp,dnorm(tmp),xlim=c(-3,3),ylim=c(0,0.4), main="Normal Curve - Without Tails",col="blue") 
+
+
+# Slide 10
+
+par(mfrow=c(1,1))
+x = seq(-3, 3, by=0.05)
+hold = vector()
+for (ii in 1:length(x)) {
+    if ( (x[ii] >= -2) & (x[ii] <= 2) ) {
+       hold[ii] = x[ii]
+    }
+}
+
+# Same "tails" plot as before
+
+plot(hold,dnorm(hold),xlim=c(-3,3),ylim=c(0,0.4),col="blue")  
+
+
+# Slide 11
+
+myfunc <- function(x) {
+  hold = vector()
+  for (ii in 1:length(x)) {
+    if ( (x[ii] >= -2) & (x[ii] <= 2) ) {
+       hold[ii] = x[ii]
+    }
+  }
+   return(hold)
+}
+
+plot(myfunc(x),dnorm(myfunc(x)), xlim=c(-3,3),ylim=c(0,0.4),col="blue")
+
+# Slide 12
+
+now = Sys.time()
+
+# Wait for some period of time
+
+later = Sys.time()
+
+later - now 
+
+# Slide 13
+
+
+start.time = Sys.time()
+
+tmp = x[(x >= -2) & (x <= 2)] 
+
+Sys.time() - start.time
+
+
+# Slide 15
+
+x = seq(-3, 3, by=0.0001)
+
+length(x)
+
+system.time( tmp <- x[(x >= -2) & (x <= 2)] )
+
+system.time( tmp <- x[(x >= -2) & (x <= 2)] )
+  
+system.time( tmp <- x[(x >= -2) & (x <= 2)] )
+
+# Slide 16
+
+x = seq(-3, 3, by=0.0001)
+
+length(x)
+
+replicate(5, tmp <- system.time( x[(x >= -2) & (x <= 2)] ))
+
+
+# Slide 17
+
+x = seq(-3, 3, by=0.0001)
+
+length(x)
+
+myfunc <- function(x) {
+  hold = vector()
+  for (ii in 1:length(x)) {
+    if ( (x[ii] >= -2) & (x[ii] <= 2) ) {
+       hold[ii] = x[ii]
+    }
+  }
+   return(hold)
+}
+
+system.time( myfunc(x) )
+
+system.time( x[(x >= -2) & (x <= 2)] )  # Big difference !
+
+# Slide 18
+
+`[`     # Type with the back quotes
+
+x = seq(-3,3,by=0.000025)
+
+length(x)
+
+system.time( x[(x >= -2) & (x <= 2)] )
+
+system.time( myfunc(x) ) 
+
+# Slide 20
+
+install.packages("rbenchmark")  # do this once
+
+library(rbenchmark)
+
+x = seq(-3,3,by=0.0001)
+
+length(x)
+
+  
+benchmark( square = x^2)
+   
+# Slide 21
+
+benchmark( square = x^2, cube = x^3, replications=5, columns=c("test","elapsed"))
+
+
+# Slide 22
+
+x = seq(-3,3,0.01)
+
+length(x)
+
+t600 = benchmark(bracket = x[(x >= -2) & (x <= 2)], 
+            forloop = myfunc(x),replications=10, columns=c("test","elapsed"))
+t600
+    
+
+# Slide 23
+
+x = seq(-3,3,0.001)
+
+length(x)
+
+t6K = benchmark(bracket = x[(x >= -2) & (x <= 2)], 
+            forloop = myfunc(x),replications=10, columns=c("test","elapsed"))
+
+t6K
+
+
+# Slide 24
+
+x = seq(-3,3, 0.0001)
+
+length(x)
+
+t60K = benchmark(bracket = x[(x >= -2) & (x <= 2)], 
+            forloop = myfunc(x),replications=10, columns=c("test","elapsed"))
+
+t60K
+
+# Slide 25
+
+x = seq(-3,3, 0.00005)
+
+length(x)
+
+t120K = benchmark(bracket = x[(x >= -2) & (x <= 2)], 
+            forloop = myfunc(x),replications=10, columns=c("test","elapsed"))
+
+t120K
+
+
+# Slide 26
+
+mtimings = cbind(t600[,2],t6K[,2],t60K[,2],t120K[,2])
+
+colnames(mtimings)=c("601","6001","60001","120001")
+
+mtimings
+
+plot(1:4,mtimings[2,],pch=18,col="red",type="l",xaxt="n",
+           main="Timings of bracket notations vs for loop",
+           ylab="Timings in Seconds")
+
+points(1:4,mtimings[1,],type="l",col="blue")
+axis(1,1:4,labels=colnames(mtimings),xlab=c("vector size in elements"))
+
+legend(1,100,c("for-loop","bracket"),col=c("red","blue"),lty=c(1,1))
+
+
+# Slide 28
+
+
+total = 0
+x = rnorm(100,mean=100,sd=2)
+for (ii in 1:length(x)) {
+    total = total + x[ii]
+}
+
+total
+
+
+# Vectorized
+
+sum(x)
+
+sum
+
+# Slide 29
+
+set.seed(233)
+
+x = rnorm(10000)
+
+# Not vectorized:
+
+maxval = x[1]
+for (ii in 1:length(x)) {
+   if (x[ii] > maxval) {
+      maxval = x[ii]
+   }
+}
+maxval
+
+# Vectorized:
+
+max(x)
+
+max
+
+# Slide 30
+
+airquality[5:6,]
+ 
+
+# Not vectorized:     
+
+jj = 1
+mylist = list()
+for (ii in 1:nrow(airquality)) {
+   numofnas = grep("NA", airquality[ii,])
+   if (length(numofnas) == 0) {
+       mylist[[jj]] = airquality[ii,]
+       jj = jj +1
+   } else {
+       next
+   }
+}
+
+nonadf = do.call(rbind, mylist)
+
+nonadf
+
+
+# Slide 31
+
+nonasdf = airquality[ complete.cases(airquality), ]
+
+# Slide 32
+
+
+v1 = c(1,2,3,4,5)
+v2 = c(5,4,3,2,1)
+
+# So we would get back 5,4,3,4,5
+
+# Not vectorized:     Please - No ! 
+
+resvec = vector()
+for (ii in 1:length(v1)) {
+    if (v1[ii] >= v2[ii]) {
+       resvec[ii] = v1[ii]
+    } else {
+       resvec[ii] = v2[ii]
+    }
+}
+
+resvec
+
+# Slide 33
+
+v1 = c(1,2,3,4,5)
+v2 = c(5,4,3,2,1)
+
+
+# Vectorized:  Ah yes !
+
+pmax(v1,v2)
+
+# Slide 35
+
+vec1 = c("a1", "b1", "c2", "d3")
+
+vec2 = c("b1", "d3")
+
+retvec = vector()
+for (ii in 1:length(vec2)) {      # For each element in vec2 try to match to vec1
+   for (jj in 1:length(vec1)) {
+      if (vec2[ii] == vec1[jj]) {
+        retvec = c(retvec,jj)
+      }
+   }
+}
+
+retvec
+
+# Slide 36 
+
+vec1 = c("a1", "b1", "c2", "d3")
+
+vec2 = c("b1", "d3")
+
+vec1 %in% vecb
+                                
+is.element(vec1, vec2)
+
+which(vec1 %in% vec2)   # Pretty cool huh ? 
+
+
+# Slide 37
+
+somevec = vector()   #
+for (ii in 1:400000) {
+   somevec[ii] = ii
+}
+
+# Is this any different, better, or worse than preallocating space for the 400000 elements ? 
+
+somevector = vector()
+length(somevector) = 400000
+for (ii in 1:400000) {
+   somevec[ii] = ii
+}
+
+# Slide 38
+
+func1 <- function(size=400000) {
+   somevec = vector()   #
+   for (ii in 1:size) {
+     somevec[ii] = ii
+   }
+   return(somevec)
+}
+
+func2 <- function(size=400000) {
+  somevec = vector()
+  length(somevec) = size  # We tell R explicitly the size of the vector
+  for (ii in 1:400000) {
+    somevec[ii] = ii
+  }
+  return(somevec)
+}
+
+# Slide 39
+
+system.time(func1())
+   
+system.time(func2())
+  
+system.time(somevec <- 1:400000)  # Much faster
+  

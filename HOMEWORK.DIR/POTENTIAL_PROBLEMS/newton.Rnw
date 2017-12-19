@@ -1,0 +1,24 @@
+mynewton <- function(n, guess) {
+  numofiters = 0
+  tolerance = 0.0001
+  diff = n-(guess^2)
+  while (diff >= 0.001) {
+    numofiters = numofiters + 1
+    guess = (n/guess + guess)/2
+    diff = n-(guess^2)
+  }
+  return(c(guess,numofiters))
+}
+
+intersect <- function(df1,df2) {
+  retlist = list()
+  kk = 1
+  for (ii in 1:length(df1)) {
+     mystr1 = paste(df1[ii,],collapse="")
+     mystr2 = paste(df2[ii,],collpase="")
+     if (msytr1 == mystr2) {
+       retlist[[kk]] = df[ii,]
+     }
+  }
+  return(retlist)
+}

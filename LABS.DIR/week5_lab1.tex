@@ -1,0 +1,119 @@
+BIOS560R Spring 2014 Week 5 Lab 1: Graphics Part 1
+============================================================
+Pittard wsp@emory.edu
+***
+
+## Base Graphics
+
+PRACTICE 1.0) DRAWING GRAPHICS USING GRAPHICS "PRIMITIVES" IS EASY.
+
+```{r eval=TRUE}
+plot(0:10, 0:10, type="n", xlab="X", ylab="Y", axes=FALSE)
+
+abline(h=seq(0,10,2),lty=3,col="gray90")
+
+abline(v=seq(0,10,2),lty=3,col="gray90")
+
+text(5,5, "Plot Stuff Here", col="red", cex=1.5)
+
+box("plot", col="red", lty = "dotted")
+
+box("inner", col="blue", lty = "dashed")
+
+mtext("South Margin",1,cex=1.2,col="blue")
+
+mtext("West Margin",2,cex=1.2,col="green")
+
+mtext("North Margin",3,cex=1.2,col="orange")
+
+mtext("East Margin",4,cex=1.2,col="purple")
+
+title("An Example Plot")
+
+```
+***
+
+PRACTICE 1.1) WE CAN CREATE PLOTS SIDE-BY-SIDE (TWO PANELS ON A SINGLE PLOT WINDOW) 
+```{r eval=TRUE}
+
+
+plot(mtcars$wt, mtcars$mpg, main="MPG vs. Weight")
+
+plot(mtcars$mpg, main="MPG", type="l",xlab="Car Number",ylab="MPG")
+
+plot(mtcars$mpg, main="MPG", type="b",xlab="Car Number",ylab="MPG")
+
+
+par(mfrow=c(1,2)) # One row and two columns
+
+plot(mtcars$mpg, main="MPG", type="l",xlab="Car Number",ylab="MPG")
+
+plot(mtcars$mpg, main="MPG", type="b",xlab="Car Number",ylab="MPG")
+
+
+
+par(mfrow=c(2,2))
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="p")
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="l")
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="h")
+
+plot(mtcars$mpg,main="MPG",xlab="Car",ylab="MPG",type="o")
+
+legend("topleft",legend=c("Test Legend"),cex=0.8)
+
+
+```
+***
+
+PRACTICE 1.2) WE CAN GENERATE A PLOT USING FOR LOOPS 
+
+```{r eval=TRUE}
+
+unique(mtcars$cyl)   # We have three categories so let's create 3 plots
+
+par(mfrow=c(1,3))   # One row and three columns
+
+fourcyl   = mtcars[mtcars$cyl == 4,]
+sixcyl    = mtcars[mtcars$cyl == 6,]
+eightcyl  = mtcars[mtcars$cyl == 8,] 
+
+plot(fourcyl$wt, fourcyl$mpg, main = "MPG vs Wt 4 Cyl", ylim=c(0,40))
+plot(sixcyl$wt, sixcyl$mpg, main = "MPG vs Wt 6 Cyl", ylim=c(0,40))
+plot(eightcyl$wt, eightcyl$mpg, main = "MPG vs Wt 8 Cyl", ylim=c(0,40))
+
+par(mfrow=c(1,1)) # Reset the plot window
+
+# Slide 28
+
+par(mfrow=c(1,3))   # One row and three columns
+mysplits = split(mtcars, mtcars$cyl)
+
+for (ii in 1:length(mysplits)) {
+    plot(mysplits[[ii]]$wt, mysplits[[ii]]$mpg, 
+    ylim = c(0,40),
+    main=paste("MPG vs weight for",names(mysplits[ii])))
+}
+
+# Better yet we could make this into a function
+
+cyl.plot <- function(df, fac, numrows=1, numcols=3) {
+  par(mfrow=c(numrows,numcols))
+  mysplits = split(df,fac)
+  for (ii in 1:length(mysplits)) {
+    plot(mysplits[[ii]]$wt, mysplits[[ii]]$mpg,
+         ylim = c(0,40),
+         main=paste("MPG vs weight for",names(mysplits[ii])))
+  }
+}
+cyl.plot(mtcars,mtcars$cyl)
+```
+***
+
+
+
+
+
+

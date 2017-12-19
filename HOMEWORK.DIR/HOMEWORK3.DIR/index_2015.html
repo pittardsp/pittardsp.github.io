@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Untitled</title>
+	<meta name="generator" content="BBEdit 10.5" />
+</head>
+<body>
+
+<h1>BIOS 545 - Homework #3</h1>
+<ul>
+<li><b>Due by 11:59 PM on 02/26/15</b>
+<li><b>Late penalty of 10% per day applies to late submissions</b>
+<li>Note that your figures do not have to match the exact dimensions depicted here. 
+However, the resulting code should generate a readable graphic that is easy to see.
+<li>For purposes of this exercise you might find it helpful to work either on a large
+display or run R outside of R Studio since the graphics pane can sometimes behave
+strangely if it isn't sized correctly. You can always adjust the sizes of the panes within
+Rstudio to give the plot window more room. 
+</ul>
+<hr>
+<h2>Problem 1 (30 points) </h2>
+<p>Please refer to the following graphic, which represents a single plot composed of
+two panels. Use Base Graphics commands (e.g. abline, mtext, text, etc) to construct a replica 
+of this graphic. <b>The data source is the infamous mtcars data frame.</b> Create 
+a single function, (e.g. mtcarsplot), that I can call, which will produce the plot. Don't
+worry so much about matching the exact color of gray used in the legend though pick 
+something close. Keep the following in mind: </p>
+
+<ul>
+<li>In the first plot we are coloring the data based on where it falls in the quartiles of 
+MPG, (the Y axis), whereas in the second plot we are coloring the data relative to weight,
+(the X axis). 
+<li>The colors used for the data correspond to "black","red","blue", and
+"green".
+<li>The dashed lines on the graph that indicate the quartiles are intentionally different.
+<li>You can use the quantile or fivenum function to obtain the quartile values.
+<li>You might find it useful to cut up the MPG and weight variables into intervals to help 
+with assigning colors. 
+</ul>
+<pre>mtcarsplot()</pre>
+<img src="problem1.png">
+<hr>
+
+<h2>Problem 2a (25 points) </h2>
+<p><a href="http://static5.businessinsider.com/image/4d88a2774bd7c84208010000/chart-of-the-day-digital-subscription-prices-march-2011.jpg">Here</a>
+is a graphic I want you to reproduce using Base graphics. The image you see below is my reproduction. 
+Although these types of charts have dubious value for general statistical analysis or inclusion in research 
+papers they do offer opportunities to learn a lot about graphics. Your attempt should be very close to mine or the original. To pick colors accurately consider
+using the browser plug in called <a href="http://www.colorzilla.com/">"ColorZilla"</a> that is available for Firefox or Chrome. It has an "eye dropper"
+tool that lets you hover over a color and it will tell you the hexadecimal value of the color that you
+can then use when you specify colors in R. Windows users can download a standalone application for free that
+does this also. It is called <a href="http://instant-eyedropper.com/">Instant Eye Dropper</a>.</p>
+
+<p>Making this plot will be largely a manual process although you should use vectors where possible to 
+simplify the construction of the chart. Use any of the high and low level Base graphic functions you want.
+Enclose all statements necessary to create this plot in a function called "chart". It doesn't need to have
+any arguments. We should be able to call it and it will produce the graphic as indicated below.</p>
+
+<p>You will most definitely need to dig into the help pages for functions like mtext, segments, axis, etc 
+and conduct some experiments to get things looking right. Refer to my reproduction and you will see that 
+the grid lines do not overlay the bars in the plot. That is they are behind the bars. Your version
+should be like this also. </p>
+
+<pre>chart()</pre>
+<center><img src="subscript.png"></center>
+
+
+
+<hr>
+<h2>Problem 2b (10 points) </h2>
+Please refer to the graphic below. Use lattice graphics to construct a replica of 
+the graphic. You can provide either a function or standalone commands. However,
+your code must be self contained. That is, I have to be able to run it (of course). 
+Note that we are plotting the Diamond Price vs. the carat size and 
+conditioning that by Diamond Color (D,E,F,G,H,I,J), which produces the seven panels.
+Note that Diamond Colors here are refereed to by letters as opposed to color names.
+Furthermore we are looking at the group interaction of Diamond Quality, which is 
+represented in the panels and legend by five different colors. </p>
+
+<p>To work this problem correctly look at the various arguments for the lattice commands. 
+Look at the lecture examples for lattice. There is more than one 
+way to get the plot as desired but these arguements will help you. Note also that you 
+should let xyplot select the colors for you. You should not have to specify colors by 
+hand in any way. lattice will "give" you most ,if not all, of what you need so if you
+find yourself working too hard to get the graphic then you are not using the power of 
+the lattice package.</p>
+
+<h3>Notes:</h3>
+<pre>
+url <- "http://steviep42.bitbucket.org/bios545r/DATA.DIR/my.diamonds.csv"
+myd <- read.csv(url,header=T,sep=",")
+
+Format:
+     A data frame with 1,000 rows and 10 variables
+Details:
+
+        • price. price in US dollars (\$326-\$18,823)
+        • carat. weight of the diamond (0.2-5.01)
+        • cut. quality of the cut (Fair, Good, Very Good, Premium,
+          Ideal)
+        • colour. diamond colour, from J (worst) to D (best)
+        • clarity. a measurement of how clear the diamond is (I1
+          (worst), SI1, SI2, VS1, VS2, VVS1, VVS2, IF (best))
+        • x. length in mm (0-10.74)
+        • y. width in mm (0--58.9)
+        • z. depth in mm (0-31.8)
+        • depth. total depth percentage = z / mean(x, y) = 2 * z / (x +
+          y) (43-79)
+        • table. width of top of diamond relative to widest point
+          (43-95)
+</pre>
+
+<br>
+
+
+<center><img src="Problem3.3.png"></center>
+<hr>
+<h2>Problem #3 Weather Data Plotting (35 points)</h2>
+This one is a bit more challenging but is representative of what you might have to do in an 
+actual development setting. If you have been keeping up with the class notes and examples you have
+everything you need to know to develop this function relatively easily. Download <a href="http://steviep42.bitbucket.org/bios545r/SUPP.DIR/weatherdat.zip">this zip file</a> and unzip it 
+somewhere on your hard drive. Make note of where you place it. It contains a folder called "weatherdat" that itself 
+contains twelve files corresponding to each month of the year for 2014. These are .csv files named according to the 
+convention of <pre>012014.csv, 022014.csv,...,122014.csv</pre> The format of each file is the same although the data values 
+will be different. The content relates to weather data for the zipcode 30322, (the Emory zip code), as recorded by
+the online weather service <a href="http://www.wunderground.com/">Wunderground</a>. Here are the fields contained 
+within each file. The relevant fields for your function are EDT, (the date of the measurement), Mean.TemperatureF, (
+the Mean temperature for that given date), and MeanDew.PointF, (the Mean Dew point for that given date).
+<pre>
+ [1] "EDT"                       "Max.TemperatureF"         
+ [3] "Mean.TemperatureF"         "Min.TemperatureF"         
+ [5] "Max.Dew.PointF"            "MeanDew.PointF"           
+ [7] "Min.DewpointF"             "Max.Humidity"             
+ [9] "Mean.Humidity"             "Min.Humidity"             
+[11] "Max.Sea.Level.PressureIn"  "Mean.Sea.Level.PressureIn"
+[13] "Min.Sea.Level.PressureIn"  "Max.VisibilityMiles"      
+[15] "Mean.VisibilityMiles"      "Min.VisibilityMiles"      
+[17] "Max.Wind.SpeedMPH"         "Mean.Wind.SpeedMPH"       
+[19] "Max.Gust.SpeedMPH"         "PrecipitationIn"          
+[21] "CloudCover"                "Events"                   
+[23] "WindDirDegrees"            
+</pre>
+
+<p>You will be writing a function called <b>weather</b> that will use the .csv files as input. The weather function 
+will accept three arguments:</p>
+
+<ol>
+<li><b>d1</b> - a character string that indicates a beginning date of the form "YYYY-MM-DD" (e.g. "2014-01-15")
+<li><b>d2</b> - a character string that indicates an end date of the form "YYYY-MM-DD" (e.g. "2014-03-31")
+<li><b>wd</b> - a character string indicating the folder that contains the .csv weather files
+</ol>
+
+It will return the data frame you create that corresponds to the data in the interval specified by d1 and d2. The function
+will also create a scatterplot of the Mean.TemperatureF and MeanDew.PointF for the indicated time interval. Use the the color
+blue for mean temp and red for Dew point. Label the chart as indicated in the below examples. 
+
+<p>Here are some suggested steps that might help you organize the flow of your function:</p>
+
+<ul>
+
+<li> Validate the d1 and d2 arguments. Make sure they are of valid length - also make sure that d2 is greater than d1 by at least 15 days
+
+<li> In some cases you can treat d1, d2 and EDT, (the date field from the files), as character labels whereas other operations
+will require you to treat them as "real" dates
+<li> Set the working directory to the "wd" arguments
+
+<li> Generate a list of the .csv files using the command(s) you learned in Week 1
+
+<li> Loop through the list of .csv file names and read them in using something like read.csv to create a single data frame to hold all the information
+  
+<li> Extract data from the data frame relating to the time interval specified by d1 an d2 
+
+<li> Determine the ranges of the Mean Dew Point and Mean Temperature so you can set up your y axis limits correctly. This will 
+also help you when you draw the gird lines
+
+<li>Setup a plot window for the scatterplot and suppress the printing of the X axis
+
+<li>Chop up the time interval into six intervals using a function or some looping of your own
+
+<li>Use the axis function to draw the x axis and put up labels
+
+<li>Put margin text in place and draw grid lines
+
+<li>Return the data frame you extracted above
+ 
+</ul>
+
+
+<p>Your function will label the x axis accordingly. That is, it will flexibly handle ranges of dates. Use
+the following two examples as models. You will need to divide the time ranges into 6 intervals. There
+is a hard way to do this and an easy way. You already know a function that can help you with this although
+you can use whatever method you want. The gird lines <b>MUST</b> match up with the X labels. The horizontal
+grid lines must match the examples also. </p>
+
+<pre>weather("2014-01-15","2014-02-28","~/Downloads/weatherdat")</pre>
+<center><img src="w2.png"></center>
+
+<pre>weather("2014-01-01","2014-12-31","~/Downloads/weatherdat")</pre>
+<center><img src="w4.png"></center>
+
+</body>
+</html>

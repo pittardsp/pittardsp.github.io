@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon"
+  href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span
+class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand"
+href="#">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#info">Info</a></li>
+  <li><a href="#prereqs">Prerequisites</a></li>
+  <li><a href="#schedule">Schedule</a></li>
+  <li><a href="#text">Textbooks</a></li>
+  <li><a href="#grading">Grading</a></li>
+  <li><a href="#honor">Honor Code</a></li>
+<!--  <li><a href="./RECAPS.DIR/recap.html">Recaps</a></li> -->
+  <li><a href="./RSTUDIO.DIR/index.html">RStudio</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h1>Introduction to R</h1>
+
+<p class="lead">This web page is for the "Intro to R Programming" class / BIOS 560R in the
+Dept of Biostatistics and Bioinformatics</p>
+
+<p>The instructors for this class are Steve Pittard and Hao Wu. This class is designed to provide an introduction to R and R
+    programming. Upon successful completion of this course, students will be able to:</p>
+<ul>
+<li>	Understand the concepts of the R programming language
+<li>	Write and debug R functions
+<li>    Create useful graphs
+<li>    Reshape and aggregate data
+<li>	Make adjustments to code to measure and improve performance
+<li>	Build R packages with proper documentation
+</ul>
+<p> This class takes place in the Spring Semester of 2014. The format will be a mixture of lectures and labs. The schedule below represents the
+    intended content although the instructor may elect to adjust the schedule and substitute topics as deemed appropriate.
+</p>
+<hr>
+<h4><a name="prereqs">Prerequisites and Audience</a></h4>
+<p><b>Prerequisites:</b> <a href="http://www.sph.emory.edu/cms/departments_centers/bios/course_descriptions.html">BIOS 501</a>
+or equivalent or permission of instructor. </p>
+
+<p><b>Intended Audience:</b> This class is for students whose research requires non-trivial amounts of data
+    manipulation and analysis. As with other domains such as Biology and Genetics, Public Health is
+    experiencing a "Data Deluge" which is being addressed in large part by the application of innovative quantitative
+    approaches that require a knowledge of R programming to implement. Therefore, we concentrate on developing programming
+    skills as opposed to data analysis and/or statistical techniques although we do use examples from both these areas to
+    illustrate important concepts. While this is an introductory class, any previous programming experience with other languages
+    will be helpful.  </p>
+<br>
+
+
+
+<h4><a name="info">Class Info</a></h4>
+
+<table class="table table-bordered table-striped">
+  <tbody>
+    <tr>
+      <th>Course Title:</th>
+      <th>Intro to R</th>
+    </tr>
+
+    <tr>
+      <td>Location:</td>
+      <td>Grace Crum Rollins GCR 107 </td>
+    <tr>
+      <td>Instructor(s)</td>
+      <td>Steve Pittard wsp [at] emory.edu , Hao Wu Hao.Wu [at] emory.edu </td>
+    </tr>
+    <tr>
+      <td>Teacher's Assistant</td>
+      <td>Dane Van Domelen dvandom [at] emory.edu</td>
+    </tr>
+    <tr>
+      <td>Class Schedule</td>
+      <td>01/13/14 - 02/26/14 (every Mon and Wed) 3:00 - 4:50 PM</td>
+    </tr>
+    <tr>
+      <td>TA Office hours</td>
+      <td>TBD</td>
+    </tr>
+    <tr>
+        <td>Instructor Office hours</td>
+        <td>TBD but you can also Email or make appointment</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+
+<h4><a name="grading">Grading</a></h4>
+
+<p></p>
+<table class="table table-striped table-bordered">
+    <tbody>
+    <tr><td>Homework</td><td>80%</td><td>Four homework sets, each worth 20% of final grade</td></tr>
+    <tr><td>Final Exam</td><td>20%</td><td>Students will be asked to write simple R programs during exam. Bring laptop
+        with R installed</td></tr>
+    </tbody>
+</table>
+<h4>Grade Scale</h4>
+<table class="table table-condensed table-striped table-bordered">
+   <tbody>
+     <tr><td>Grade</td><td>Meaning</td><td>Quality Points</td></tr>
+     <tr><td>A</td><td>95-100</td><td>4.0</td></tr>
+     <tr><td>A-</td><td>90-94.9</td><td>3.7</td></tr>
+     <tr><td>B+</td><td>85-89.9</td><td>3.3</td></tr>
+     <tr><td>B</td><td>80-84.9</td><td>3.0</td></tr>
+     <tr><td>B-</td><td>75-75.9</td><td>2.7</td></tr>
+     <tr><td>C</td><td>70-74.9</td><td>2.0</td></tr>
+     <tr><td>F</td><td>&lt; 70</td><td>0.0</td></tr>
+   </tbody>
+</table>
+<hr>
+<h4><a name="honor">Honor Code</a></h4>
+<p> </p>
+<p>You are expected to adhere to all applicable <a href="http://www.sph.emory.edu/current_students/enrollment_services/honor_code.html">
+    honor code policies</a> in effect for the Rollins School of Public Health. While it is permissible to discuss assignments with
+    other students on a <i>conceptual basis</i>, it is not permissible to develop code collaboratively. This means that all work that
+    you turn in for grading will be your own and will not be the result of copying from other students, (current or former), or
+    from Google search results.
+    </p>
+<hr>
+<h4><a name="schedule">Schedule</a></h4>
+<p>This represents the anticipated topic sequence. We may deviate from this if in the opinion of the instructors adjustments need to be made. The layout of the class is to have lecture and lab within each class meeting. However, due to the MLK Holiday on the 20th we'll have to alter that plan for the first week or so. After that the schedule will be more consistent.</p>
+
+<table class="table table-bordered table-striped">
+  <tbody>
+    <tr>
+      <th>Date</th>
+      <th>Topic</th>
+      <!-- <th>Lecturer</th>       -->
+  <!--    <th>Materials</th> -->
+      <th>Extra</th>
+    </tr>
+
+    <!-- Wk1 Lecture -->
+
+    <tr>
+      <td>01/13/14</td>
+
+        <td>
+            <table class="table table-bordered ">
+                <tbody>
+                <tr><td><a href="/bios560rs2014/LECTURES.DIR/BIOS560R_Spring_2014_Week1_Lecture1.pdf"> Lecture: </a>History of R, Getting Help, OS Considerations, R Environment, Using a GUI, File I/O</td></tr>
+                <tr><td><a href="/bios560rs2014/LABS.DIR/week1_lab.html">Mini-Lab</a> (Installing R and Rstudio)</td></tr>
+                <tr><td><a href="/bios560rs2014/LABS.DIR/week2_lab.html">Lab</td></tr>
+                </tbody>
+            </table>
+        </td>
+     <!-- <td>Pittard</td>
+    <td><a href="/DATA.DIR/BIOS560R_Week1.pdf">Lecture</a></td> -->
+      <td><a href="/bios560rs2014/DATA.DIR/BIOS560R_Week1.R">R</td>
+    </tr>
+
+    <!-- Wk2 Lab -->
+
+    <tr>
+      <td>01/15/14</td>
+      <td>
+          <table class="table table-bordered ">
+              <tbody>
+                <tr><td><a href="/bios560rs2014/LECTURES.DIR/BIOS560R_Spring_2014_Week1_Lecture2.pdf">Lecture</a> - Variables, Objects, Vectors</td></tr>
+                <tr><td><a href="/bios560rs2014/LABS.DIR/lecture2_lab.html">Lab</a></td></tr>
+              </tbody>
+          </table>
+      </td>
+
+
+     <!--  <td>Pittard</td>
+     <td><a href="/DATA.DIR/BIOS560R_Week_1_Labs_Intro_GUI_Workspace_IO.pdf">Lab</a><br>
+      <a href="/DATA.DIR/BIOS560R_Week_2_3_variables_vectors_lists_matrices_factors_copy.pdf">Lecture</a></td> -->
+      <td><a href="/bios560rs2014/SUPP.DIR/BIOS560R_Spring_2014_Week1_Slides2.txt">R</a></td>
+    </tr>
+
+    <!-- Wk3 Lecture -->
+
+    <tr>
+      <td>01/20/14</td>
+
+        <td>
+            <table class="table table-bordered ">
+                <tbody>
+<!--                <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Week_3_vectors_matrices.pdf">Lecture</a> - Matrices, lists, factors</td></tr>
+                <tr><td><a href="/bios560rf2013/LABS.DIR/week3_lab.txt">Lab</a></td></tr> -->
+                <tr><td>No Class - MLK Holiday</td></tr>
+                </tbody>
+            </table>
+        </td>
+
+      <!-- <td>Pittard</td>
+       <td>&nbsp;</td> -->
+      <td><a href="/bios560rf2013/SUPP.DIR/BIOS560R_Week3.txt">R</a></td> 
+    </tr>
+
+   <!-- Wk4 Lab -->
+
+   <tr>
+      <td>01/22/14</td>
+
+       <td>
+           <table class="table table-bordered ">
+               <tbody>
+               <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Week4_Matricies_Factors_Lists_DataFrames.pdf">Lecture</a> - Matrices, lists, factors</td></tr>
+               <tr><td><a href="/bios560rf2013/LABS.DIR/week4_lab.txt">Lab</a></td></tr>
+               <tr><td>Homework #1 Assigned (on Thursday actually)</td></tr>
+               </tbody>
+           </table>
+       </td>
+
+
+     <!-- <td>Pittard</td>
+     <td><a href="/DATA.DIR/BIOS560R_Week2_Lab.txt">Lab</a><br>
+      <a href="/DATA.DIR/BIOS560R_Week_2_variables_and_vectors_matrices_factors.pdf">Lecture</a></td>    -->
+      <td><a href="/bios560rf2013/SUPP.DIR/BIOS560R_Week_4_Code_From_Slides.txt">R</a></td>
+    </tr>
+    <tr>
+
+    <!-- Wk5 Lecture -->
+    <tr>
+        <td>01/27/14</td>
+
+        <td>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Week5_DataFrames_fupl.pdf">Lecture</a>  Data frames, Control Statements, Loops - Part I</td></tr>
+                <tr><td><a href="/bos560rf2013/bios560rf2013/LABS.DIR/week5_df.txt">Lab<a/></td></tr>
+
+                </tbody>
+            </table>
+        </td>
+
+
+
+      <!--  <td>Pittard</td>
+        <td><a href="/BIOS560R/DATA.DIR/BIOS560R_Week2_Lab.txt">Lab</a><br>
+            <a href="/BIOS560R/DATA.DIR/BIOS560R_Week_2_variables_and_vectors_matrices_factors.pdf">Lecture</a></td>  -->
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+
+    <!-- Wk6 Lab -->
+
+    <tr>
+      <td>01/29/14</td>
+
+        <td>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Week6_control_structures.pdf">Lecture</a>  Data frames, Control Statements, Loops - Part II</td></tr>
+                <tr><td><a href="/bios560rf2013/LABS.DIR/week6_lab.txt">Lab</a></td></tr>
+
+                </tbody>
+            </table>
+        </td>
+
+
+     <!-- <td>Pittard</td>
+      <td><A href="/BIOS560R/DATA.DIR/BIOS560R_Week_3_Lab.txt">Lab</a><br>
+      <a href="/BIOS560R/DATA.DIR/BIOS560_Week3_lists_dataframes_control.pdf">Lecture</a></td>     -->
+      <td>&nbsp;</td>
+    </tr>
+
+
+    <!-- Wk7 Lecture -->
+
+   <tr>
+      <td>02/03/14</td>
+
+       <td>
+           <table class="table table-bordered table-striped">
+               <tbody>
+               <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Week7_Functions_Part1.pdf">Lecture</a> Functions and Debugging</td></tr>
+               <tr><td><A href="/bios560rf2013/LABS.DIR/week7_lab.txt">Lab</td></tr>
+
+               </tbody>
+           </table>
+       </td>
+
+
+     <!--  <td>Pittard</td>
+       <td><A href="/DATA.DIR/BIOS560R_Week_3_Lab.txt">Lab</a></td>   -->
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+
+    <!-- Wk8 Lab -->
+
+    <tr>
+      <td>02/05/14</td>
+        <td>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Functions_Debugging_Part2.pdf">Lecture</a> Functions and Debugging - Part II</td></tr>
+                <tr><td><a href="/bios560rf2013/LABS.DIR/week8_lab.txt">Lab</td></tr>
+                <tr><td>Homework #2 Assigned</td></tr>
+                </tbody>
+            </table>
+        </td>
+
+
+      <!-- <td>Pittard</td>
+      <td><a href="/BIOS560R/DATA.DIR/BIOS560R_Week_4_functions_debugging.pdf">Lecture</a></td>  
+     -->
+      <td><a href="/bios560rf2013/SUPP.DIR/function_study.pdf">Function Study</a></td>
+    </tr>
+
+  <!-- Wk9  Lecture -->
+
+   <tr>
+      <td>02/10/14</td>
+       <td>
+           <table class="table table-bordered table-striped">
+               <tbody>
+               <tr><td><A href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Week_9_graphics.pdf">Lecture</a> R Graphics: Base and Lattics graphics - Part I</td></tr>
+               <tr><td><a href="/bios560rf2013/LABS.DIR/week9_lab.txt">Lab<a/></td></tr>
+
+               </tbody>
+           </table>
+       </td>
+
+
+     <!-- <td>Pittard</td>
+     <td><A href="/BIOS560R/DATA.DIR/BIOS560R_Week4_Lab.txt">Lab</a></td>     -->
+      <td>&nbsp;</td>
+    </tr>
+
+  <!-- Wk10 Lab -->
+
+    <tr>
+      <td>02/12/14</td>
+        <td>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Week_10_graphics.pdf">Lecture</a> R Graphics: Base and Lattice graphics - Part 2</td></tr>
+                <tr><td><a href="/bios560rf2013/LABS.DIR/week10_lab.txt">Lab</a></td></tr>
+                <tr><td><a href="/bios560rf2013/HOMEWORK.DIR/HOMEWORK3.DIR">Homework #3</a> Assigned</td></tr>
+
+                </tbody>
+            </table>
+        </td>
+
+
+    <!--  <td>Pittard</td>
+       <td><a href="/BIOS560R/DATA.DIR/BIOS560R_Week_5_graphics_orig.pdf">Lecture</a></td>     -->
+      <td>&nbsp;</td>
+    </tr>
+
+ <!-- Wk11 Lecture -->
+
+   <tr>
+      <td>02/17/14</td>
+       <td>
+           <table class="table table-bordered table-striped">
+               <tbody>
+               <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall2013_Week_11_Aggregation.pdf">Lecture</a> Data Shaping, Aggregation, Benchmarking - Part I</td></tr>
+               <tr><td><a href="/bios560rf2013/LABS.DIR/week11_lab.txt">Lab</a></td></tr>
+
+
+               </tbody>
+           </table>
+       </td>
+
+
+      <!-- <td>Pittard</td>
+       <td><A href="/BIOS560R/DATA.DIR/BIOS560R_Week5_Lab.txt">Lab</a></td>   -->
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+
+ <!-- Wk12 Lab -->
+
+    <tr>
+      <td>02/19/14</td>
+        <td>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall2013_Week_12_Performance.pdf">Lecture</a> - Data Shaping, Aggregation, Benchmarking - Part II</td></tr>
+                <tr><td><a href="/bios560rf2013/LABS.DIR/week12_lab.txt">Lab</a></td></tr>
+
+
+                </tbody>
+            </table>
+        </td>
+
+      <!-- <td>Pittard</td>
+      <td><a href="/DATA.DIR/BIOS560R_Week_6_aggregation_WU_final.pdf">Lecture</a></td>    -->
+      <td>&nbsp;</td>
+    </tr>
+
+ <!-- Wk13 Lecture -->
+
+   <tr>
+      <td>02/24/14</td>
+
+       <td>
+           <table class="table table-bordered table-striped">
+               <tbody>
+               <tr><td><a href="/bios560rf2013/LECTURES.DIR/BIOS560R_Fall_2013_Week_13_Sweave.pdf">Lecture</a> - Packages, Building, Documenting, Sweave - Part I</td></tr>
+               <tr><td><a href="/bios560rf2013/LABS.DIR/week13_lab.txt">Lab</a></td></tr>
+
+
+               </tbody>
+           </table>
+       </td>
+
+      <!-- <td>Pittard</td>
+       <td><a href="/BIOS560R/DATA.DIR/BIOS560R_Week6_Lab.txt">Lab</a></td>     -->
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+
+  <!-- Wk14 Lab -->
+
+    <tr>
+      <td>02/26/14</td>
+        <td>
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr><td>First hour: Lecture - Packages, Building, Documenting, Sweave - Part II</td></tr>
+                <tr><td>Second hour: Lab</td></tr>
+                <tr><td>Homework #4 Assigned</td></tr>
+
+                </tbody>
+            </table>
+        </td>
+
+      <!-- <td>Pittard</td>
+      <td><a href="/BIOS560R/DATA.DIR/BIOS560R_Week_7_package.pdf">PDF</a></td>  -->
+      <td>&nbsp;</td>
+    </tr>
+
+
+ <!-- Wk15 Final -->
+    <tr>
+      <td>12/04/13</td>
+      <td>Final exam</td>
+     <!-- <td>&nbsp;</td>
+       <td><a href="/BIOS560R/DATA.DIR/BIOS560R_Week_8.pdf">Lecture</a></td>    -->
+      <td>&nbsp;</td>
+    </tr>
+
+  </tbody>
+</table>
+
+<hr>
+
+<h4><a name="text">Recommended Textbooks</a></h4>
+
+<table class="table table-bordered table-striped">
+  <tbody>
+    <tr>
+      <th>Title</th>
+      <th>Author(s)</th>
+    </tr>
+    <tr>
+      <td><a
+        href="http://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf">R
+        for Beginners</a></td>
+      <td>Paradis, E</td>
+    </tr>
+    <tr>
+      <td><a href="http://www.amazon.com/Beginners-Guide-Use-Alain-Zuur/dp/0387938362">A Beginner's Guide to R</a></td>
+      <td>Zuur, Ieno, Meesters</td>
+    </tr>
+
+    <tr>
+        <td><a href="http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml">Google's R Style Guide</a></td>
+        <td>Useful suggestions for styling your R code</td>
+    </tr>
+    <tr>
+        <td><a
+                href="http://www.amazon.com/Software-Data-Analysis-Programming-Statistics/dp/1441926127">Software
+            for Data Analysis: Programming with R</a></td>
+        <td>Chambers, JM</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+
+<h4><a name="supplemental">Supplemental</a></h4>
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="js/jquery.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-transition.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-alert.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-modal.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-dropdown.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-scrollspy.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-tab.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-tooltip.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-popover.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-button.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-collapse.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-carousel.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-typeahead.js">
+</script>
+</body>
+</html>

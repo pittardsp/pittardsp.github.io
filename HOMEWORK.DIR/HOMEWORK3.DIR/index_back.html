@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Untitled</title>
+	<meta name="generator" content="BBEdit 10.5" />
+</head>
+<body>
+
+<h1>BIOS 545 - Homework #3</h1>
+<ul>
+<li><b>Due by 11:59 PM on 02/23/16. A penalty of 10% per day late applies to submissions 
+that arrive after the due date and time. After three days late submissions will no longer 
+be accepted and score of 0 will be rendered.</b>
+</ul>
+
+<ul>
+<li>Note that your figures do not have to match the exact dimensions depicted here. 
+However, the resulting code should generate a readable graphic that is easy to see.
+<li>For purposes of this exercise you might find it helpful to work either on a large
+display or run R outside of R Studio since the graphics pane can sometimes behave
+strangely if it isn't sized correctly. You can always adjust the sizes of the panes within
+Rstudio to give the plot window more room. 
+</ul>
+<hr>
+<h2>Problem 1 (30 points) </h2>
+<p>The purpose of this exercise is to plot some information relating to the Indometh data 
+set which is provided to you as part of R. You will be writing a function that does a line 
+plot of the concentration of Indometacin observed in the blood over time. Each line will 
+represent a different subject (and color) thus you will need a legend so users of your 
+function can distinguish between the lines. You will also allow users of your function 
+to specify a "log"" argument that, if TRUE, would first take the natural logarithm of the 
+concentration before making the plot. This helps make the decline in concentrations over 
+time more apparent. Note that the log transformation will apply <b>only</b> to the 
+concentration - <b>NOT</b> the time.  Users can also supply a vector of colors. The default 
+is to use 6 colors from the rainbow palette. A shell for the function, including default 
+arguments, would look 
+like:</p>
+
+<pre>
+plot.indometh <- function(log=FALSE,colors=rainbow(6)) {
+   
+  # INPUT:      log=FALSE a T/F value. If TRUE then first take the log of the 
+  #                       concentration before rendering the plot
+  #                  
+  #        colors - a vector of valid color values corresponding to the colors to be used 
+  #                 for each subject
+  
+  
+       (your code goes here) 
+}
+
+
+</pre>
+
+Here are two ways that your function could be called. Make sure that the y axis accurately 
+reflects the value of the log=TRUE argument <b>IF</b> it has been specified. Make sure you have six colors. That 
+is, error check the number colors to be sure you have enough to uniquely color each of the
+subjects. 
+
+<table>
+  <tr><td><pre>plot.indometh()</pre></td><td><pre>plot.indometh(log=TRUE,color=terrain.colors(6))</pre></td></tr>
+  <tr><td><img src="indometh1.png"></td><td><img src="indometh2.png"></td></tr>
+</table>
+
+
+
+<p>Here is the help information for the Indometh data set</p>
+<pre>
+Indometh               package:datasets                R Documentation
+
+Pharmacokinetics of Indomethacin
+
+Description:
+
+     The ‘Indometh’ data frame has 66 rows and 3 columns of data on the
+     pharmacokinetics of indometacin (or, older spelling,
+     ‘indomethacin’).
+
+Usage:
+
+     Indometh
+
+Format:
+
+     An object of class ‘c("nfnGroupedData", "nfGroupedData",
+     "groupedData", "data.frame")’ containing the following columns:
+
+     Subject an ordered factor with containing the subject codes.  The
+          ordering is according to increasing maximum response.
+
+     time a numeric vector of times at which blood samples were drawn
+          (hr).
+
+     conc a numeric vector of plasma concentrations of indometacin
+          (mcg/ml).
+
+Details:
+
+     Each of the six subjects were given an intravenous injection of
+     indometacin.
+
+</pre>
+
+<hr>
+
+<h2>Problem 2a (15 points) </h2>
+<p>Please refer to the following plot. Use Base Graphics to construct a replica of 
+the graphic. Please provide R expressions that will generate the plot. Explore the 
+options and arguments available to you in the boxplot command. You will need to read in 
+the Deer data set to be used when creating the graph.</p>
+
+<pre>
+url <- "http://steviep42.bitbucket.org/bios545r_2016/DATA.DIR/Deer.txt"
+deer <- read.table(url,header=T,sep=",")
+
+# Some observer guys measured the length of groups of Deer who were living 
+# on 24 different Farms located throughout Spain
+
+head(deer)
+  Farm Month Year Sex clas1_4 LCT   KFI Ecervi Tb
+1   AL    10    0   1       4 191 20.45   0.00  0
+2   AL    10    0   1       4 180 16.40   0.00  0
+3   AL    10    0   1       3 192 15.90   2.38  0
+4   AL    10    0   1       4 196 17.30   0.00  0
+5   AL    10    0   1       4 204    NA   0.00 NA
+6   AL    10    0   1       4 190 16.30   0.00  0
+>
+
+</pre>
+<p>The numbers in red in the top margin are the number of observations in the box plot beneath
+it. You can get this information from the the call to the boxplot function itself. Refer
+to the lab / lecture for more information.</p>
+<p>The color scheme in the boxplot is produced by creating a Color Ramp which in this case
+ranges from Green to Blue. Do some research on creating a "Color Ramp" to create a graduated 
+color scheme as in the plot. Do *not* pick your colors by hand or hardcode the colors 
+yourself.</p>
+
+<center><img src="deer.png"></center>
+
+
+
+<hr>
+<h2>Problem 2b (20 points) </h2>
+<p>Please refer to the plots below. Use the lattice package to construct replicas
+of the graphics. You are plotting the hwy (highway) mileage vs cty (city) mileage for each 
+value of the drv (drive) category. You should provide a function named <b>mympg()</b> 
+that we can call to reproduce the plots. Here is a shell of the function with 
+some default arguments. Note that you should check that the layout makes sense. In other 
+words given that there are 10 unique values for the drive variable you should do some 
+error checking on the layout vector to insure the layout is possible. For 
+example a layout of c(3,7) would not be possible. Legal values would be any wherein the 
+product of the two elements is 10. 
+</p>
+
+<pre>
+mympg <- function(layout=c(2,5),pch=19) {
+
+   # INPUT: layout - a vector that specifies either 2 columns and 5 rows 
+   #                 or 5 rows and 2 columns
+   #        pch    - a plot character value (See example(pch) ) 
+   #
+   # OUTPUT: a lattice scatterplot
+   
+   
+   Your code goes here
+  
+}
+
+# Error check the layout
+mympg(layout=c(3,9))
+Error in mympg(layout = c(3, 9)) :
+  Sorry - the layout numbers must be integers and their product must equal 10
+
+</pre>
+
+<h3>Notes:</h3>
+
+<p>To work this problem correctly look at the various arguments for the lattice commands. 
+Download the file as below and read it in using <b>read.csv</b>
+</p>
+
+<pre>
+url <- "http://steviep42.bitbucket.org/YOUTUBE.DIR/mpg.csv"
+download.file(url,"mpg.csv")
+mpg <- read.csv(url,header=T,sep=",")
+
+> head(mpg)
+  manufacturer model displ year cyl      trans drv cty hwy fl   class
+1         audi    a4   1.8 1999   4   auto(l5)   f  18  29  p compact
+2         audi    a4   1.8 1999   4 manual(m5)   f  21  29  p compact
+3         audi    a4   2.0 2008   4 manual(m6)   f  20  31  p compact
+4         audi    a4   2.0 2008   4   auto(av)   f  21  30  p compact
+5         audi    a4   2.8 1999   6   auto(l5)   f  16  26  p compact
+6         audi    a4   2.8 1999   6 manual(m5)   f  18  26  p compact
+
+
+Fuel economy data from 1999 and 2008 for 38 popular models of car
+
+Description:
+
+     This dataset contains a subset of the fuel economy data that the
+     EPA makes available on <URL: http://fueleconomy.gov>. It contains
+     only models which had a new release every year between 1999 and
+     2008 - this was used as a proxy for the popularity of the car.
+
+Format:
+
+     A data frame with 234 rows and 11 variables
+        • manufacturer.
+        • model.
+        • displ. engine displacement, in litres
+        • year.
+        • cyl. number of cylinders
+        • trans. type of transmission
+        • drv. f = front-wheel drive, r = rear wheel drive, 4 = 4wd
+        • cty. city miles per gallon
+</pre>
+
+<br>
+<p>Here are two examples of calling the <b>mympg()</b> function. We should be able to reproduce
+these plots using your code and by using the arguments specified in the call to the function.
+Note that the overall size does not have to match what you see on this web page. As you develop 
+your code it will be displayed in the graphics panel of R Studio which is smaller than what you 
+see here. However, the legend title, plot character, and layout should be identical.
+
+<table>
+  <tr><td><pre>mympg()</pre></td><td><pre>mympg(layout=c(5,2),pch=21)</pre></td></tr>
+  <tr><td><img src="xyplot_mpg.png"></td><td><img src="xyplot2_mpg.png"></td></tr>
+</table>
+
+<hr>
+<h2>Problem #3 Weather Data Plotting (35 points)</h2>
+This one is a bit more challenging but is representative of what you might have to do in an 
+actual development setting. If you have been keeping up with the class notes and examples you have
+everything you need to know to develop this function relatively easily. Download 
+<a href="http://steviep42.bitbucket.org/bios545r_2016/SUPP.DIR/weatherdat.zip">this zip file</a> and unzip it 
+somewhere on your hard drive. Make note of where you place it. It contains a folder called "weatherdat" that itself 
+contains twelve files corresponding to each month of the year for 2014. These are .csv files named according to the 
+convention of <pre>012014.csv, 022014.csv,...,122014.csv</pre> The format of each file is the same although the data values 
+will be different. The content relates to weather data for the zipcode 30322, (the Emory zip code), as recorded by
+the online weather service <a href="http://www.wunderground.com/">Wunderground</a>. Here are the fields contained 
+within each file. The relevant fields for your function are EDT, (the date of the measurement), Mean.TemperatureF, (
+the Mean temperature for that given date), and MeanDew.PointF, (the Mean Dew point for that given date).
+<pre>
+ [1] "EDT"                       "Max.TemperatureF"         
+ [3] "Mean.TemperatureF"         "Min.TemperatureF"         
+ [5] "Max.Dew.PointF"            "MeanDew.PointF"           
+ [7] "Min.DewpointF"             "Max.Humidity"             
+ [9] "Mean.Humidity"             "Min.Humidity"             
+[11] "Max.Sea.Level.PressureIn"  "Mean.Sea.Level.PressureIn"
+[13] "Min.Sea.Level.PressureIn"  "Max.VisibilityMiles"      
+[15] "Mean.VisibilityMiles"      "Min.VisibilityMiles"      
+[17] "Max.Wind.SpeedMPH"         "Mean.Wind.SpeedMPH"       
+[19] "Max.Gust.SpeedMPH"         "PrecipitationIn"          
+[21] "CloudCover"                "Events"                   
+[23] "WindDirDegrees"            
+</pre>
+
+<p>You will be writing a function called <b>weather</b> that will use the .csv files as input. The weather function 
+will accept three arguments:</p>
+
+<ol>
+<li><b>d1</b> - a character string that indicates a beginning date of the form "YYYY-MM-DD" (e.g. "2014-01-15")
+<li><b>d2</b> - a character string that indicates an end date of the form "YYYY-MM-DD" (e.g. "2014-03-31")
+<li><b>wd</b> - a character string indicating the folder that contains the .csv weather files
+</ol>
+
+It will return the data frame you create that corresponds to the data in the interval specified by d1 and d2. The function
+will also create a scatterplot of the Mean.TemperatureF and MeanDew.PointF for the indicated time interval. Use the the color
+blue for mean temp and red for Dew point. Label the chart as indicated in the below examples. 
+
+<p>Here are some suggested steps that might help you organize the flow of your function:</p>
+
+<ul>
+
+<li> Validate the d1 and d2 arguments. Make sure they are of valid length - also make sure that d2 is greater than d1 by at least 15 days
+
+<li> In some cases you can treat d1, d2 and EDT, (the date field from the files), as character labels whereas other operations
+will require you to treat them as "real" dates
+<li> Set the working directory via the "wd" argument. This will be the folder/location wherein you extracted the zip file
+
+<li> Generate a list of the .csv files using the command(s) you learned in Week 1
+
+<li> Loop through the list of .csv file names and read them in using something like read.csv to create a single data frame 
+to hold all the information. the <b>rbind</b> function will come in handy
+  
+<li> Extract data from the data frame relating to the time interval specified by d1 an d2 
+
+<li> Determine the ranges of the Mean Dew Point and Mean Temperature so you can set up your y axis limits correctly. This will 
+also help you when you draw the gird lines
+
+<li>Setup a plot window for the scatterplot and suppress the printing of the X axis
+
+<li>Chop up the time interval into six intervals using a function or some looping of your own
+
+<li>Use the axis function to draw the x axis and put up labels
+
+<li>Put margin text in place and draw grid lines
+
+<li>Return the data frame you extracted above
+ 
+</ul>
+
+
+<p>Your function will label the x axis accordingly. That is, it will flexibly handle ranges of dates. Use
+the following two examples as models. You will need to divide the time ranges into 6 intervals. There
+is a hard way to do this and an easy way. You already know a function that can help you with this although
+you can use whatever method you want. The gird lines <b>MUST</b> match up with the X labels. The horizontal
+grid lines must match the examples also. </p>
+
+<pre>weather("2014-01-15","2014-02-28","~/Downloads/weatherdat")</pre>
+<center><img src="w2.png"></center>
+
+<pre>weather("2014-01-01","2014-12-31","~/Downloads/weatherdat")</pre>
+<center><img src="w4.png"></center>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<pre>
+head(mtcars,15)
+
+xyplot(mpg~1:nrow(mtcars)|factor(cyl),data=mtcars)
+aggregate(mpg~cyl,data=mtcars,mean)
+
+
+3+5
+
+typeof(3)
+
+class(3)	# “class” and “mode” can be used interchangeably 
+
+typeof(`+`)
+
+#Use the "str" function() - It is a good summary command
+
+str(3)
+
+
+var1 = 3
+var1
+
+sqrt(var1)
+
+var1 = 33.3
+
+str(var1)
+
+
+myvar = 5
+
+myvar + myvar	# Addition
+
+myvar - myvar  	# Subtraction
+
+myvar * myvar	# Multiplication
+
+myvar / myvar	# Division
+
+myvar ^ myvar	# myvar raised to the power of myvar
+
+
+aa = 5
+
+class(aa)
+
+str(aa)
+
+aa = as.integer(aa)  # We use a "coercion" function here
+
+class(aa)
+
+aa = 5.67
+
+as.integer(aa)   # Truncates the value - note it doesn’t round.
+
+var.one = "Hello there ! My name is Steve."
+var.two = "How do you do ?"
+
+var.one
+
+nchar(var.one)	# Number of characters present
+
+toupper(var.one)
+
+mydna = c("A","G","T","C","A")  
+
+# See BioConductor http://www.bioconductor.org/
+
+str(mydna)
+
+mydna
+
+paste(var.one,var.two)
+
+paste(var.one,var.two,sep=":")
+
+strsplit(var.one," ")
+
+
+patientid = "ID:011472:M:C"  # Encodes Birthday, Gender, and Race
+
+strsplit(patientid,":")
+
+bday = strsplit(patientid,":")[[1]][2]  # Get just the birthday
+
+
+Sys.Date()
+
+Sys.Date()+1
+
+class(Sys.Date())
+
+string = "2011-04-27”
+class(string)
+
+as.Date(string)
+
+
+as.Date("03/17/1996")
+
+as.Date("03/17/1996",format="%m/%d/%Y")
+
+as.Date('1/15/2001',format='%m/%d/%Y')
+
+as.Date('April 26, 2001',format='%B %d, %Y')
+
+as.Date("2012-10-27")
+
+
+my.date = as.Date("2012-10-27")
+my.date - 1 
+
+format(my.date,"%Y")   # Note all of these are character strings
+
+format(my.date,"%b")
+
+format(my.date,"%y")
+
+format(my.date,"%b %d")
+
+format(my.date,"%b %d, %Y")
+
+difftime("2005-10-21 08:32:58","2003-8-15 09:18:05")
+
+strptime(c("03/27/2003","03/27/2003","04/14/2008"),format="%m/%d/%Y") 
+
+if ( 4 < 5 ) {
+  print("Four is less than Five")
+}
+
+my.var = ( 4 < 5) 
+
+if (my.var) {
+  print("four is less than five")
+}
+
+if (! my.var ) {
+   print("four is greater than five")
+}
+
+my.var = (4 < 5) & ( 4 < 6 )  # Logical AND operator
+
+#Both expressions must be TRUE in order for the combined expression to return TRUE.
+
+my.var
+
+my.var = (4 < 5) | ( 4 < 6 ) # Logical OR operator. 
+my.var = TRUE
+
+
+my_int = as.integer(5)
+
+as.character(my_int)
+
+as.integer(as.character(my_int))  
+
+my_number = 12.345
+
+as.character(my_number)
+
+as.logical(1)
+
+as.character(as.logical(1))
+
+
+my.func = function(x) {
+
+       if (!is.numeric(x) ) {
+          stop("Hey. I need a numeric vector here")
+       } else {
+          return(mean(x))
+       }
+}
+
+
+
+</pre>
+

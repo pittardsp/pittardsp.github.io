@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function a(b,c,d){function e(f){if(!c[f]){var g=c[f]={exports:{}};b[f][0].call(g.exports,function(a){var c=b[f][1][a];return e(c?c:a)},g,g.exports,a,b,c,d)}return c[f].exports}for(var f=0;f<d.length;f++)e(d[f]);return e}({"4O2Y62":[function(a,b){function c(a,b){var c=d[a];return c?c.apply(this,b):(e[a]||(e[a]=[]),void e[a].push(b))}var d={},e={};b.exports=c,c.queues=e,c.handlers=d},{}],handle:[function(a,b){b.exports=a("4O2Y62")},{}],YLUGVp:[function(a,b){function c(){var a=m.info=NREUM.info;if(a&&a.agent&&a.licenseKey&&a.applicationID){m.proto="https"===l.split(":")[0]||a.sslForHttp?"https://":"http://",g("mark",["onload",f()]);var b=i.createElement("script");b.src=m.proto+a.agent,i.body.appendChild(b)}}function d(){"complete"===i.readyState&&e()}function e(){g("mark",["domContent",f()])}function f(){return(new Date).getTime()}var g=a("handle"),h=window,i=h.document,j="addEventListener",k="attachEvent",l=(""+location).split("?")[0],m=b.exports={offset:f(),origin:l};i[j]?(i[j]("DOMContentLoaded",e,!1),h[j]("load",c,!1)):(i[k]("onreadystatechange",d),h[k]("onload",c)),g("mark",["firstbyte",f()])},{handle:"4O2Y62"}],loader:[function(a,b){b.exports=a("YLUGVp")},{}]},{},["YLUGVp"]);</script>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon"
+  href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span
+class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand"
+href="/bios560rs2014">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+<!--  <li class="active"><a href="./recap3.html">3</a></li> -->
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h3><a href="#Week1">Week 1</a></h3>
+<h3><a href="#Week2">Week 2</a></h3>
+<h3><a href="#Week3">Week 3 and first part of Week 4</a></h3>
+<h3><a href="#Week5">Week 5</a></h3>
+<h3><a href="#Week6">Week 6</a></h3>
+<hr>
+<h3><a name="Week1">Week 1 Recap</a></h3>
+<h3>Vectors</h3>
+<p>Vectors are a fundamental data structure in R and can be used to accomplish a
+wide variety of tasks with just a little bit of effort. Once you have a couple
+of vectors you can start doing analysis directly. One usually extracts vectors from data frames, imported spreadsheets, and matrices. It is also possible to create your own and then turn them into a matrix when it is appropriate or required. As we progress you will discover that it is easy to transform vectors into other structures and back. This is the type of flexibility that makes R useful.
+It is important to point out that one will use vectors as input to the numerous functions available in R for analyis which, in turn, will "spit out" vectors as output (well lists and data frames too but we'll get to that). </p>
+
+<h3>Applying functions to vectors</h3>
+
+<p>One thing I wanted to make clear is how one should "call" functions. I presented a number of examples though let's focus on one in particular - the sampling of the coin vector and the ChiSquare test. My example looked like:</p>
+<pre>
+my.coins = c("Heads","Tails")		# Create a coin vector
+
+faircoin = table(sample(my.coins,1000000,replace=TRUE))
+
+chisq.test(faircoin,p=c(.5,.5))
+</pre>
+<p>To make this example more "readable" I could have done the following. Basically store the output of the sample in a temporary variable to make the flow more obvious:</p>
+<pre>
+my.coins = c("Heads","Tails")           # Create a coin vector
+
+mysamp = sample(my.coins,1000000,replace=T) # Create a holding variable for the sample
+
+faircoin = table(mysamp)
+
+chisq.test(faircoin,p=c(.5,.5))
+</pre>
+<p>This approach is very useful especially when you are learning R. It allows you to inspect the variables and vectors being used at any step. I use this approach whenever I am writing new code since it makes it easier to debug. Store the results of some function in a variable and then use that variable as input into another function so on.</p>
+<p>That said, it is also quite common in intermediate and advanced R programs to see things like the following (using the above as an example). This approach takes advantage of being able to use "composite" functions where you can nest function calls within function calls. Now, this is <strong>not necessarily better</strong> although it does economize on typing. But, when you see something like this it can be difficult to determine what it is doing. You have to "unpack" each call to understand what is going on.  So while the following is perfectly "legal" it can also be a bit confusing</p>
+
+<pre>
+# Do it all in one call. Impressive for one line but it is hard to decipher 
+
+chisq.test( table(sample(c("Heads","Tails"),1000000,T))  , p=c(.5,.5))
+</pre>
+
+<p>Some other interesting examples include the following. We can rapdily create interesting vectors using the paste function. For example, let's create a deck of cards and then use the sample function to simulate a hand of poker. This is easier than you think. Here's one way to do it. I'll build the example in steps.
+
+<pre>
+# Let's create cards 2 - 10, Jack, Queen, King, Ace
+
+somecards = paste(c(2:10,"Jack","Queen","King","Ace"))
+
+somecards
+[1] "2"     "3"     "4"     "5"     "6"     "7"     "8"     "9"     "10"    "Jack"  "Queen" "King"  "Ace"
+
+# But in a real deck of cards we have fours suites (e.g. Spades, Clubs, Hearts, Diamonds so we need to repeat this vector four times.
+
+> rep(somecards,4)
+ [1] "2"     "3"     "4"     "5"     "6"     "7"     "8"     "9"     "10"   
+[10] "Jack"  "Queen" "King"  "Ace"   "2"     "3"     "4"     "5"     "6"    
+[19] "7"     "8"     "9"     "10"    "Jack"  "Queen" "King"  "Ace"   "2"    
+[28] "3"     "4"     "5"     "6"     "7"     "8"     "9"     "10"    "Jack" 
+[37] "Queen" "King"  "Ace"   "2"     "3"     "4"     "5"     "6"     "7"    
+[46] "8"     "9"     "10"    "Jack"  "Queen" "King"  "Ace"  
+
+# Okay we are getting closer. But we need to account for the 4 suites.
+
+suites = c("Spades","Clubs","Hearts","Diamonds")
+
+# How do we put these together ? Try this
+
+> deck = paste(rep(somecards,4), suites, sep="_of_")
+
+> deck
+ [1] "2_of_Spades"       "3_of_Clubs"        "4_of_Hearts"      
+ [4] "5_of_Diamonds"     "6_of_Spades"       "7_of_Clubs"       
+ [7] "8_of_Hearts"       "9_of_Diamonds"     "10_of_Spades"     
+[10] "Jack_of_Clubs"     "Queen_of_Hearts"   "King_of_Diamonds" 
+[13] "Ace_of_Spades"     "2_of_Clubs"        "3_of_Hearts"      
+[16] "4_of_Diamonds"     "5_of_Spades"       "6_of_Clubs"       
+[19] "7_of_Hearts"       "8_of_Diamonds"     "9_of_Spades"      
+[22] "10_of_Clubs"       "Jack_of_Hearts"    "Queen_of_Diamonds"
+[25] "King_of_Spades"    "Ace_of_Clubs"      "2_of_Hearts"      
+[28] "3_of_Diamonds"     "4_of_Spades"       "5_of_Clubs"       
+[31] "6_of_Hearts"       "7_of_Diamonds"     "8_of_Spades"      
+[34] "9_of_Clubs"        "10_of_Hearts"      "Jack_of_Diamonds" 
+[37] "Queen_of_Spades"   "King_of_Clubs"     "Ace_of_Hearts"    
+[40] "2_of_Diamonds"     "3_of_Spades"       "4_of_Clubs"       
+[43] "5_of_Hearts"       "6_of_Diamonds"     "7_of_Spades"      
+[46] "8_of_Clubs"        "9_of_Hearts"       "10_of_Diamonds"   
+[49] "Jack_of_Spades"    "Queen_of_Clubs"    "King_of_Hearts"   
+[52] "Ace_of_Diamonds"  
+
+# How do we draw 5 cards ? Easy. USe the sample function. Pull out 5 cards
+
+> sample(deck,5,replace=F)
+[1] "9_of_Spades"    "2_of_Spades"    "King_of_Spades" "Jack_of_Clubs"  "4_of_Clubs"   
+
+# Okay - in poker we usually deal several hands (one for each player). Let's see how we might could do this. There is a function called replicate that will help us.
+
+> replicate(4,sample(deck,5,replace=F))
+     [,1]            [,2]               [,3]                [,4]            
+[1,] "5_of_Clubs"    "3_of_Spades"      "2_of_Diamonds"     "10_of_Clubs"   
+[2,] "10_of_Spades"  "Jack_of_Diamonds" "6_of_Spades"       "3_of_Clubs"    
+[3,] "4_of_Clubs"    "King_of_Spades"   "7_of_Spades"       "Queen_of_Clubs"
+[4,] "4_of_Hearts"   "5_of_Diamonds"    "King_of_Diamonds"  "2_of_Clubs"    
+[5,] "2_of_Diamonds" "6_of_Hearts"      "Queen_of_Diamonds" "8_of_Clubs" 
+
+</pre>
+<P>Notice that each column represents five cards. This is exactly right because each sample is independent and we run the risk of duplicating cards although we could change the approach to make the simulation much more true to life. We might also consider how we would decrement the count of cards remaining in the deck after the hands are dealt.</p>
+
+<hr>
+<h2><a name="Week2">Week 2 Recap</a></h2>
+
+<h3>Character strings</h3>
+We finished off our discussion on vectors by using some examples of simulating DNA. Character vectors are equally as important
+as numeric vectors since they usually go hand in hand. That is, we have descriptive labels for our numeric values that that the 
+various statistical functions within R expect. So knowing how to "break down" character strings into vectors is an important skill.
+Its also important to know how to search through a vector of character strings to identify specific observations. Imagine a study dataset
+that has identifier information that includes information such as location, gender, birthday, occupation, and the like. By using regular
+expressions we can rapidly extract only those records that relate to a specific city, state, gender, or occupation. 
+
+<h3>Matrices</h3>
+The most important thing to remember about matrices is that they are nothing more than vectors with dimension attributes. We can take
+this:
+
+<pre>
+myvec <- 1:100
+
+# and turn it into a matrix by doing
+
+dim(myvec) <- c(10,10)
+</pre>
+In general though we are usually given a matrix of data to analyze. The matrix is usually the result of some scientific experiment 
+that originates elsewhere and we then import it into R. So vectors and matrices are a flexible way to contain information. Check this out.
+We have a vector containing numbers from 1 to 100. We want to add up the numbers 10,20,30,40,....,90,100. How could we do this without
+writing code involving for loops which is something that we would normally do if we were programming in C or C++ ?
+<pre>
+myvec <- 1:100
+
+# Let's use the seq function which lets us generate a sequence of numbers by intervals. 
+
+seq(0,100,10)
+ [1]   0  10  20  30  40  50  60  70  80  90 100
+ 
+myvec(seq(0,100,10))
+ 
+sum(seq(0,100,10))
+[1] 550
+</pre>
+<h3>Apply family of functions</h3>
+I introduced the apply command but want to dig a little deeper. There are a variety of commands in R that have 
+some variation of the word "apply" within their name: apply, tapply, sapply, lapply. These commands, while sharing a similar purpose, 
+exist to operate on different types of data. I readily acknowledge that having these different commands can be confusing, and I cannot 
+provide an explanation as to why there isn't a single integrated apply command that will accommodate different input types. My guess 
+is that they added them over time. There is an addon package called "plyr" which seeks to provide a single interface to manipulating 
+data but you will still need to understand the above commands since you are quite likely to encounter them when reading existing R 
+code. I will attempt to provide a brief summary here of what is going on. As the semester progresses you will see more examples which 
+will help you understand how they work. for now I will summarize apply and sapply. 
+
+<h4>apply</h4>
+apply is used to evalaute a function (built-in or even one that you have written) on the columns or rows of a matrix. It is a 
+substitute  for writing a for-loop. So we could do:
+<pre>
+
+mymat <- matrix(rnorm(25),5,5)
+mymat
+           [,1]       [,2]         [,3]        [,4]       [,5]
+[1,] -0.2535432  0.7927872 -0.297595140  1.06669867 -0.6918667
+[2,] -0.9311483  1.5508725 -0.023561964  0.04190551  0.2550659
+[3,]  1.1007635 -0.2332405 -0.001881569  0.84589333  1.4851316
+[4,]  0.1885696  0.1045578 -1.371205766  0.40117119 -1.3238177
+[5,]  0.2006289  1.8323407 -0.911528757 -0.10459268  1.7274098
+
+apply(mymat,1,mean)
+[1]  0.1232962  0.1786267  0.6393333 -0.4001450  0.5488516
+
+# This is more convenient than doing:
+
+resvec = vector()
+for (ii in 1:nrow(mymat)) {
+     resvec[ii] = mean(mymat[ii,])
+}
+resvec
+
+# And you can supply your own functions if you wish
+
+mycenterfunc <- function(x) {
+   mycenter = x - mean(x)
+   return(mycenter)
+}
+
+apply(mymat,1,mycenterfunc)
+           [,1]       [,2]       [,3]       [,4]       [,5]
+[1,] -0.3768393 -1.1097751  0.4614302  0.5887146 -0.3482227
+[2,]  0.6694910  1.3722457 -0.8725738  0.5047028  1.2834891
+[3,] -0.4208913 -0.2021887 -0.6412148 -0.9710608 -1.4603804
+[4,]  0.9434025 -0.1367212  0.2065601  0.8013161 -0.6534443
+[5,] -0.8151629  0.0764392  0.8457983 -0.9236727  1.1785582
+
+</pre>
+
+R has some shortcut functions that can also be accomplished with apply although the shortcut functions can be much faster 
+when working on larger matricies. The shortcut functions I'm talking about are rowSums, colSums, rowMeans, and colMeans. 
+So check this out:
+
+<pre>
+rowSums(mymat) is equivalent to apply(mymat, 1, sum)
+
+rowMeans(mymat) is equivalen to apply(mymat, 1, mean)
+
+colSums(mymat) is equivalent to apply(mymat, 2, sum)
+
+colMeans(mymat) is equivalent to apply(mymat, 2, mean)
+</pre>
+
+<h4>tapply</h4>
+tapply is used to aggregate data across some groups or factors. We look at aggregation in greater depth later in the 
+course. For now just consider it as a method for summarizing continuous data across groups. As an example look at the 
+internal "iris" data set. We are sort of jumping ahead here because this example uses data frames which we have yet
+to learn about but we'll get to them next week. 
+
+<pre>
+> ?iris
+Edgar Anderson's Iris Data
+
+Description:
+
+     This famous (Fisher's or Anderson's) iris data set gives the
+     measurements in centimeters of the variables sepal length and
+     width and petal length and width, respectively, for 50 flowers
+     from each of 3 species of iris.  The species are _Iris setosa_,
+     _versicolor_, and _virginica_.
+
+> head(iris)
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+
+# How many values does Species assume ? 
+
+> levels(iris$Species)
+[1] "setosa"     "versicolor" "virginica" 
+
+# Let's summarize Sepal.Length for each species
+
+tapply(iris$Sepal.Length,iris$Species,mean)
+    setosa versicolor  virginica 
+     5.006      5.936      6.588 
+</pre>
+We'll expand on the apply family of functions as the course progresses. 
+
+<h4>Supplemental Material</h4>
+For those of you who expressed an interest in the Principal Components Analysis example I can refer
+you to a YouTube vide I created which includes the correct links to the example data. I think in the 
+lecture I have a stale link to the "wines.csv" file. Anyway the link to the YouTube video is 
+<a href="http://www.youtube.com/watch?v=oZ2nfIPdvjY">HERE</a>. The link to the wines.csv file is 
+located <a href="http://steviep42.bitbucket.org/YOUTUBE.DIR/wines.csv">HERE</a>.
+<hr>
+<br>
+<h3><a name="Week3">Week 3 and first part of Week 4</a></h3>
+<p>Note that we had a snow day on 1/29 so we had some catching up to do on Monday's lecture. We finished up Data Frames and talked about programming structures, how to use them, and how to use them when creating functions. The examples I showed you, especially those using the split function for data frames, can be used as "recipes" for common activities such as looping over data segmented into specific groups. Let's load a data frame from the ggplot2 package called "diamonds". If you don't have that installed then you can install it using the menu options within RStudio. Once you get it loaded you can see that it contains information on diamonds.</p>
+<pre>
+library(ggplot2)  
+
+data(diamonds)
+
+nrow(diamonds)
+[1] 53940
+
+head(diamonds)
+  carat       cut color clarity depth table price    x    y    z
+1  0.23     Ideal     E     SI2  61.5    55   326 3.95 3.98 2.43
+2  0.21   Premium     E     SI1  59.8    61   326 3.89 3.84 2.31
+3  0.23      Good     E     VS1  56.9    65   327 4.05 4.07 2.31
+4  0.29   Premium     I     VS2  62.4    58   334 4.20 4.23 2.63
+5  0.31      Good     J     SI2  63.3    58   335 4.34 4.35 2.75
+6  0.24 Very Good     J    VVS2  62.8    57   336 3.94 3.96 2.48
+</pre>
+<p>If we wanted to sort this data frame on carat size and price, both from highest to lowest, we would do it like this. As I mentioned in class this isn't as intuitive as it could be since one's inclincation might be to use the "sort"function which works fine on vectors. However, the order function does work well with the bracket notation so this approach is efficient and fast.</p>
+<pre>
+head(diamonds[order(-diamonds$carat,-diamonds$price),])
+      carat       cut color clarity depth table price     x     y    z
+27416  5.01      Fair     J      I1  65.5    59 18018 10.74 10.54 6.98
+27631  4.50      Fair     J      I1  65.8    58 18531 10.23 10.16 6.72
+27131  4.13      Fair     H      I1  64.8    61 17329 10.00  9.85 6.43
+25999  4.01   Premium     I      I1  61.0    61 15223 10.14 10.10 6.17
+26000  4.01   Premium     J      I1  62.5    62 15223 10.02  9.94 6.24
+26445  4.00 Very Good     I      I1  63.3    58 15984 10.01  9.94 6.31
+
+</pre>
+<p>In terms of sampling from a data frame we also discovered that we couldn't use the sample fuction directly on a data frame. We have to determine the number of rows that it has and then sample from the "population of row numbers". In reality R doesn't know or care that you ultimately want to sample from a data frame. We just have to do something like this:</p>
+<pre>
+( hold = sample(1:nrow(diamonds), 5, replace=F) )
+ [1] 51612 24453 36547 30887  5552 48533 13273  2269 17686 51478
+ 
+diamonds[hold,]
+      carat       cut color clarity depth table price    x    y    z
+51612  0.70     Ideal     F     SI2  65.0    53  2394 5.61 5.56 3.63
+24453  2.03 Very Good     I     SI2  61.2    55 12714 8.14 8.26 5.02
+36547  0.40   Premium     F     SI1  62.5    59   945 4.71 4.67 2.93
+30887  0.33     Ideal     E     SI1  63.0    54   743 4.42 4.38 2.77
+5552   0.90   Premium     E     SI2  60.4    59  3856 6.24 6.21 3.76
+
+#Or you could do it all in one command
+
+diamonds[sample(1:nrow(diamonds), 5, replace=F),]
+      carat       cut color clarity depth table price    x    y    z
+47982  0.33     Ideal     E     SI1  61.5    55   532 4.46 4.49 2.75
+37370  0.40     Ideal     G    VVS2  62.4    56   982 4.72 4.74 2.95
+34548  0.36   Premium     F     VS2  58.5    58   869 4.69 4.65 2.73
+53628  0.30 Very Good     D     SI1  61.3    60   552 4.26 4.32 2.63
+35367  0.38   Premium     H     VS2  63.0    56   898 4.61 4.57 2.89
+</pre>
+
+<p>We can also split this data frame up  split say on "color". </p>
+<pre>
+  
+diamondgps = split(diamonds,diamonds$color)
+
+length(diamondgps)
+[1] 7
+
+sapply(diamondgps,nrow)
+    D     E     F     G     H     I     J 
+ 6775  9797  9542 11292  8304  5422  2808 
+
+for (ii in 1:length(diamondgps)) {
+   cat("Group ",names(diamondgps)[ii]," contains ",nrow(diamondgps[[ii]])," rows \n")
+}
+
+Group  D  contains  6775  rows 
+Group  E  contains  9797  rows 
+Group  F  contains  9542  rows 
+Group  G  contains  11292  rows 
+Group  H  contains  8304  rows 
+Group  I  contains  5422  rows 
+Group  J  contains  2808  rows 
+</pre>
+
+<p>Both of these approaches, (sapply and the for loop), offer basically the same capability although the sapply approach might be easier to read. Of course this is not drastically different from what we did in class with mtcars although the diamonds data frame is more representative of a more involved dataset. Let's look in greater detail at the ways to address parts of a list. The "str" function can help us understand what is going on. Here we see that diamondgps is a list of 7 that contains 7 elements each of which is named D,E,F,..,J. Each of those elements has a value that is a data frame containing rows from diamonds that correspond to a specific color.</p>
+<pre>
+> str(diamondgps,max.level=1)
+List of 7
+ $ D:'data.frame':  6775 obs. of  10 variables:
+ $ E:'data.frame':	9797 obs. of  10 variables:
+ $ F:'data.frame':	9542 obs. of  10 variables:
+ $ G:'data.frame':	11292 obs. of  10 variables:
+ $ H:'data.frame':	8304 obs. of  10 variables:
+ $ I:'data.frame':	5422 obs. of  10 variables:
+ $ J:'data.frame':	2808 obs. of  10 variables:  
+
+# Notice that when we use the single bracket notation we get both the element name and element value:
+
+str(diamondgps[1],max.level=1)
+List of 1
+ $ D:'data.frame':  6775 obs. of  10 variables:
+
+# Notice that when we use the double bracket notation we get ONLY the element value which in this case is a data frame. 
+
+str(diamondgps[[1]],max.level=1)
+'data.frame':  6775 obs. of  10 variables:
+ $ carat  : num  0.23 0.23 0.26 0.26 0.26 0.22 0.3 0.3 0.3 0.24 ...
+ $ cut    : Ord.factor w/ 5 levels "Fair"<"Good"<..: 3 3 3 2 2 4 4 5 5 3 ...
+ $ color  : Ord.factor w/ 7 levels "D"<"E"<"F"<"G"<..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ clarity: Ord.factor w/ 8 levels "I1"<"SI2"<"SI1"<..: 4 5 4 4 5 4 3 3 3 7 ...
+ $ depth  : num  60.5 61.9 60.8 65.2 58.4 59.3 62.6 62.5 62.1 61.5 ...
+ $ table  : num  61 58 59 56 63 62 59 57 56 60 ...
+ $ price  : int  357 402 403 403 403 404 552 552 552 553 ...
+ $ x      : num  3.96 3.92 4.13 3.99 4.19 3.91 4.23 4.29 4.3 3.97 ...
+ $ y      : num  3.97 3.96 4.16 4.02 4.24 3.88 4.27 4.32 4.33 4 ...
+ $ z      : num  2.4 2.44 2.52 2.61 2.46 2.31 2.66 2.69 2.68 2.45 ...
+ 
+ # So we could "reach" into each element and employ functions that are appropriate for the element value type.
+ 
+range(diamondgps[[1]]$price)
+[1]   357 18693 
+
+# or
+
+range(diamondgps$D$price)
+[1]   357 18693
+
+# or
+
+nrow(diamondgps$I)
+[1] 5422
+</pre>
+
+<p>It takes a while to get used to this approach but once you do you will have mastered one of the more challenging aspects of R. After that everything else is much easier.</p>
+
+<p>We also learned about functions and how to declare/create them. It winds up being pretty easy to do. The harder part is to determine what it is you are going to be accepting as input, what it is you are going to do with that input, and then what format you will use to return your results. If you are returning more than just a single value then perhaps its best to use a list structure since that will allow you to embed elements of various types. Here is a function that implements the quadratic formula.</p>
+
+<pre>
+myquad <- function(a0, a1, a2) {
+  
+  # PURPOSE: To find the zeros of a polynomial - a2*x^2 + a1*x + a0 = 0
+  # INPUT: Three real values that represent the coefficients of the polynomials
+  # OUTPUT: The solution(s) to the above equation (if it exists)
+    
+  # If the discriminate is > 0 then we apply the famous quadratic formula
+      
+  roots <- (-a1 + c(1,-1) * sqrt(a1^2 - 4*a2*a0))/(2*a2)    
+  return(roots)
+}  
+
+myquad(1,3,1)
+[1] -0.381966 -2.618034
+</pre>
+<p>So this is a very basic form of this function since we need to put in error checking to determine of the coefficients are valid and ,even if they are, that the discriminant produces values we can work with. But you get the point here. Its easy to write a function and then, over time, add functionality to it as desired.</p>
+
+<hr>
+<h2><a name="Week5">Week 5 Recap</a></h2>
+<p>Let's start the recap with the last example presented so I can drive home a point about the flexibility of lattice graphics. As we learned you can use conditioning to observe relationships of some continuous variable(s) across categories or factors. However, we aren't restricted to just one category. We can add in multiple categories. In this example we can look at the MPG vs Wt across transmission type across cylinder group. In effect we are creating a table wherein each cell (panel) can contain a scatterplot of MPG vs wt for that element of the table. This is extremely powerful and allows us to see relationships that aren't obvious. In this case we see that the 8 cylinder cards with manual transmissions don't get as good as gas mileage as automatic 8 cylinder cars. For the 4 cylinder cars it is the reverse. So with one line of code we get a high impact graph.</p>
+<pre> xyplot(mpg~wt|factor(am,labels=c("A","M"))+factor(cyl),data=mtcars)
+</pre>
+<center>
+<img src="xyplot1.png">
+</center>
+
+<p>We can extend this plot logic to include other plot types. for example I want to look at a dotplot of MPG across transmission and cylinder groups. I picked the dotplot command since there aren't a lot of values in the original data frame so it might be easier to see how the data is behaving.</p>
+<pre>
+dotplot(~mpg|factor(am)+factor(cyl),data=mtcars)
+</pre>
+<center>
+<img src="dotplot1.png">
+</center>
+<p>If you notice there is a small problem with the labelling of the panels in that we see 0 and 1 instead of something more meaningful. I mentioned this in class that lattice graphic procedures are more sensitive to factors than Base graphics so if you want meaningful label in your lattice output then make sure you assign those labels accordingly when creating a factor. So here is an improvemnt to the last example.</p>
+<pre>
+dotplot(~mpg|factor(am,labels=c("Auto","Manual"))+factor(cyl),data=mtcars)
+</pre>
+<center>
+<img src="dotplot2.png">
+</center>
+
+<p>So two of the more compelling reasons to use lattice graphics is that lattice makes it very easy to do "grouping" and "conditioning". We can do both at the same time as in the above examples. In general we might do one at a time which makes for a simpler plot at least initially.</p>
+<pre>
+xyplot(mpg~wt,groups=factor(cyl),data=mtcars,auto.key=list(columns=3,pch=19),main="MPG vs wt",type=c("p","g"))
+</pre>
+<center>
+<img src="xyplot3.png">
+</center>
+
+<p>For this example let's plot the same data except we'll use conditioning instead of grouping. Notice that we will have a panel for each unique value of the conditioning factor (cyl) - in this case three panels. Moreover, because the panels themselves provide a way to organize the data we don't need a legend as we did with the grouping example. </p>
+<pre>
+xyplot(mpg~wt|factor(cyl),data=mtcars,main="MPG vs wt",type=c("p","g"),pch=19,layout=c(3,1),col="purple")
+</pre>
+<center>
+<img src="xyplot4.png">
+</center>
+<h2>Panel Functions</h2>
+<p>Working with Panel functions. One thing we didn't get to in class is the concept of "panel" functions. By the name you can guess that it might be a function that relates to what appears withing the individual panels of a conditioned plot. This is true. I like to think of panel functions as a way to customize lattice graphics. In some sense the "panel" functions allow us to get "under the hood" of whatever lattice function we are using to draw a graph. To better explain here is an example of how a panel function interacts with a given lattice function. Whether you know it or not whenever you call a lattice procedure, like xyplot, it 'silently' calls its associated 'panel' function to do the work. So a call like this:</p>
+<pre>
+xyplot(mpg~wt, data=mtcars)
+</pre>
+<p>is the same as the following command. In fact this is what lattice does behind the scenes anyway - you just don't know it.'</p>
+<pre>
+xyplot(mpg~wt, data=mtcars, panel = function(...) {
+         panel.xyplot(...)})
+</pre>
+<p>Why is this useful ? Well it presents us with the opportunity to add stuff inside our panel function to further customize the graph.</p>
+
+<pre>
+xyplot(mpg ~ wt, data=mtcars, pch=19, 
+       panel = function(...) {
+          panel.xyplot(...)          # This plots the data
+          panel.grid(...,h=-1,v=-1)  # This makes a grid
+          panel.loess(...,col="red") # Puts up a loess line
+       })  
+  
+</pre>
+<center>
+<img src="xyplot5.png">
+</center>
+
+<p>So it is also possible to do similar things without using the panel function although using the panel function approach gives finer grained control. If we just wanted to put up a smoothing line we could simply do:</p>
+<pre>
+xyplot(mpg~wt, data=mtcars, pch=19, type=c('p','g','smooth'))
+</pre>
+<center>
+<img src="xyplot6.png">
+</center>
+<p>But then again what if we wanted to color the smoothing line independently of the points ? We have to customize it. So the way to think about this is to consider to what extent you need to customize your graph. If you plan on heavily annotating it then you will probably want to use panel functions as this approach affords the most flexibility although it isn't always obvious how to use them. In fact it can be confusing.</p>
+<p>A good starting point is to understand that all high level plotting functions in lattice have an associated panel plot function. So just as xyplot has a "helper" panel function called panel.xyplot, the histogram function has a helper panel function called panel.histogram. Moreover, we can use various panel functions withing the panel functions that we write. Here is a more involved example that demonstrates what can eb accomplished.</p>
+<p>Let's revisit the example with mtcars wherein we want to color points for records whose mean MPG exceeds the average MPG for all records. We can do this in base graphics a couple of ways. We can also do this a couple of ways using lattice graphics:</p>
+<pre>
+xyplot(mpg ~ wt, mtcars,pch=19,
+  panel = function(x,y,...) {
+  panel.xyplot(x[x <= mean(x)], y[x <= mean(x)], col="red",...)
+  panel.xyplot(x[x > mean(x)], y[x > mean(x)], col="blue",...)
+  panel.abline(v=mean(x))
+  panel.grid(h=-1,v=-1,lty="dashed",col="gray90")
+ })
+  
+</pre>
+<center>
+<img src="xyplot7.png">  
+</center>
+<p>So we are doing data extraction within the panel function itself. Conceptually we are putting everything into one procedure call although we are definitely doing some programming as part of the call. Some people prefer this approach since it contains everything you need to get the graph. All you need to do is make sure that the raw data frame is available. Here is another example that allows us to create a MPG vs wt plot conditioned on transmission type. Furthermore we will draw loess and regression lines within each panel. </p>
+<pre>
+xyplot(mpg ~ wt | factor(am,labels=c("auto","manual")), data=mtcars, 
+       panel = function(x, y) {
+         panel.grid(h = -1, v = -1)
+         panel.xyplot(x, y)
+         panel.loess(x, y, span=0.5, col='red')
+         panel.lmline(x, y)
+       })
+</pre>
+<center>
+<img src="xyplot9.png">
+</center>
+<p>It is important to point out that we can define our panel function in advance which makes the call to xyplot a bit easier to read. It also makes it easier should we need to change the panel function.</p>
+<pre>
+mypanel <- function(x,y) {
+  panel.grid(h = -1, v = -1)
+  panel.xyplot(x, y)
+  panel.loess(x, y, span=0.5, col='red')
+  panel.lmline(x, y)
+} 
+
+xyplot(mpg~wt | factor(am,labels=c("auto","manual")), data=mtcars, panel=mypanel)
+</pre>
+<p>I favor this approach since it makes the call to xyplot much less error prone. In general you should always favor writing R code that is easy to read even if it doesn't look like R code you might see in examples in books or on the Internet where it can sometimes seem like people are trying to impress others on how obscure they can make their code look. The goal should be to make it easy on yourself should you have to revisit your code some weeks, months, (or years) after the fact. If you have written code that is hard to read, even though it might be slightly more efficient or "pro looking", then you haven't gained very much if you have to spend an hour or more trying to figure out how it works before making a change.</p>
+<h3>Base Graphics</h3>
+<p>So what about Base Graphics ? How do we view them in relation to lattice graphics ? Well, I think it can easily be observed that lattice makes things like conditioning and grouping much easier than when using Base Graphics. Still, Base graphics has the advantage, at least in my opinion, of being able to use high and low level plotting functions to build your plot in layers. You can also create a high level plot and then follow it up with low level functions to annotate it further. Yes, we can do this with lattice but its a little more involved. The stronger advocates of lattice graphics suggest that putting in the time to learn panel functions is worth it and that once you have mastered them then you won't use Base graphics again. For me, I use both approaches depending on what the ultimate goal is and/or if I am working as part of a team. I view Base graphics as the most effective lowest common demoninator. Its also quite easy to create functions that use base graphics functions to build custom plots. </p>
+
+<p>One underpublicized aspect of Base graphics is the ability to draw curves, lines, segements, and polygons. Generally there isn't a big demand for this type of capability unless you are building custom plots in which case they become quite useful. As an example, let's say that we are trying to represent the following problem using a supporting graphic:</p>
+
+<p>If you have a random variable from a normal distribution then you can standardize it and also generate a Z-score. Assume we have a normal distribution of some values with a mean of 72 and a standard deviation of 12. These represent customer satisfaction scores. What's the probability of getting a score of less than 78 ?</p>
+
+<pre>
+1) Let's standardize the value and then plot the problem.
+
+zscore = (78-72)/12  # (x-mu/sd)
+[1] 0.5
+
+2) Plot it:
+
+x = seq(-4,4,length=200)
+y = dnorm(x)
+plot(x,y,type="l",lwd=2,col="red",main="Find the Area Below ")
+  
+# Now let's shade the region to the left of 0.5.
+# So we can now ask what is the probability of getting a score less than 0.5
+
+# We use the polygon function to fill in the region up to 0.5
+
+x = seq(-4,0.5,length=200)
+y = dnorm(x)
+polygon(c(-4,x,0.5),c(0,y,0),col="gray")
+text(0,0.15,"?",cex=1.9)
+axis(1,labels=0.5,at=0.5)
+
+</pre>
+<center>
+<img src="normal.png">
+</center>
+<pre>
+# We could look this up in the Z tables but R makes it easy. 
+# Just call pnorm()
+
+pnorm(0.5)
+[1] 0.6914625    
+
+So there is a ~ 70% chance of getting a score <= 78.
+
+pnorm(78,mean=72,sd=12)     # <==== shortcut
+[1] 0.691
+</pre>
+<hr>
+<p>Lastly, here is an example of using low level Base graphics routines to create a box plot. Of course there is already a function called boxplot to handle this kind of thing but I want to show how easy it is to create your own graphics.</p>
+<pre>
+myboxplot <- function(somevec, boxcol="gray90") {
+  
+  par(mfrow=c(1,1)) # One row by One Column print region
+  
+  my5 = fivenum(somevec) # Get fivenum summary
+  
+  # Draw a blank plot into which we will draw the box plot
+  # Note we add on 5 extra units to the end of the fivenum
+  # summary value to have extra room to put up the last line
+  
+  plot(somevec,type="n",ylim=c(0,8),xlim=c(0,my5[5]+5),xlab="")
+  
+  # This loops through the fivenum summary and draws vertical
+  # lines for each value
+  
+  for (ii in 1:length(my5)) {
+     segments(my5[ii],2,my5[ii],6)
+  }
+  
+  for (ii in 1:length(my5)) {
+    text(my5[ii],7,round(my5[ii],2),cex=0.6)
+  }
+  # We draw a shaded gray rectangle over the IQR
+  
+  rect(my5[2],2,my5[4],6,col=boxcol)
+  
+  segments(my5[3],2,my5[3],6) # Draw median over IQR rectangle
+ 
+  # Draw the top and bottom on the IQR box
+  
+  segments(my5[2],2,my5[4],2)
+  segments(my5[2],6,my5[4],6)
+  
+  # Draw lines connecting IQR to Whiskers
+  
+  segments(my5[1],4,my5[2],4)
+  segments(my5[4],4,my5[5],4)
+  
+}                                                                                        
+</pre>
+<center>
+<img src="boxplot1.png">
+</center>
+
+<hr>
+<h3><a name="Week6">Week 6 Recap</a></h3>
+<p>Here are the steps one would take when creating a package within RStudio. As you have learned you can create a package skeleton, edit the DESCRIPTION file, remove the "man" sub folder and build/install the package. However, if you wanted to put your package on CRAN you would also have to edit the files located in the man folder in addition to the DESCRIPTION file.</p>
+
+<ul>
+<li><p>Using your favorite editor, (such as the edit Window within RStudio), create a .R file that contains only the function or functions for which you want to create a package. You can edit the file to contain only the function(s) of interest. Here is a trivial example. Create a file called cool.R. On my computer I will save it in /Users/fender/Rscripts</p>
+<pre>
+cool <- function(x) {
+  # This function is so cool
+  # Input: A vector
+  # Output: The square root of a sum of the vector
+  
+  if (!is.vector(x)) {
+      stop("Hey ! I need a vector. Nothing else will do")
+  } else if (sum(x) < 0) {
+      stop("Hey ! I can't take the square root of a negative number")
+  } else {
+      return(sqrt(sum(x)))
+  }
+}
+</pre>
+<li><p>From the RStudio menu do File -> New Project -> New Directory -> R Package</p>
+
+<li><p>Supply a name for your package of your own choosing. Keep in mind that this will be the name that R will use when creating the package structure so choose something that makes sense to your potential users. If you are just experimenting then pick any name you want. Here my function name is "cool" and I'll call the package "coolness".</p>
+
+<li><p>In the subwindow that says "Create package based on source files" click the "add" button and navigate it to where your .R file is. R will use this source file to create the templates for the help files.</p>
+
+<li><p>Click the "Create Project" button to complete the package creation process. It might take a few seconds but you will the see Rstudio produce a new "project". If you look in the "Files" pane you will see a typical skeleton package structure specific to your files. </p>
+
+<li><p>Click on the man folder and you will see two files. For example if you named your package coolness then you will see two .Rd files - one for cool and the other for coolness. It is important to note that "coolness" is the package that contains the function "cool". In the real world it is typical for the package to contain multiple functions, not just one, although it does happen.</p>
+
+<li><p>So now your job is to edit <b>DESCRIPTION</b>, <b>man/cool.Rd</b>, and <b>man/coolness-package.Rd</b> This can be tedious and sometimes error prone but intellectually it is not at all difficult. You just have to be persistent. If things get really messed up then you can recreate the package and start over again. </p></li>
+
+<li><p>You can hit the Build and Reload button to check to see if your package is building. If it succeeds without warnings then you can type things like "?cool" or "?coolness" and see the associated PDF help file. If you see "Warnings" they will typically tell you what line number of what file has the problem. These warnings are usually the result of you not filling out the required fields in the help and DESCRIPTION files.
+
+<li><p>Also if it looks okay then you can click the "Check" button to see if it passes the more stringent tests that would be required were you to submit this package to CRAN.</p></li>
+</ul>
+<!-- DO NOT GO PAST HERE -->
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="js/jquery.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-transition.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-alert.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-modal.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-dropdown.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-scrollspy.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-tab.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-tooltip.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-popover.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-button.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-collapse.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-carousel.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-typeahead.js">
+</script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"beacon-2.newrelic.com","queueTime":0,"licenseKey":"a2cef8c3d3","agent":"js-agent.newrelic.com/nr-323.min.js","transactionName":"Z11RZxdWW0cEVkYLDV4XdUYLVEFdClsdAAtEWkZQDlJBGgRFQhFMUlodXgxTUVgAQlMQBwp+VkcGX3NGClhxAwFYXX5aAVNZURJUQAdMQEpcUABERmsXUEMXB0NM","applicationID":"1841284","errorBeacon":"jserror.newrelic.com","applicationTime":5}</script></body>
+</html>

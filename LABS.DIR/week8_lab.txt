@@ -1,0 +1,343 @@
+# 01
+
+pythag <- function(a = 4, b = 5) {
+  if (!is.numeric(a) | !is.numeric(b)) {
+    stop("I need real values to make this work")
+  }
+  hypo = sqrt(a^2 + b^2)
+  myreturnlist = list(hypoteneuse = hypo, sidea = a, sideb = b) 
+  return(myreturnlist)
+}
+
+# 05
+
+environment()   # Shows current environment
+
+ls()    # Lists objects in your environment
+
+# 06
+
+myenvfunc <- function(somenv) {
+  print(environment())
+}
+
+myenvfunc()
+
+# 07
+
+x = 0      # Set x to zero in the global environment (your console)
+
+myfunc <- function(x) {     # Define this function 
+  x = 3                    # This value of "x" is private
+  return(x)
+}
+
+myfunc()       # Function returns 3
+
+
+x              # The value of x in the global env is unchanged
+
+# 09 
+
+rm(list=ls()) # Clears all variables from your environment.
+
+exampf <- function(x) {
+  return(x + a)    
+}
+
+ls()      # The function f is in our global environment
+
+exampf(2)
+
+# 10 
+
+exampf <- function(x) {
+  return(x + a)
+}
+
+a = 10
+x = 5
+
+ls()
+
+exampf(2)
+
+# 11
+
+exampf <- function(x) {
+  a = 3
+  return(x + a)
+}
+
+a = 10
+x = 5
+
+exampf(2)
+
+# 13
+
+exampf <- function(x) {
+  a = 3
+  return(x + a)
+}
+
+exampf <- function(exampx) {
+  exampa = 3
+  return(exampx + exampa)
+}
+  
+exampf <- function(exampx, exampa) {
+  return(exampx + exampa)
+}
+
+# 14
+
+exampf <- function(myvec) {
+  
+  retval = c(mean(myvec), sd(myvec))  # mean and sd are known
+  
+  return(retval)
+}
+
+exampf(1:10)
+
+# 15
+
+is.odd <- function(somenumber) {
+  retval = 0
+  if (somenumber %% 2 != 0) {
+    retval = TRUE
+  } else {
+    retval = FALSE
+  }
+  return(retval)
+}
+
+is.odd(3)
+
+# 18 
+
+mymedian <- function(medianvec) {
+  
+  is.odd <- function(somenumber) {  # We define is.odd inside of mymedian
+    retval = 0
+    if (somenumber %% 2 != 0) {
+      retval = TRUE
+    } else {
+      retval = FALSE
+    }
+    return(retval)
+  }
+  
+  # Function to compute the median of a vector
+  
+  medianveclength = length(medianvec)
+  if (is.odd(medianveclength)) {
+    
+    # We find the median using the formula for odd length vectors
+    
+  } else {
+    
+    # We find the median using the formula for even length vectors
+    
+  }
+}
+
+# 19
+
+
+a = 4
+b = 5
+hypo = sqrt(a^2 + b^2)
+
+pythag <- function(a,b) {
+   hypo = sqrt(a^2 + b^2)
+   mylist = list(sidea=a, sideb=b, hypoteneuse=hypo)
+   return(mylist)
+}
+
+
+pythag <- function(a = 4, b = 5) {
+  if (!is.numeric(a) | !is.numeric(b)) {
+    stop("I need real values to make this work")
+  }
+  hypo = sqrt(a^2 + b^2)
+  myreturnlist = list(hypoteneuse = hypo, sidea = a, sideb = b) 
+  return(myreturnlist)
+}
+
+# 20 
+
+pythag(4,5)
+
+pythag(5,4) 
+
+# 22
+
+set.seed(1)
+
+myx = rnorm(20)
+
+mean(myx)       # myx MATCHES the "x" argument
+
+mean(myx,0.05) # myx MATCHES "x" and 0.05 MATCHES "trim"
+
+mean(myx,0.05,TRUE) # myx MATCHES "x", 0.05 MATCHES "trim", TRUE matches na.rm
+
+# COULD DO:
+  
+mean(x = myx, trim = 0.05, na.rm = TRUE)
+
+# 23
+
+# Can't switch positions without using the names
+
+mean(TRUE, 0.05, myx)
+
+# 24
+
+plot(mtcars$wt,mtcars$mpg)
+plot(mtcars$wt,mtcars$mpg, bty="l") 
+
+plot(mtcars$wt,mtcars$mpg, main="Default") (
+plot(mtcars$wt,mtcars$mpg, tck=0.05, main="tck=0.05") (
+plot(mtcars$wt,mtcars$mpg, axes=F, main="Different tick marks for each axis") 
+
+plot(mtcars$wt,mtcars$mpg, xlim=c(0,100),xlab="Gallons",pch=21,bg="blue",col="red")
+
+# 26
+
+my.plot <- function(x,y, ...) {
+  plot(x,y, col="red",...)
+}
+
+# 27
+
+my.plot <- function(x,y, ...) {
+  plot(x,y, col="red",...)
+}
+
+my.plot(mtcars$wt,mtcars$mpg, pch=15, lty=2, xlim=c(0,40))
+
+# 28
+
+my.plot <- function(...) {
+  plot(...)
+}
+
+my.plot(mtcars$wt,mtcars$mpg, pch=15, lty=2, xlim=c(0,40))
+
+# 29 
+
+pythag <- function(a = 4, b = 5) {
+  if (!is.numeric(a) | !is.numeric(b)) {
+    stop("I need real values to make this work")
+  }
+  hypo = sqrt(a^2 + b^2)
+  myreturnlist = list(hypoteneuse = hypo, sidea = a, sideb = b) 
+  return(myreturnlist)
+}
+
+pythag(-1,3)   # Hmmm. Well -1 isn't a valid value for side a.
+
+# 30
+
+pythag <- function(a = 4, b = 5) {
+  if (!is.numeric(a) | !is.numeric(b)) {
+    stop("I need real values to make this work")
+  }
+  cat("a is ",a,"b is ",b,"\n")
+  hypo = sqrt(a^2 + b^2)
+  myreturnlist = list(hypoteneuse = hypo, sidea = a, sideb = b) 
+  return(myreturnlist)
+}
+
+pythag(-1,3)
+
+# 31
+
+pythag <- function(a = 4, b = 5) {
+  if (!is.numeric(a) | !is.numeric(b)) {
+    stop("I need real values to make this work")
+  }
+  cat("a is ",a,"b is ",b,"\n")
+  cat("a^2 is",a^2,"\n")
+  hypo = sqrt(a^2 + b^2)
+  myreturnlist = list(hypoteneuse = hypo, sidea = a, sideb = b) 
+  return(myreturnlist)
+}
+
+pythag(-1,3)
+
+# 34
+
+pythag <- function(a = 4, b = 5) {
+  if (!is.numeric(a) | !is.numeric(b)) {
+    stop("I need real values to make this work")
+  }
+  hypo = sqrt(a^2 + b^2)
+  myreturnlist = list(hypoteneuse = hypo, sidea = a, sideb = b) 
+  return(myreturnlist)
+}
+
+debug(pythag)  # Informs R that we want to invoke the debugger
+pythag(-1,3)
+
+# 36
+
+mybadfunc <- function(somevec) {
+  retval = vector()
+  for (ii in 1:length(somevec)) {
+    retval[ii] = log(somevec[ii])
+  }
+  return(retval)
+}
+
+input = 1:-1      
+
+mybadfunc(input)
+
+# 37
+
+mybadfunc <- function(somevec) {
+  retval = vector()
+  for (ii in 1:length(somevec)) {
+    if (somevec[ii] <= 0) {
+      browser()   # This calls the debugger only if the condition is met
+    }
+    retval[ii] = log(somevec[ii])
+  }
+  return(retval)
+}
+
+mybadfunc(input)
+
+# 40
+
+mymedian <- function(somevec) {
+  mymed = 0
+  if (length(somevec) %% 2 != 0) {
+    mys = sort(somevec)    # Sort the vector
+    half = length(mys)/2   # Find candidate middle
+    half = ceiling(half)   # Round it up 
+    mymed = mys[half]      # Get the associated value
+  } else {    
+    
+    # Write logic for processing vectors of even length
+  }
+  return(mymed)
+}
+
+# 41
+
+mymedian <- function(somevec) {
+  mymed = 0
+  if (length(somevec) %% 2 != 0) {
+    mymed = sort(somevec)[ceiling(length(mys)/2)]
+  } else {    
+    
+    # Write logic for processing vectors of even length
+  }
+  return(mymed)
+}
+

@@ -1,0 +1,257 @@
+PROBLEM 1.0) PLEASE ENTER THE FOLLOWING VECTORS:
+
+	names = c("P1","P2","P3","P4","P5")
+	temp = c(98.2,101.3,97.2,100.2,98.5)
+	pulse = c(66,72,83,85,90)
+	gender = c("M","F","M","M","F")
+
+1.1 CREATE A DATA FRAME CALLED MY_DF THAT HAS AS COLUMNS THE ABOVE VECTORS. 
+
+	my_df = data.frame(names, temp, pulse, gender)
+
+How many rows does it have ? 
+
+	nrow(my_df)
+
+How many columns does it have ?
+
+	ncol(my_df)
+
+What are the names of the columns ?
+
+	names(my_df)
+
+1.2	 DETERMINE THE CLASS OF EACH COLUMN/VARIABLE
+
+	sapply(my_df, class)
+	
+1.3 CHANGE THE ROWNAMES OF THE DATAFRAME TO BE P1, P2, .. P5
+
+	rownames(my_df) = paste("P",1:5,sep="")
+
+PROBLEM 2.0) WITH RESPECT TO THE MTCARS DATA FRAME, WHICH IS BUILT IN TO R, LET'S DO 
+SOME SUBSETTING TO EXTRACT DATA. EXTRACT THE 11TH COLUMN
+
+	mtcars[,11]
+
+Extract the 2nd through 4th columns
+
+	mtcars[,2:4]
+
+Extract the 1st through 10th rows and the 5th though 11th columns
+
+	mtcars[1:10,5:11]
+
+Extract all columns except the 3rd, 5th, and 7th 
+
+	mtcars[,c(-3,-5,-7)] 
+
+PROBLEM 3.0 LET'S EXTRACT SOME DATA BASED ON LOGICAL CONDITIONS. EXTRACT ALL RECORDS FOR 
+WHICH THE TRANSMISSION TYPE (INDICATED BY COLUMN AM) IS EQUAL TO 0
+
+	mtcars[mtcars$am == 0, ]
+
+3.1) EXTRACT ALL RECORDS / ROWS WHERE THE MPG IS GREATER THAN OR EQUAL TO 30
+	
+	mtcars[mtcars$mpg >= 30.0,]
+                
+3.2) FOR COLUMNS 2 THROUGH 6 EXTRACT ALL RECORDS / ROWS WHERE THE MPG IS >= 30.
+
+	mtcars[mtcars$mpg >= 30.0,2:6]
+
+3.3) EXTRACT ALL RECORDS FOR WHICH MPG IS >= 30 AND THE NUMBER OF CYLINDERS ARE LESS 
+THAN 6
+
+	mtcars[mtcars$mpg >= 30.0 & mtcars$cyl < 6,]
+
+3.4) LET'S SEE HOW WE CAN IDENTIFY THE POTENTIAL FACTORS
+
+	sapply(mtcars, function(x) length(unique(x)))
+
+PROBLEM 4.0 LET'S RECODE SOME VARIABLES. LET'S TAKE THE "AM" COLUMN AND MAKE THAT MORE 
+UNDERSTANDABLE.
+
+	mtcars$am = factor(mtcars$am, labels=c("auto","manual"))
+
+4.1) USE THE TABLE COMMAND TO SUMMARIZE THE COUNTS OF AUTOMATIC TRANSMISSIONS VS CYLINDER 
+TYPE:
+
+	table(mtcars$am, mtcars$cyl)
+
+4.2) USE THE TAPPLY COMMAND
+
+	tapply(mtcars$mpg,mtcars$am,quantile)
+
+4.3) WE CAN ALSO EASILY ADD COLUMNS TO A DATA FRAME. LET'S SAY WE HAVE A 31 ELEMENT VECTOR CALLED 
+"MYRATE" THAT WE WANT TO PUT INTO OUR DATA FRAME.
+
+	myrate = c("B","G","G","G","B","G","G","G","B","O","B","O","B","B","O","G","B","G","G",
+"G","B","G","B","B","G","B","O","B","B","O","B","O")
+
+	mtcars = cbind(mtcars,rate=myrate)
+
+	-OR-
+
+	mtcars$rate = myrate
+
+4.4) LET'S TRANSOFRM SOME OF THE COLUMN VARIABLES IN THE mtcars DATA FRAMEE:
+
+	transform(mtcars,wt = (wt*1000), qsec = round(qsec), am = factor(am,labels=c("A","M")))
+
+4.5) WE'LL LOOK AT SOME DATA WITH MISSING VALUES:
+
+	url = "http://homepages.wmich.edu/~hgv7680/data/SAS/hs0.csv"
+	data1 = read.table(url,header=F,sep=",")
+	names(data1) = c("gender","id","race","ses","schtyp","prgtype","read", "write","math","science","socst")	
+# How many rows are there ?
+
+	nrow(data1)
+
+# How many complete cases are there ?
+
+	sum(complete.cases(data1))
+
+# How many missing cases are there ?
+
+	sum(!complete.cases(data1))
+
+# Extract the rows with missing values
+
+	data1[!complete.cases(data1),]
+
+	
+	
+5.0) MERGING DATA FRAMES
+
+	tb1 = data.frame(indiv_id = 1:4, snp1 = c(1,1,0,1), snp2 = c(1,1,0,0)) 
+
+	tb2 = data.frame(indiv_id = c(1,3,4,6), cov1 = c(1.14,4.50,0.80,1.39), 
+                                          cov2 = c(74.6,79.4,48.2,68.1))		
+
+	merge(tb1, tb2, by="indiv_id", all=TRUE)
+
+5.1) SPLITTING A DATA FRAME
+
+	eight.cyl = mtcars[mtcars$cyl == 8,]
+
+	six.cyl = mtcars[mtcars$cyl == 6, ]
+
+	four.cyl = mtcars[mtcars$cyl == 4, ]		
+
+# Use the split command
+
+	(hold = split(mtcars, mtcars$cyl) )
+
+	lapply(hold, head)
+
+	lapply(hold, nrow)
+
+# Apply a function to each of the splits
+
+
+	my.func <- function(x) {
+	    hold = x[x$am == 0,]
+	    retvec = c(mean=mean(hold$mpg),sd=sd(hold$mpg))
+	    return(retvec)
+	}		
+
+	lapply(hold, my.func)
+
+# Let's unsplit the splits
+
+	unsplit(hold, mtcars$cyl)
+
+
+6.0) SORTING
+
+	newdata <- mtcars[order(mtcars$mpg),] 
+
+	newdata <- mtcars[order(-mtcars$mpg),]  
+
+	newdata = mtcars[order(mtcars$mpg, mtcars$cyl),]
+
+	order(mtcars$mpg)
+
+	mtcars[15,]
+
+	mtcars[20,]
+
+7.0) SAMPLING
+
+	my_vec = 1:20
+
+	sample(my_vec,10,replace=TRUE)    # Repetition is possible
+
+	sample(my_vec, 10, replace=TRUE)  # Different results each time
+
+	sample(my_vec, 10, replace=FALSE) # Don’t replace to insure unique numbers
+
+	sample(1:20, 10, replace=FALSE)   # Short cut
+
+	my_records = sample(1:nrow(mtcars), 10, replace = FALSE)
+	
+	my_records
+
+	sample_of_ten = mtcars[my_records,]
+	sample_of_ten
+
+OPTIONAL - CHICAGO CRIME DATA. MAKE SURE YOU SAVE ALL YOUR WORK, EMAIL, AND ANY OPEN FILES BEFORE
+ATTEMPTING THIS AS LOADING THE FILE MIGHT STALL YOUR COMPUTER. 
+
+	
+	install.packages("googleVis",dependencies=TRUE)
+
+	url = "http://www.bimcore.emory.edu/BIOS560R/DATA.DIR/chi_crimes.csv"
+
+	chi = read.table(url,header=T,sep=",")		
+
+
+	chi$Date = strptime(chi$Date,"%m/%d/%Y %r") # Change Dates from factor to a "real" Date
+	chi$month = months(chi$Date)
+	chi$month = factor(chi$month,levels=c("January","February","March","April","May","June","July","August","September","October","November","December"),ordered=TRUE)
+
+# Okay how many crimes were committed in each Month of the year ?
+
+	plot(1:12,as.vector(table(chi$month)),type="n",xaxt="n",ylab="Alleged Crimes",xlab="Month",main="Chicago Crimes in 2012 by Month",ylim=c(5000,33000))
+	grid()
+	axis(1,at=1:12,labels=as.character(sapply(levels(chi$month),function(x) substr(x,1,3))),cex.axis=0.8)
+	points(1:12,as.vector(table(chi$month)),type="b",pch=19,col="blue")
+	points(1:12,as.vector(table(chi$month,chi$Arrest)[,2]),col="red",pch=19,type="b")
+	legend(5,20000,c("Reported Crimes","Actual Arrests"),fill=c("blue","red"))
+
+
+	barplot(table(chi$Arrest,chi$month),col=c("blue","red"),cex.names=0.5,main="Chicago: Reported Crimes vs. Actual Arrests")
+	legend("topright",c("Arrests"),fill="red")
+
+
+	# So now what about the types of crimes ?
+
+	categories = rev(sort(table(chi$Primary.Type)))
+	barplot(categories,horiz=F,las=1,cex.names=0.6,col=heat.colors(30),las=2,main="Chicago: Types of Crimes Reported")
+
+	# See if there is a difference between the AM and PM
+	chi$ampm=substr(format(chi$Date,"%r"),10,11)
+
+	barplot(table(chi$ampm,chi$month),col=c("yellow","blue"),cex.names=.5,main="Reported Crimes by AM/PM per Month")
+	legend("topright",c("AM","PM"),fill=c("yellow","blue"))
+
+
+	# Get some order in the months
+
+	library(lattice)
+	barchart(table(chi$month,chi$ampm),stack=FALSE,auto.key=T,freq=F)
+
+	hold = chi[chi$Primary.Type == "GAMBLING" & chi$Description != "GAME/DICE",]
+
+	nrow(hold) # How many non-Dice related gambling offenses were there ?
+# About 26 I think
+# Let's plot them on a map
+
+	library(googleVis)
+	hold$LatLon = paste(hold$Latitude,hold$Longitude,sep=":")
+	hold$Tip = paste(hold$Description,hold$Locate.Description,hold$Block,"<BR>",sep=" ")
+
+	chi.plot = gvisMap(hold,"LatLon","Tip")
+	plot(chi.plot)	
+ 
+	

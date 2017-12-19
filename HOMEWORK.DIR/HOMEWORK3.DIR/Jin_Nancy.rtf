@@ -1,0 +1,58 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf400
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Tahoma;\f2\froman\fcharset0 TimesNewRomanPSMT;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f0\fs24 \cf2 From: "Van Domelen, Dane Robert" <dvandom@emory.edu>\
+Subject: RE: HW3 Graph\
+Date: February 26, 2014 3:36:16 PM EST\
+To: "Jin, Nancy" <zhuxuan.jin@emory.edu>, "Pittard, Steve" <wsp@emory.edu>\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf2 \
+\pard\pardeftab720
+
+\f1\fs26 \cf2 Hi Nancy, here are your results for HW3:\
+\
+1. -2 points. There is an error when you call myplot(Left=F). The figure looks fine but you\'a0should make sure that your functions do not return errors. Also the points in the right plot are\'a0larger than the points on the left plot.\'a0\
+2a. -2 points. The second boxplot call actually overwrites the first, so that you lose the grid\'a0lines. Also, rather than use the width argument in the boxplot function call, I recommend using\'a0varwidth = TRUE. It's just easier to program and it scales the box widths to be proportional to\'a0the square root of the sample size in each group (rather than the sample size in each group).\
+2b. -2 points. You have a lot of white space between the title and the actual figures. To remove\'a0this white space, just remove the layout=c(3,4) arguments to your function call.\'a0\
+3. -2 points. Note that when you call your function with the second dataset mentioned in the\'a0assignment, the topmost confidence interval is plotted on the edge of the figure. There is no\'a0white space. You can see this by running:\
+\
+set.seed(430)\
+x=rnorm(100,10)\
+smean=mean(x)\
+sci=replicate(100,t.test(sample(x,rep=T))$conf.int)\
+sci=t(sci)\
+plot.ci(sci,smean)\
+\
+\
+Total = 92. Nice work.\'a0\
+\
+- Dane\
+\
+\pard\pardeftab720\sa160
+
+\f2\fs32 \cf2 \
+\pard\pardeftab720
+
+\f1\b\fs20 \cf2 From:
+\b0  Jin, Nancy\
+
+\b Sent:
+\b0  Wednesday, February 19, 2014 4:04 PM\
+
+\b To:
+\b0  Pittard, Steve; Van Domelen, Dane Robert\
+
+\b Subject:
+\b0  HW3 Graph\
+\pard\pardeftab720
+
+\f2\fs32 \cf2 \
+\
+Here is my HW3.\
+\
+\
+\
+}

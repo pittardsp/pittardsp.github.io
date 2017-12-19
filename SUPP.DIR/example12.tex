@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\title{Manual of coolpkg}
+\author{John Doe}
+
+\usepackage{Sweave}
+\begin{document}
+\input{example12-concordance}
+\maketitle
+
+\section{Introduction}
+Some introduction to my coolpkg.
+
+\section{Results}
+Some data analysis results. Below is an example of the table function.
+\begin{Schunk}
+\begin{Sinput}
+> table(mtcars$cyl)   
+\end{Sinput}
+\begin{Soutput}
+ 4  6  8 
+11  7 14 
+\end{Soutput}
+\end{Schunk}
+\section{Conclusion}
+Conclusion texts are here.
+
+\end{document}

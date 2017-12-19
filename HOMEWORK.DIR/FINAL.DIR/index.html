@@ -1,0 +1,111 @@
+<BODY>
+<H1>BIOS560R - Final Exam 12/04/13</H1>
+<H4>Open notes and access to internet is permitted although email is not - except to send your final results to Dane, dvandom@emory.edu, and myself, wsp@emory.edu</h4>
+<HR>
+<h2>Problem 1 (20 Points)</h2>
+<p>Write a function called degs2rads(x) that, given a measurement in
+degrees, will convert it to radians. The formula to convert from degrees to radians is (x * &pi;) / 180 where x is a number in degrees and &pi; is the value for Pi. Note that "pi" is a constant defined within R. Put in error checking to test that x is a numeric value and that it is between 0 and 360. If your function detects an illegal value then it should stop processing and alert the user with an appropriate error message. </p>
+<pre>
+# Here we convert 200 degrees into radians
+> degs2rads(200)
+[1] 3.49
+
+# Put in error checking. for example:
+
+> degs2rads(-5)
+Error in degs2rads(-5) : Value is not between 0 and 360
+
+> degs2rads("36")
+Error in degs2rads("36") : Not a number !
+
+</pre>
+
+<hr>
+<h2>Problem 2 (25 Points) </h2>
+<p>Provide the R command(s) necessary to reproduce this graphic which uses the internal data frame called "iris". Think about which graphics package will be the most appropriate for this task. Selecting the "best" one will greatly simplify your work. Are there conditioning variables in use here ? Grouping variables ?</p>
+<pre>
+>?iris
+iris                 package:datasets                  R Documentation
+
+Edgar Anderson's Iris Data
+
+Description:
+
+     This famous (Fisher's or Anderson's) iris data set gives the
+     measurements in centimeters of the variables sepal length and
+     width and petal length and width, respectively, for 50 flowers
+     from each of 3 species of iris.  The species are _Iris setosa_,
+     _versicolor_, and _virginica_.
+
+Format:
+
+     "iris" is a data frame with 150 cases (rows) and 5 variables
+     (columns) named Sepal.Length, Sepal.Width, Petal.Length,
+     Petal.Width, and Species.
+
+> head(iris)
+  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+
+</pre>
+<center>
+<img src="prob2_xy_plot.png">
+</center>
+
+<hr>
+<h3>Problem 3 (15 Points) </h3>
+<p>Load up the "Aids2" data set in R by doing the following:</p>
+<pre>
+library(MASS)
+data(Aids2)
+
+> ?Aids2
+
+Aids2                   package:MASS                   R Documentation
+
+Australian AIDS Survival Data
+
+Description:
+
+     Data on patients diagnosed with AIDS in Australia before 1 July 1991.
+
+Usage:
+
+     Aids2
+     
+Format:
+
+     This data frame contains 2843 rows and the following columns:
+
+     state - Grouped state (geogpraphical Australian state) of origin: NSW includes ACT and "other" is WA, SA, NT and TAS.
+
+     sex - Sex of patient.
+     diag - (Julian) date of diagnosis.
+     death - (Julian) date of death or end of observation.
+     status - "A" (alive) or "D" (dead) at end of observation.
+     T.categ - Reported transmission category.
+     age -  Age (years) at diagnosis.
+</pre>
+<p>Provide the R command(s) that presents counts for the two categories "sex" and "T.categ". However, do so only for those patients who were less than 32 years of age at initial diagnosis. Note that you can use a single command to generate this answer although if you wish you can use multiple commands. Just be sure to include any and all commands you used to arrive at the answer. We will need to run them.  The correct output should resemble the following: </p>
+<pre>
+  T.categ
+sex  hs hsid  id het haem blood mother other
+  F   1    0  15   8    0     7      4     4
+  M 689   38  11   5   27    17      3    16
+</pre>
+
+<HR>
+<H3>Problem 4 (40 Points)</H3>
+<p>With respect to the "Aids2" data frame presented above please provide the R command(s) necessary to answer the following questions. Note that your expression should be self contained and present the requested answer. All of these can be done in a single line though if you need to split the answer across multiple commands that is okay.</p>
+<ol>
+<li>(5 Points) How many records are there corresponding to patients of Age 50 or greater at the time of diagnosis ?</li>
+<li>(10 Points) How many records are there corresponding to patients of Age 30 or less with a transmission category of "blood" and a current status of "alive".
+<li>(10 Points) What is the mean age of all deceased patients with a Transmission category of "hs" and a sex of "M".
+<li>(15 points) Extract all records from Aids2 into a new dataframe called "hold" which will not contain records where the state name is "Other" or "NSW".
+</ul>
+</BODY>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon"
+  href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span
+class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand"
+href="/bios545r">BIOS 545</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#lab1">Lab 1</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2>Week 1 -  Lab 1</h2>
+
+<hr>
+<p>1.1) Let's check out the R environment a little bit to see what is there:</p>
+
+<pre>getOption("defaultPackages")</pre>
+<br>
+
+<p>1.2) Let's see what the "stats" package contains:</p>
+
+<pre>
+library(help="stats")
+</pre>
+<br>
+
+<p>1.3) We could also use the search() and searchpaths() command to check out the environment:
+
+<pre>
+search()
+searchpaths()
+</pre>
+<br>
+
+<p>1.5) Now load the lattice library and repeat the above:
+
+<pre>
+library(lattice)
+search()
+</pre>
+<br>
+
+<p>1.6) Note that add-on packages come with data packages that are there to provide examples.
+To get more info on them you can do:
+
+<pre>data(package = "lattice")</pre>
+<br>
+
+<p>1.7) R has many add-on packages contributed into the CRAN network. Go to  http://cran.cnr.berkeley.edu
+to see some of the categories. Take a look at the phylogenetic section. What are some of the packages present
+in this domain ?
+<br>
+
+<p>1.8) Let's install one of the CRAN packages. This is important since many excellent packages are available and you will
+no doubt want to install many of them as you move forward. From a command line you could install the package XML as
+follows:
+
+<pre>install.packages("XML", dependencies = TRUE)
+
+Or you could use your RStudio to do it. Tools -> Install Packages
+</pre>
+<br>
+
+<p>1.9) On occasion you will need to install a package from a specific repository. For example, the OmegaHat project at
+www.omeghat.org has many interesting add-on packages that aren?t necessarily linked into CRAN. To install one of these
+packages you would do something like:
+
+<pre>install.packages("GeoIP", repos = "http://www.omegahat.org/R")</pre>
+
+
+<p>Note: it is possible that you will see messages like this:
+<pre>
+Warning: unable to access index for repository http://www.omegahat.org/R/bin/macosx/leopard/contrib/2.15
+Warning message: package ‘GeoIP’ is not available (for R version 2.15.1)
+</pre>
+<br>
+<hr>
+
+<p>Practice 2.0) Let's use R to enter some basic commands most of which will be numbers and some functions. Don't worry so much about what they do. Just get comfortable entering the info. Enter in the following:</p>
+<pre>
+?mean			# Get help on the mean function
+
+example(kmeans)	 	# Run an example of kmeans (if it exists)
+
+pi			# Some popular quantities are built-in to R
+
+sqrt(2)			# Basic arithmetic
+
+print(pi)		# Print the comments of the pi variable
+ 
+X <- 3; Y <- 4		# Semicolon lets you enter commands on the same line
+
+Z <- sqrt(X^2 + Y^2)	# Variables contain information
+
+ls()			# List all variables in the “environment”
+
+2+3
+
+3/2
+
+2^3     		# Exponetiation
+
+4^2 - 3*2
+
+(56-14)/6 - 4*7*10/(5^2-5) # Should equal to -7
+
+abs(2-4)
+
+cos(4*pi)
+
+factorial(6)
+
+x <- c(1,2,3,4)    # Vectors
+y <- c(5,6,7,8)
+
+x*y
+
+y/x
+</pre>
+
+<br>
+<br>
+<p>2.1) Take a look at these tables that describe arithmetic operators and logical operators:</p>
+<table class="table table-bordered">
+<tbody>
+<tr> <th>Arithmetic Operators</th><th>Logical Operators</th></tr>
+<tr>
+ <td>
+   <table class="table table-bordered table-striped">
+     <tbody>
+       <tr><td>+</td><td>Addition</td></tr>
+	<tr><td>-</td><td>Subtractions</td></tr>
+	<tr><td>*</td><td>Multiplication</td></tr>
+        <tr><td>^</td><td>Exponentiation</td></tr>
+        <tr><td>x %% y</td><td>modulus (x mod y)</td></tr>
+     </tbody>
+   </table>
+ </td>
+
+ <td>
+    <table class="table table-bordered table-striped">
+     <tbody>
+       <tr><td>&lt;</td><td>Less than</td></tr>
+        <tr><td>&lt;=</td><td>Less than or equal to</td></tr>
+        <tr><td>&gt;</td><td>Greater than</td></tr>
+        <tr><td>&gt;=</td><td>Greater than or equal to</td></tr>
+        <tr><td>==</td><td>Exactly equal to</td></tr>
+        <tr><td>!=</td><td>Not equal to</td></tr>
+        <tr><td>!x</td><td>Not x</td></tr>
+        <tr><td>x | y</td><td>x OR y</td></tr>
+        <tr><td>x & y</td><td>x AND y</td></tr>
+        <tr><td>isTRUE(x)</td><td>test if X is TRUE</td></tr>
+     </tbody>
+   </table>
+ </td>
+</tr>
+</tbody>
+</table>
+
+<p>2.2) Note that these operators have an order of precedence: Anything in parentheses gets evaluated first. So the following two expressions will produce different results:</p>
+
+<pre>
+x <- 3
+
+y <- 4
+
+(x + y) * 10
+
+x + y * 10
+
+</pre>
+<br>
+<p>2.3) Notice that the multiplication operator carries a higher precedence than the addition operator so verify that the following is equal to 15 as opposed to 21:</p>
+
+<pre>
+x + y * 3
+</pre>
+<br>
+
+<p>2.4) Type in the following to see what the results are. </p>
+
+<pre>
+y <- 3
+
+x + 3 - y + 5
+
+(x + 3) - y + 5
+
+((x + 3) - y) + 5
+
+((x + 3) - y + 5)
+</pre>
+<br>
+<p>2.5) Practice a bit by entering in some common formulas:</p>
+
+<pre>
+
+a <- 3; b <- 4
+
+y2 <- 8; y1 <- 6
+
+x2 <- 5; x1 <- 4
+
+m <- (y2 - y1) / (x2 - x1)	  # Slope of a line
+
+r <- 4; h <- 6
+
+circumference <- 2*pi*r 	   # circumference of a circle 
+
+area <- 0.5*b*h		       # Area of a triangle
+
+x <- 3.14
+
+y <- 3.14
+
+z <- sqrt(x^2 + y^2)
+
+</pre>
+<br>
+
+<p>2.6) A quadratic equation with real or complex coefficients has two solutions, called roots. These two solutions may or may not be distinct, and they may or may not be real: &nbsp; &nbsp; a*x^2 + b*x +c = 0</p>
+<p>The solution to this equation is given by the quadratic formula. In this case let's assume that a = 1, b = 4, and c = 2. Write out two R statements (one for each root) that provides the two solutions. Try this out on your own before looking at the solution:
+ </p>
+<pre>
+a <- 1
+
+b <- 4
+
+c <- 2
+
+x1 <- (-b + sqrt(b^2 - 4*a*c))/ (2*a)
+
+x2 <- (-b - sqrt(b^2 - 4*a*c))/ (2*a)
+
+</pre>
+<br>
+<p>2.7) Check your work. That is, use the two distinct solutions – plug them into the equation to see that it produces a value of zero.</p>
+<pre>
+
+a*x1^2 + b*x1 + c
+
+a*x2^2 + b*x2 + c
+
+</pre>
+<br>
+<P>2.8) We can make expressions also. This is basically a way to define an expression in terms of variables without first having to define the variables</p>
+<pre>
+circumference = expression( 2*pi*r )
+
+r <- 4
+
+eval(circumference)
+
+</pre>
+
+<hr>
+
+<p> Using R to navigate the filesystem
+
+<p>Practice 3: Use the R.home() function to determine where your computer has placed its installation of R. This will vary based on
+what operating system, (e.g. OSX, Windows, Linux), you are using.</p>
+<pre>
+R.home()
+</pre>
+
+<p>3.1) Next, use the dir() command to determine what files lie undernea th the R home directory. How many are there ? What are
+their names ?
+<pre>
+dir(R.home())
+</pre>
+
+<hr>
+Knowing Where You Are
+<br>
+<p>Practice 4: It is useful to know what and where your current working directory is. Use the "getwd" command to determine this.
+This will vary depending upon what operating system you are using (e.g. Windows, OSX, or Linux).</p>
+<pre>
+getwd()
+</pre>
+<br>
+<p>4.1) You might want to make a copy of thi s in case you need to get back "home" after moving around the filesystem. 
+This is simple to.  You can stash the current working directory into a character string for later use.
+<pre>
+my.default.R.dir <- getwd()
+</pre>
+<br>
+<p>4.2) Use the "dir()" function to determine what, (if any), files currently exist within the current working directory. There might
+very well be none at this point. Let's change that:
+<pre>
+dir()
+url <- "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/BIOS560R_Week1.R"
+download.file(url,"mylocalfile")
+</pre>
+<br>
+<p>4.3) Next, use the dir() function to verify that this file exists.
+<pre>
+dir()
+</pre>
+<br>
+<p>4.4) Next use the dir.create() command to create a new working directory called "example.dir"
+<pre>
+dir.create("example.dir")
+</pre>
+<br>
+<p>4.5) In order to use this directory you will have to use the "setwd()" command to inform R that this is the directory from which you
+wish to work. Keep in mind that you can create your own directory structure as you see appropriate.
+<pre>
+setwd("example.dir")
+</pre>
+<br>
+
+
+<p>4.6) Let's now re-download the files we did previously into the example.dir directory. As before use the dir() command to verify
+that it is present:
+<pre>
+url <- "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/BIOS560R_Week1.R"
+download.file(url, "mylocalfile")
+dir()
+</pre>
+<br>
+
+<p>4.7) Let's now set the working directory to the level above. In effect this will return us to the directory above. We can do this by 
+using the ".." operator. This should return you to the directory from where you started.
+<pre>
+setwd("..")
+getwd()
+</pre>
+<br>
+
+
+<p>4.8) Just to be sure you should be able to return to this same directory by doing. Note that you do not need the quotes because
+my.default.R.dir is a variable containing a value.  
+<pre>
+setwd(my.default.R.dir)
+</pre>
+<br>
+
+<p>4.9) Next, lets use the options command to change some of the defaults that R establishes for us. In general you don't need to do
+this frequently but it is useful at times as in the following example.  First, run the following command:
+<pre>
+set.seed(123)
+x <- rnorm(5)
+</pre>
+<br>
+<p>If you inspect the contents of x (just type x at the prompt) it will look like the following.
+<pre>
+x
+</pre>
+<br>
+<p>Notice that the reason that we see eight digits to the right of the zero is because it is R's default. If we type "options()$digits" we see this:
+<pre>
+options()$digits
+</pre>
+<br>
+<p>Note that the actual number of digits to be displayed is one less than the specified number of digits. I don't know why this is but it
+seems to be consistent. Anyway let's change this by typing:
+<pre>
+options(digits <- 4)
+</pre>
+<br>
+<p>Now if we inspect the contents of x we see that only 5 (4+1) digits are displayed to the right of the zero.
+<pre>
+x
+</pre>
+<br>
+<p>4.10) Let's look at another option that you might want to adjust.  The "width" option. It controls how wide the screen display is. At
+the R prompt type:
+<pre>
+head(mtcars)
+</pre>
+<br>
+<p> The current display width is:
+
+<pre>
+options()$width
+[1] 130
+</pre>
+<br>
+<p>Let's change it and see how it impacts what we see:
+<pre>
+options( width = 40)
+head(mtcars)
+</pre>
+<br>
+<hr>
+
+<p>Creating a Startup File to Save Your Customization
+
+<p>Practice 5: What if you wanted to make these kinds of changes permanent ? Let's create a .Rprofile (note that there is a "." in
+front of the filename) that will reside in our home directory.  Editing this file let's us specify these options such that they are
+basically permanent. Enter the following command:
+
+<pre>
+download.file("http://steviep42.bitbucket.org/bios545r/SUPP.DIR/Rprofile" ,".Rprofile")
+</pre>
+<br>
+<p>After entering this command, stop R by typing "q()". When prompted to save your workspace then type "y".
+<br>
+
+<p>5.1) Using your favorite editor open the file .Rprofile that is now in the current directory. Inspect its contents. It should look like this:
+<pre>
+# Sample Rprofile.site file
+
+# Things you might want to change
+# options(papersize="a4")
+# options(editor="notepad")
+# options(pager="internal")
+
+# R interactive prompt
+# options(prompt="> ")
+# options(continue="+ ")
+
+# to prefer Compiled HTML
+# to prefer HTML help
+# options(htmlhelp=TRUE)
+
+# General options
+options(digits=3)
+options(tab.width = 2)
+options(width = 130)
+options(graphics.record=TRUE)
+
+.First <- function(){
+ cat("\nWelcome at", date(), "\n")
+}
+
+.Last <- function(){
+ cat("\nHey. See ya later", date(), "\n")
+}
+
+</pre>
+<br>
+
+<p>5.2) Now let's start R back up again. Then repeat the example from above by typing:
+<pre>
+set.seed(123)
+x <- rnorm(5) 
+</pre>
+<br>
+
+<p>Then inspect the contents of x. Note that the digits options have been impacted since we set it in the .Rprofile
+<pre>
+x
+</pre>
+
+<hr>
+<p>Working with the R environment
+<p>Practice 6 : Let's look at the R environment a bit. If you still have R running from the previous examples that is fine. You might also want to stop and restart it to get a "clean" environment. Once you have restarted R then do ls() to see what variables are in there environment. You will probably not see much in response.
+<pre>
+ls()
+</pre>
+<br>
+<p>Type the following
+<pre>
+my.x <- rnorm(20)
+my.func <- function(x) {mean(x)}
+ls()
+</pre>
+<br>
+
+<p>You should see something like the following. These are variables that that have been added to your environment.
+<pre>
+ls()
+</pre>
+<br>
+
+<p>Let's remove the "my.x" variable from the environment.
+<pre>
+rm(my.x)
+ls()
+</pre>
+<br>
+
+<p>6.1) Let's bring in some more variables into our environment. You can do this easily by doing:
+<pre>
+source("http://steviep42.bitbucket.org/bios560rs2014/SUPP.DIR/stuff.R", echo = T)
+ls()
+</pre>
+<br>
+<p>Take some time to inspect these variables to see what they are. Or maybe use the "class()" function to see what class they belong to. If you wanted to rapidly see the contents of all the variables you could do this programmatically:
+<pre>
+sapply(ls(), get)
+</pre>
+<br>
+
+<p>6.3) Also note that at any time we can choose to save all or some of these variables to a file for later use. Do the following
+:
+<pre>
+save.image()
+</pre>
+
+<p>Write the two variables aa and bb to a file called "my.import.objects"
+<pre>
+save(aa,bb, file = "my_import_objects")
+</pre>
+<br>
+
+<p>To prove that this worked, remove the two variables from the environment:
+<pre>
+rm(aa, bb)
+ls()
+</pre>
+<br>
+
+<p>Now let's load the file we just created to see if we get aa and bb back.
+<pre>
+load("my_import_objects")
+ls()
+</pre>
+<br>
+
+<p>6.4) Now let's quit R and it will then ask us if we want to save the current environment. Answer "y"
+<pre>
+q()
+Save workspace image? [y/n/c]: y
+</pre>
+<br>
+
+<p>Now let's quit R and it will then ask us if we want to save the current environment. Answer "y"
+
+<hr>
+
+<p>Getting Help within R Pr actice 7 : Let's look at how we would get help on various functions within R. There are a number of ways to do this. Some people use Google for the most part though there are some tools within R itself that you should be able to use:
+<pre>
+?mean
+</pre>
+<br>
+<p>will give you a help screen on the mean function
+<pre>
+??mean
+</pre>
+<br>
+<p>will give you information on all R functions having to do with "mean".
+<pre>
+example(mean)
+</pre>
+<p>Will present an example of the given function (in this case mean) assuming the functions exists.
+<hr>
+<p>Variables & Files
+<p>Practice 8.0) Which of the following variable names are invalid ?  Why ?
+<pre>
+My.var
+my.var
+.my.var
+1my.var
+ANEWVARIAble
+SomeVariable
+12MyCoolVariable
+_somevar
+</pre>
+<br>
+
+<p>8.1) Let's create a variable to contain a vector. We will use the scan() function. Enter in the following values in response to the
+scan command. Note that entering a blank value will terminate the data entry.
+<pre>
+my.input.vector <- scan()
+1: 8
+2: 8
+3: 9
+4: 2
+5: 3
+6: 4
+</pre>
+<br>
+<p>8.3) Files: Let's create a variable tha t will contain a data frame.  We'll read a file using the read.table function.
+<pre>
+url <- "http://www.ats.ucla.edu/stat/stata/notes/hs0.csv"
+my.input <- read.table(url, header=T, sep=",")
+head(my.input)
+</pre>
+<br>
+
+<p>8.4) In this next example let's practice writing out a .CSV file.
+<pre>
+head(mtcars)
+write.table(mtcars,file="mtcars.csv", row.names=TRUE, col.names=TRUE, sep =",")
+</pre>
+
+<p>8.5) This next example is a little more involved but it is exemplary of the kinds of things you will ultimately need to know to effectively use R.  You will need to install the XML package to make this next example work.
+<pre>
+install.packages("XML", dependencies = TRUE)
+library(XML)
+url <- "http://msenux.redwoods.edu/math/R/regression.php"
+my.table <- readHTMLTable(url,which=1)
+my.table
+my.table <- my.table[ 1: 2,]
+names(my.table) <- c("Age","Height")
+head(my.table)
+</pre>
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="js/jquery.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-transition.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-alert.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-modal.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-dropdown.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-scrollspy.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-tab.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-tooltip.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-popover.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-button.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-collapse.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-carousel.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-typeahead.js">
+</script>
+</body>
+</html>

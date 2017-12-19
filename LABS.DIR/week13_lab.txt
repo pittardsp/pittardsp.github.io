@@ -1,0 +1,265 @@
+# Week 13 Sweave
+
+# Slide 01
+
+system("ls .Rdata",intern=T)
+
+ls()
+
+save(hold,file="xfer.RData")
+
+load("xfer.RData")
+
+ls()
+
+# Slide 02
+
+
+load(url("http://www.bimcore.emory.edu/BIOS560R/SUPP.DIR/xy.Rdata"))
+
+ls()
+
+# Slide 15
+
+help("Sweave", package="utils")
+
+vignette("Sweave")
+
+# Slide 23
+
+\documentclass{article}
+\usepackage{amsmath}
+\title{Nobel Prize Winning Article}
+\author{Ziggy Stardust}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+\section{Introduction}
+Simplictity is everything. This is why I like being simple. It's too difficult being difficult.
+\section{Results}
+Some data analysis results. If you don't understand this then there is no hope for you.
+ \begin{align*}
+    \sin A \cos B &= \frac{1}{2}\left[ \sin(A-B)+\sin(A+B) \right] \\
+ \end{align*}
+ 
+\begin{equation*}
+\int_{\partial \Omega} \omega = \int_{\Omega} d\omega.
+\end{equation*}
+
+\section{Conclusion}
+Conclusion texts are here.
+\end{document} 
+
+# Slide 333
+
+
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\begin{document}
+\title{BIOS560R - Homework 2}
+\date{Due by 11:59 PM on October 25, 2013}
+\maketitle
+\SweaveOpts{concordance=TRUE}
+
+Submit a text file containing your answers. The name of the file should be of the form LastName\_FirstName\_Homework2
+
+\section{Problem 1 - Data Frame Questions - 30 points}
+Please read in the following data set as follows. This data frame contains information on several important characteristics of diamonds. You might want to
+familiarize yourself with the layout and column names using some of the functions
+we've discussed in class. In all questions please present the R statements used to arrive at the answer.
+
+\begin{footnotesize}
+\begin{verbatim}
+myd = read.table("http://www.bimcore.emory.edu/BIOS560R/DATA.DIR/my.diamonds.csv",header=T,sep=",") 
+
+names(myd)
+ [1] "carat"   "cut"     "color"   "clarity" "depth"   "table"   "price"  
+ [8] "x"       "y"       "z"      
+
+head(myd)
+  carat       cut color clarity depth table price    x    y    z
+1  1.83      Fair     H      I1  68.0    57  6887 7.47 7.44 5.07
+2  0.36     Ideal     F     VS1  60.1    57  1013 4.67 4.62 2.79
+3  0.99 Very Good     G     SI1  62.8    56  4863 6.34 6.36 3.99
+4  0.30     Ideal     H     VS1  62.2    57   545 4.28 4.31 2.67
+5  0.30     Ideal     D    VVS2  61.6    57   814 4.31 4.32 2.66
+6  0.53     Ideal     F     VS2  61.1    56  1753 5.26 5.22 3.20
+\end{verbatim}
+\end{footnotesize}
+
+Please use this data frame to answer the following questions:
+
+\subsection{6 points} Extract the subset of rows from the data frame where color is equal to H, and the  clarity is equal to I1, and the depth is greater than 62. How many rows are in the result ? Please use an R command to indicate how many rows. That is, don't just visually count and present an answer. Use R commands to do this.
+
+\subsection{6 points}
+What is the mean diamond price for all records where carat size exceeds the 75th  quantile of itself ? Of course, this will involve finding the 75th quantile/percentile for the carat size. 
+
+\subsection{6 points}
+Use the bracket notation or the subset function to extract rows 90 through 100 and rows 500 through 550. You should be able to do this using a one-line R statement although it is not required to get full credit. However, the result should be a single data frame - NOT two different results (e.g. two separate data frames).
+
+\subsection{3 points}
+Sort the dataframe by decreasing order of price. That is, the record with the highest price diamond should be the first record. 
+
+\subsection{9 points}
+Split the data frame up by color and save it to a list. Then, using a for loop, print out the total number of records from each split where carat is greater than 1.5. Note that you do not have to write a function to do this but you could if you wanted to.
+
+
+\section{ Chevalier de M\'{e}r\'{e} 30 points}
+
+To play a game of Chevalier de M\'{e}r\'{e} you roll a single die four times in hopes of observing at least one six. If you get at least one six then you win that round of the game. Your job is to write a function called chevalier that simulates a single round of the game. Note that you can use the sample command to simulate the roll of a die. (A die can be represented by a vector 1:6). Once you generate the simulated rolls you can use loops or bracket notation to see if a six was "rolled". 
+\\
+\\
+As input, your function will accept an argument called ``N'' whose default value should be set to 4 since that is typically how many times one rolls the die in a round of the game. However, your function will use the argument N to determine how many rolls you are simulating. So N=10 would mean that you simulate 10 rolls of the die. Basically, you use N as a variable when doing your sample.
+\\
+\\
+Your function will return a list that contains two elements: ``sim'' a vector which shows the results of the simulated rolls and ``win'', a single logical value,(TRUE or FALSE), indicating if a six was observed in the simulated rolls. Your function should also verify that N is a numeric value so please insert some logic to check this. If N is not numeric then stop processing and issue an appropriate error message (See below). Here are some examples showing how your function will be called:
+
+\begin{verbatim}
+> set.seed(123)
+> chevalier()
+$sim
+[1] 2 5 3 6
+
+$win
+[1] TRUE
+
+> set.seed(1)
+> chevalier(N=10)
+$sim
+ [1] 2 3 4 6 2 6 6 4 4 1
+
+$win
+[1] TRUE
+
+> chevalier("4")
+Error in chevalier("4") : N is not numeric !
+\end{verbatim}
+
+\section{DNA Compliment - 40 Points}
+With regard to DNA sequences the alphabet is A,C,G, and T. These are nucleic acids. Each person's genome contains about 3.2 billion of these. Given a sequence of DNA we can compute its ``compliment'' by applying some basic rules. If you treat the DNA as a character vector you can inspect each element individually and apply the following coding, which will give us the compliment. So, if you encounter an A then change it to a T. If you encounter a G then change it to a C. If you encounter a T then change it to an A. If you encounter a C then change it to a G. As an example the string ACGTTGA would have a compliment of TGCAACT. In summary:
+\\
+\\
+A to T
+\\
+G to C
+\\
+T to A
+\\
+C to G
+\\
+\\
+So for this string of DNA:
+\begin{verbatim}
+
+mysamp =c("C","C","G","T","A","T","T","G","G","A","A","A","G","C","T","C","G","T","C","T")
+
+# The compliment would be:
+
+[1] "G" "G" "C" "A" "T" "A" "A" "C" "C" "T" "T" "T" "C" "G" "A" "G" "C" "A" "G" "A"
+\end{verbatim}
+
+Write a function called mycomp that will accept as input a character vector of DNA and return the compliment of that sequence. Also include an argument called "shrink" whose default value is FALSE. If the user sets it to TRUE when calling your function, it will return a collapsed version of the complimented vector. \textbf{Restrictions}: For this function you many \textbf{not} use the \textbf{chartr} function. Include some argument checking to insure that the input vector is in fact a character.
+\\
+\\
+As example of how your function should behave, if your input vector is the mysamp vector:
+
+\begin{verbatim}
+> mysamp
+ [1] "C" "C" "G" "T" "A" "T" "T" "G" "G" "A" "A" "A" "G" "C" "T" "C" "G" "T" "C" "T"
+
+> mycomp(mysamp,shrink=F)
+ [1] "G" "G" "C" "A" "T" "A" "A" "C" "C" "T" "T" "T" "C" "G" "A" "G" "C" "A" "G" "A"
+
+> mycomp(mysamp,shrink=T)
+[1] "GGCATAACCTTTCGAGCAGA"
+
+> mysamp2
+ [1] "G" "T" "G" "G" "G" "G" "C" "A" "T" "T"
+
+> mycomp(mysamp2)
+ [1] "C" "A" "C" "C" "C" "C" "G" "T" "A" "A"
+ 
+\end{verbatim}
+
+\end{document}
+
+
+# Slide 39
+
+\documentclass{article}
+\usepackage{amsmath}
+
+\title{Manual of coolpkg}
+\author{John Doe}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Some introduction to my coolpkg.
+
+\section{Results}
+Some data analysis results. Below is an example of the table function.
+<<>>=
+table(mtcars$cyl)   
+@
+\section{Conclusion}
+Conclusion texts are here.
+
+\end{document}
+
+# 42
+
+\documentclass{article}
+\usepackage{amsmath}
+\title{Manual of coolpkg}
+\author{John Doe}
+\begin{document}
+\maketitle
+\section{Introduction}
+Some introduction to my coolpkg.
+\section{Results}
+Some data analysis results. Below is an example of the lm function.
+<<>>=
+my.lm = lm(mpg~wt, data=mtcars)
+print(my.lm)
+@
+<<fig=TRUE>>=
+par(mfrow=c(2,2))
+plot(my.lm)
+@
+\section{Conclusion}
+Conclusion texts are here.
+\end{document} 
+
+# Slide 45
+
+\documentclass[a4paper]{article}
+\title{Sweave Example 1} 
+\author{Friedrich Leisch}
+\usepackage{Sweave} 
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+In this example we embed parts of the examples from the 
+\texttt{kruskal.test} help page into a \LaTeX{} document:
+
+<<>>=
+data(airquality , package="datasets")
+library ("stats")
+kruskal.test(Ozone ~ Month, data = airquality) 
+@
+
+which shows that the location parameter of the Ozone distribution varies significantly from month to month. Finally we include a boxplot of the data:
+\begin{center}
+<<fig=TRUE>>=
+library ("graphics")
+boxplot(Ozone ~ Month, data = airquality) 
+@
+\end{center}
+\end{document}
+
+

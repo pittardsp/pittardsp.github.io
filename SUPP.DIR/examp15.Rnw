@@ -1,0 +1,31 @@
+\documentclass[a4paper]{article}
+\title{Sweave Example 1} 
+\author{Steve}
+\usepackage{Sweave} 
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+\section{Section 1}
+This is section one. Blah, blah, etc.
+<<>>=
+my.lm = lm(mpg~wt,data=mtcars)
+@
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+  \hline
+ & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+  \hline
+(Intercept) & 37.2851 & 1.8776 & 19.86 & 0.0000 \\ 
+  wt & -5.3445 & 0.5591 & -9.56 & 0.0000 \\ 
+   \hline
+\end{tabular}
+\end{table} 
+
+\section{Section 2}
+Here we do some regression
+<<fig=TRUE>>=
+plot(my.lm)
+@
+\end{document}

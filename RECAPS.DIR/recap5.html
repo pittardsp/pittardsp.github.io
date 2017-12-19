@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="/">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#info">Weekly Recaps</a></li>
+  <li><a href="./recap.html">2</a></li>
+  <li><a href="./recap3.html">3</a></li>
+  <li><a href="./recap4.html">4</a></li>
+<li class="active"><a href="./recap5.html">5</a></li>
+<li><a href="./recap7.html">7</a></li>
+<li><a href="./recap8.html">8</a></li>
+<li><a href="./recap9.html">9</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2><a href="#2">Week 5 Recap</a></h2>
+<h3>Data Frames</h3>
+<p>Dataframes represent the most commonly used construct in R. They usually come in the form of .CSV files that you process using the read.table command which creates a data frame. Most data analysis activties cannot happen until the data frame is first "cleaned" and prepared for your project. The most common sequence of events related to data frame cleaning is to:
+
+<ul>
+<li> Determine the number of rows and columns: nrow(df), col(df), str(df)
+<li> Determine possible grouping categories or factors (e.g. sapply(df, function(x) length(unique(x))
+<li> Look for rows that contain missing values
+<li> Transform columns into more usable formats (e.g. use strptime to turn characters into dates)
+<li> Do some initial aggregation between continuous variables and any grouping variabes (e.g. tapply)
+<li> Plot some basic count data (e.g. use the table function and the barplot function)
+</ul>
+
+<p>This is by no means complete although I've rarely encountered a data frame containing "real data" that didn't first need a significant amount of work prior to analysis. You are very lucky if you get data in a form that does *not* require significant alteration. Being able to manipulate data drames is very important if you wish to be succesful in R. While it is possible to select or extract specifics sets of data from a data frame you will typically focus on interactions betweens columns. R makes it easy to "address" or access the columns of interest by using the $ notation:
+<pre>
+tapply(mtcars$mpg, mtcars$cyl, mean)
+</pre>
+
+<p>Note that we do not have to first extract the information into vectors before we use tapply. We can simply refer to the columns of interest. When subsetting or interrogating a data frame the bracket notation is most commonly used since it also works with vectors, matrices, and lists. It is also very efficient for very large data frames. For example the following expression will find all cars whose MPG exceeds the mean MPG for the entire data set that have, at the same time, a cylinder count greater than 4 and a weight less than 3.2.
+<pre>
+mtcars[mtcars$mpg >= mean(mtcars$mpg) & mtcars$cyl > 4 & mtcars$wt < 3.2, ]
+
+              mpg cyl disp  hp drat   wt qsec vs am gear carb
+Mazda RX4      21   6  160 110  3.9 2.62 16.5  0  1    4    4
+Mazda RX4 Wag  21   6  160 110  3.9 2.88 17.0  0  1    4    4
+</pre>
+<p>This is very convenient and represents a general way to investigate your data frame. Once you become accustomed to this type of approach you can use it with most any R construct.
+<hr> 
+<h3>Sorting and Sampling</h3>
+
+<p>As we saw, sorting and sampling from data frames is a little bit odd. Well at least at first. With respect to sorting we have to use the order function on the columns we wish to use a "key" for the sorting action. What order returns corresponds to the row number of the data frame to which the vector belongs. In the case of mtcars$mpg we saw:
+<pre>
+order(mtcars$mpg)
+ [1] 15 16 24  7 17 31 14 23 22 29 12 13 11  6  5 10 25 30  1  2  4 32 21  3  9  8 27 26 19 28 18 20
+
+#Row 15 corresponds to the Cadillac Fleetwood. Row 20 corresponds to the Toyota Corolla. We can reverse this
+# easily bu using the rev function.
+
+rev(order(mtcars$mpg))
+ [1] 20 18 28 19 26 27  8  9  3 21 32  4  2  1 30 25 10  5  6 11 13 12 29 22 23 14 31 17  7 24 16 15
+
+# Of course we can now use this as an index to the bracket notation
+
+> mtcars[order(mtcars$mpg),]
+                     mpg cyl  disp  hp drat   wt qsec vs am gear carb
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.25 18.0  0  0    3    4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.42 17.8  0  0    3    4
+Camaro Z28          13.3   8 350.0 245 3.73 3.84 15.4  0  0    3    4
+Duster 360          14.3   8 360.0 245 3.21 3.57 15.8  0  0    3    4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.34 17.4  0  0    3    4
+Maserati Bora       15.0   8 301.0 335 3.54 3.57 14.6  0  1    5    8
+Merc 450SLC         15.2   8 275.8 180 3.07 3.78 18.0  0  0    3    3
+AMC Javelin         15.2   8 304.0 150 3.15 3.44 17.3  0  0    3    2
+Dodge Challenger    15.5   8 318.0 150 2.76 3.52 16.9  0  0    3    2
+Ford Pantera L      15.8   8 351.0 264 4.22 3.17 14.5  0  1    5    4
+Merc 450SE          16.4   8 275.8 180 3.07 4.07 17.4  0  0    3    3
+Merc 450SL          17.3   8 275.8 180 3.07 3.73 17.6  0  0    3    3
+Merc 280C           17.8   6 167.6 123 3.92 3.44 18.9  1  0    4    4
+Valiant             18.1   6 225.0 105 2.76 3.46 20.2  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.44 17.0  0  0    3    2
+Merc 280            19.2   6 167.6 123 3.92 3.44 18.3  1  0    4    4
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.85 17.1  0  0    3    2
+Ferrari Dino        19.7   6 145.0 175 3.62 2.77 15.5  0  1    5    6
+Mazda RX4           21.0   6 160.0 110 3.90 2.62 16.5  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.88 17.0  0  1    4    4
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.21 19.4  1  0    3    1
+Volvo 142E          21.4   4 121.0 109 4.11 2.78 18.6  1  1    4    2
+Toyota Corona       21.5   4 120.1  97 3.70 2.46 20.0  1  0    3    1
+Datsun 710          22.8   4 108.0  93 3.85 2.32 18.6  1  1    4    1
+Merc 230            22.8   4 140.8  95 3.92 3.15 22.9  1  0    4    2
+Merc 240D           24.4   4 146.7  62 3.69 3.19 20.0  1  0    4    2
+Porsche 914-2       26.0   4 120.3  91 4.43 2.14 16.7  0  1    5    2
+Fiat X1-9           27.3   4  79.0  66 4.08 1.94 18.9  1  1    4    1
+Honda Civic         30.4   4  75.7  52 4.93 1.61 18.5  1  1    4    2
+Lotus Europa        30.4   4  95.1 113 3.77 1.51 16.9  1  1    5    2
+Fiat 128            32.4   4  78.7  66 4.08 2.20 19.5  1  1    4    1
+Toyota Corolla      33.9   4  71.1  65 4.22 1.83 19.9  1  1    4    1
+
+</pre>
+<p>To sample we actually take a sample of the row numbers and then use that as an index into the data
+frame. With respect to mtcars we note that there are 32 rows. So we use the sample function to get a sample
+of numbers between 1 and 32.
+
+<pre>
+mholdsamp = sample(1:nrow(mtcars), 10, F)
+ 
+mholdsamp
+ [1] 16  8  7 20  2 19 10 11 29 22
+
+mtcars[mholdsamp,]
+                     mpg cyl  disp  hp drat   wt qsec vs am gear carb
+Lincoln Continental 10.4   8 460.0 215 3.00 5.42 17.8  0  0    3    4
+Merc 240D           24.4   4 146.7  62 3.69 3.19 20.0  1  0    4    2
+Duster 360          14.3   8 360.0 245 3.21 3.57 15.8  0  0    3    4
+Toyota Corolla      33.9   4  71.1  65 4.22 1.83 19.9  1  1    4    1
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.88 17.0  0  1    4    4
+Honda Civic         30.4   4  75.7  52 4.93 1.61 18.5  1  1    4    2
+Merc 280            19.2   6 167.6 123 3.92 3.44 18.3  1  0    4    4
+Merc 280C           17.8   6 167.6 123 3.92 3.44 18.9  1  0    4    4
+Ford Pantera L      15.8   8 351.0 264 4.22 3.17 14.5  0  1    5    4
+Dodge Challenger    15.5   8 318.0 150 2.76 3.52 16.9  0  0    3    2
+</pre>
+
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="recap4_files/jquery.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-transition.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-alert.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-modal.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-dropdown.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-scrollspy.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tab.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-tooltip.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-popover.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-button.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-collapse.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-carousel.html">
+</script>
+<script type="text/javascript" src="recap4_files/bootstrap-typeahead.html">
+</script>
+
+
+</body></html>

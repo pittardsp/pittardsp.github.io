@@ -1,0 +1,48 @@
+<body>
+<pre>
+mymedian <- function(xvec=rnorm(1000), na.rm=TRUE) {
+  
+  # Function to compute the median of a numeric vector
+  # INPUT(S): xvec - A numeric vector
+  #           na.rm - TRUE or FALSE to indicate removal of missing values
+  #
+  # OUTPUT: A single value representing the median value of xvec
+  
+  # First check for non numeric input. Then check for missing values
+  
+  if (!is.numeric(xvec)) {
+      stop("The input is not numeric. Please check the vector")
+  } else if (na.rm & sum(is.na(xvec)) >= 1) {
+      xvec <- xvec[!is.na(xvec)]
+  }                                  
+  
+  # Okay we are finished checking arguments. We need to get the length
+  # of the input vector and, while we are at it, let's get a sorted version
+  # of the vector.
+  
+  veclength  <- length(xvec)   # Get vector length
+  sortedvec  <- sort(xvec)     # Get sorted vector
+  
+  # Check vector length for being odd or even. We first handle
+  # the case where the length is odd
+  
+  if (veclength %% 2 != 0) {   
+    
+      index  <- ceiling(veclength/2)
+      retval <- sortedvec[index]
+    
+  # The following logic is executed if the length is even
+    
+  } else {   
+    
+      index1  <- veclength/2
+      indices <- c(index1,index1+1)
+      retval  <- mean(sortedvec[indices])
+      
+  }   # End if statement
+  
+  return(retval)
+  
+}      # End function definition
+</pre>
+</body>

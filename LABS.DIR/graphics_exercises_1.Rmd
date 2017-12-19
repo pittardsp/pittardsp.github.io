@@ -1,0 +1,213 @@
+---
+title: "graphics_exercises"
+author: "Steve Pittard"
+date: "February 7, 2017"
+output: 
+  html_document: 
+    number_sections: true
+---
+
+
+# Getting Familiar with Plots
+
+## Scatterplots
+Let's explore a familiar plot type which in this case is the scatterplot also known as the X-Y plot. Read in the Microsoft Stock Data from the lecture notes:
+
+```{r}
+url <- "https://steviep42.bitbucket.org/bios545r_2017/SUPP.DIR/stock.data.14.csv"
+msft <- read.csv(url,stringsAsFactors = FALSE)
+str(msft)
+```
+
+### A Single Variable
+Here we are going to plot the High Price for all Days. We saw an example like this in the lecture notes. The idea is that we want to plot a line for each row in the dataframe. Let's also place a grid on the graph. This is easy:
+
+```{r echo=FALSE}
+plot(msft$High,type="l",main="Microsoft Stock Prices - High")
+grid()
+```
+
+### Draw a line representing the mean of the High
+This is easy to - we can compute the mean and then use the abline function to create a red horizontal line that represents the mean. We could also use the segements, lines, or points functions but the abline function has arguments that let's us specify horizontal or vertical direction. 
+
+```{r echo=FALSE}
+plot(msft$High,type="l",main="Microsoft Stock Prices - High")
+grid()
+abline(h=mean(msft$High),col="red")
+```
+
+### Drawing on the plot
+We could also use the lines function to overlay this existing plot with the Low Stock Price. We saw examples of this in the lecture. Note that your initial attempts might not work so well and if/when it doesn't you can always redraw the plot you drew previously to start over. You can leave out the average high line.
+
+```{r echo=FALSE}
+plot(msft$High,type="l",main="Microsoft Stock Prices - High")
+grid()
+points(msft$Low,type="l")
+
+```
+
+### Drawing on the plot
+That looks nice but when looking at the plot we don't really know which line represents which variable so perhaps we should redraw everything using different colors for the variables. Say Blue for the High and Orange for the Low
+
+```{r echo=FALSE}
+plot(msft$High,type="l",main="Microsoft Stock Prices - High and Lo",col="blue")
+grid()
+points(msft$Low,type="l",col="orange")
+```
+
+
+### Drawing the legend
+That was nice but we now need a legend to distinguish between the lines. The plot is kind of busy in the upper right so let's put the legend in the upper left. Remember that we can use 
+
+```{r echo=FALSE}
+plot(msft$High,type="l",main="Microsoft Stock Prices - High and Lo",col="blue")
+grid()
+points(msft$Low,type="l",col="orange")
+legend(25,50,c("High","Low"),pch=19,col=c("blue","orange"))
+```
+
+
+### Let's plot two variables. We'll plot the High variable as a function of the Low variable. 
+
+```{r echo=FALSE}
+plot(msft$High~msft$Low,type="p",main="Stock Prices - High vs Lo",col="blue")
+grid()
+```
+
+
+## histograms
+Here we will learn how to do some basic histograms. This is a useful plot type when trying to understand the underlying dsitribution of a continuous variable. Usually we want to know if the variable is normally distributed. To do this example please first install the ggplot2 package. Within R Studio you can go to the menu and select Tools -> Install packages after which you will 
+be prompted to enter a package name - in this case ggplot2. After that make sure to load it as follows. 
+
+```{r eval=FALSE}
+library(ggplot2)
+data(diamonds)
+```
+
+### Basic histogram
+This will also load the diamonds dataset which has information on a lot of different diamonds. In this case we are interested in the price. Let's create a histogram. In R the Base graphics command is **hist** 
+```{r echo=FALSE}
+library(ggplot2)
+data(diamonds)
+hist(diamonds$price,main="Diamond Prices")
+```
+
+### Bins/Breaks
+It turns out that the prices are skewed but that's okay. We could reduce the number of bins/breaks used in the display. How would we do that ? Experiment with the number of breaks. For example specify 10. 
+
+```{r echo=FALSE}
+library(ggplot2)
+hist(diamonds$price,main="Diamond Prices",breaks=10)
+```
+
+
+### Colors
+We could use the col and border arguments to set specific colors. In this place let's make the bars blue and the border black. You can actually use those exact names. 
+
+```{r echo=FALSE}
+library(ggplot2)
+hist(diamonds$price,main="Diamond Prices",col="blue",border="black",breaks=10)
+```
+
+### log transformation
+Sometimes when data is skewed we can apply a transformation to it to then see if the data is normally distributed. Sometimes it is - sometimes it isn't but it's not hard to try. Apply a log transformation to the price variable and then see if the resulting histogram suggests anything. You might let it pick the number of breaks - that is don't specify the number of breaks. 
+
+```{r echo=FALSE}
+library(ggplot2)
+hist(log(diamonds$price),main="Log Diamond Prices ",col="blue",border="black")
+```
+
+### Plotting some actual normally distributed data
+Let's use our friend the **rnorm** function to generate a lot of data (say 1,000 points) from a Normal distribution with mean 0 and standard deviation 1. This should give us a very obvious normal curve.
+
+```{r echo=FALSE}
+hist(rnorm(1000),main="Histogram from rnorm with 1,000")
+```
+
+### Plotting some actual normally distributed data
+Repeat this with 10,000 values from the rnorm distribution
+
+```{r echo=FALSE}
+hist(rnorm(10000),main="Histogram from rnorm with 10,000")
+```
+
+
+## barcharts
+
+### Basic barcharts
+These are ususally employed when you are representing count data. Let's look at the diamonds data set from the ggplot2 package. Create a barchart for the cut variable which has 5 levels. Remember that the barchart takes a table as input. Let's pick the color "aquamarine" 
+
+```{r echo=FALSE}
+barplot(table(diamonds$cut),main="Diamonds by Cut Type",xlab="Cut",col="aquamarine")
+```
+
+### Basic barcharts
+Next let's rotate this chart so that the bars run horizontally
+
+```{r echo=FALSE}
+barplot(table(diamonds$cut),main="Diamonds by Cut Type",xlab="Cut",col="aquamarine",horiz=TRUE)
+```
+
+### Two way barcharts
+Now let's create a barchart for the cut and color. This could get a little busy because cut has 5 levels and color has 7 levels but we can do this. Remember that you first have to create a table. Use the legend argument to get a legend displayed. 
+
+```{r echo=FALSE}
+barplot(table(cut=diamonds$cut,color=diamonds$color),legend=TRUE)
+```
+
+### Two way barcharts with color
+That was okay but it was boring. We can get some colors from one of the palletes built in to R such as the rainbow pallette. We will need 7 colors since there are seven levels for the diamond color variable. 
+
+```{r echo=FALSE}
+barplot(table(cut=diamonds$cut,color=diamonds$color),col=rainbow(7),legend=TRUE)
+```
+
+### Two way barcharts with color
+So instead of having the bars stacked we could have them beside each other for a given cut type. Look at the following plot and look at arguments to the barplot function to help you reproduce this:
+
+```{r echo=FALSE}
+barplot(table(cut=diamonds$cut,color=diamonds$color),col=rainbow(7),legend=TRUE,beside=T)
+```
+
+
+## dotcharts
+
+### Basic dotchart
+Study the help page for the dotchart command to create the following plots. We want to use the dotchart command to plot the MPG values from mtcars. For example what command would you use to produce the following plot ? Note that the x-axis has a label and there is also a main title for
+the plot.
+
+```{r echo=FALSE}
+dotchart(mtcars$mpg,main="MPG by Cylinder Group",xlab="MPG")
+```
+
+### Sorted dotchart
+Now consider what it might take to make the resulting plot more orderly. That is, maybe arrange/sort the dataframe by MPG and save it to a new data frame and redraw the plot to get something like the following:
+
+```{r, echo=FALSE}
+mydf <- mtcars[order(mtcars$mpg),]
+# mydf$cyl <- factor(mtcars$cyl)
+dotchart(mydf$mpg,main="MPG by Cylinder Group",xlab="MPG")
+
+```
+
+### Labels and font sizes
+
+This looks better although we don't really have any labels other than on the X Axis. Suppose we would like to see which car names correspond to which points ? There is a labels argument that could help us with that. Note to do this we will need to get the rownames from mtcars. That's easy too - use the row.names function to accomplish this. You might also look at the cex argument which adjusts the size of the labels. It takes a value between 0 and 1 with value close to 1 representing a larger font and those being closer to zero being a smaller font. 
+
+```{r echo=FALSE}
+mydf <- mtcars[order(mtcars$mpg),]
+# mydf$cyl <- factor(mtcars$cyl)
+dotchart(mydf$mpg,main="MPG by Cylinder Group",cex=0.8,labels=row.names(mydf),xlab="MPG")
+```
+
+### Grouped by Cylinders
+
+Okay now look at the following plot. Notice how the labels are separated apparently by cylinder 
+group value. There is an argument to dotplot called groups that would allow us to do this. We can use the cyl variable with this argument BUT first we need to turn the cyl variable into a true
+factor. So you could do something like mydf\$cyl <- factor(mydf\$cyl). Note that mydf in this case would represent the sorted version of the mtcars data frame
+
+```{r echo=FALSE}
+dotchart(mydf$mpg,main="MPG by Cylinder Group",cex=0.8,labels=row.names(mydf),
+         groups=factor(mydf$cyl),xlab="MPG")
+```
+

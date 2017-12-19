@@ -1,0 +1,235 @@
+BIOS 545 Spring 2015 Week 5 Lab 2: Graphics Part 2
+============================================================
+Pittard wsp@emory.edu
+***
+
+## Base Graphics Cont - Lattice graphics
+
+PRACTICE 1.0) LET'S DRAW SOME BARPLOTS USING COLORS AND ALSO LOOK AT SOME "COLOR RAMPS"
+
+```{r eval=TRUE}
+myt <- tapply(mtcars$mpg, mtcars$cyl, mean)  
+
+# tapply produces a table
+
+barplot(myt, main = "Mean MPG per Cylinder Group", col=heat.colors(3))
+
+myt <- tapply(mtcars$mpg, mtcars$carb, mean)
+
+barplot(myt, main = "Mean MPG per Carb group", 
+             col= terrain.colors(length(myt)),legend=T)
+
+barplot(rev(sort(myt)), main = "Mean MPG per Carb group", 
+            col= terrain.colors(length(myt)),legend=T)
+
+mycols <- colorRampPalette(c("red","blue"))( 6 ) 
+
+
+barplot(rev(sort(myt)), 
+        main = "Mean MPG per Carb group", col=mycols, legend=T)
+
+
+myt <- tapply(mtcars$mpg, mtcars$cyl, mean)  
+
+# tapply produces a table
+
+barplot(rev(sort(myt)), main = "Mean MPG per Cylinder Group",   col=heat.colors(3))
+
+```
+***
+
+## More Annotation
+PRACTICE 1.2) WE CAN ALSO ANNOTATE OUR BARPLOTS
+
+```{r eval=TRUE}
+myt <- tapply(mtcars$mpg, mtcars$cyl, mean)  
+
+# tapply produces a table
+
+temp <- barplot(myt, main = "Mean MPG per Cylinder Group",
+                    col=heat.colors(3))
+
+temp        # These represent the X coordinates for each bar
+
+#     x    y   text
+
+text(0.7, 10, 26.66)    # We put up the means one by one
+
+text(1.9, 10, 19.74)
+
+text(3.1, 10, 15.10)
+
+# This will put up the text in one go
+
+
+temp <- barplot(myt, main = "Mean MPG per Cylinder Group",
+                    col=heat.colors(3))
+
+text(temp,10,round(myt,2))
+```
+***
+
+## Boxplots
+
+PRACTICE 1.3) HERE WE CAN DRAW THE BOXPLOT VALUES ON THE ACTUAL GRAPH
+
+```{r eval=TRUE}
+fivenum(mtcars$mpg) # RETURNS THE FIVE NUM SUMMARY
+
+boxplot(mtcars$mpg, main="MPG Boxplot",xlab="MPG",col="aquamarine")
+
+# LET'S PUT UP A BOXPLOT WITH TWO COLORS
+
+boxplot(mpg~am, data = mtcars, main="MPG / Transmission",
+                col=heat.colors(2), names=c("auto","manual"))
+
+legend(0.5,33,c("Auto","Manual"),fill=heat.colors(2))
+
+# THIS WILL AUTOMATICALLY GENERATE THREE BOXPLOTS - ONE FOR
+# EACH CYLINDER GROUP
+
+boxplot(mpg~cyl,data=mtcars,main="MPG by Cylinders",
+        col=rainbow(3), horizontal=TRUE, 
+        names=c("Four","Six","Eight"))
+
+# THIS IS THE SAME AS ABOVE EXCEPT WE USE A COLOR PALETTE
+
+boxplot(mpg~cyl, main="MPG vs. Cylinder", data=mtcars, 
+         notch=TRUE, col=terrain.colors(3))
+
+# THE BOXPLOT FUNCTION RETURNS INFORMATION WE CAN USE
+
+boxplot(mtcars$mpg, main="MPG Boxplot",xlab="MPG",col="aquamarine")
+
+
+# WE SAVE THE PLOT INTO A VARIABLE FOR LATER INSPECTION AND USE
+
+hold <- boxplot(mtcars$mpg, main="MPG Boxplot",
+               xlab="MPG",col="aquamarine")
+hold
+
+text(1,10.4,10.4)
+text(1,15.35,15.35)
+text(1,19.20,19.20)
+text(1,22.8,22.8)
+text(1,33.9,33.9)
+
+
+# OR could put up text in one go
+
+text(1,hold$stats[,1],hold$stats[,1])
+
+tmpvar <- boxplot(mpg~cyl,data=mtcars)
+
+
+tmpvar$stats
+
+tmpvar$stats[3,]
+
+mtext(at=1:3, text=tmpvar$stats[3,])
+
+# THIS IS THE SAME AS DOING THE FOLLOWING:
+
+
+mtext(at=1, text=tmpvar$stats[3,1], side=3) # top margin
+mtext(at=2, text=tmpvar$stats[3,2], side=3) # top margin
+mtext(at=3, text=tmpvar$stats[3,3], side=3) # top margin
+
+```
+***
+
+## Lattice Graphics
+
+PRACTICE 2.0) LATTICE GRAPHICS AFFORDS US SOME CONVENIENCE THAT THE BASE GRAPHICS DOES NOT. 
+```{r eval=TRUE}
+library(lattice)  # Required for all lattice plot commands
+
+# We can specify attributes of the points and the graph using arguments
+
+xyplot(mpg~wt|factor(carb), data=mtcars, pch=19,main="MPG vs Wt per Carb #", type=c("p","g"))
+
+# Lattice graphics let's us take advantage of factors in a way that base graphics does not
+
+mtcars$am <- factor(mtcars$am, labels=c("auto","manual"))
+
+mtcars$am
+
+levels(mtcars$am)
+
+# We want to plot mpg vs wt as a function of cylinder groups. this is really easy 
+
+xyplot(mpg ~ wt, data = mtcars, pch = 19, main = "MPG vs. Weight")
+
+xyplot(mpg ~ wt, data = mtcars, pch = 19, main = "MPG vs. Weight", type=c("p","g"))
+
+xyplot(mpg ~ wt | factor(cyl), data = mtcars, pch=16, main = "MPG vs. wt by Cylinder Group")
+
+xyplot(mpg ~ wt | factor(cyl), data = mtcars, pch=16, type=c("p","g"), main = "MPG vs. wt by Cylinder Group", layout=c(1,3))
+
+```
+***
+
+PRACTICE 2.1) LATTICE GRAPHICS / xyplot CONTINUED
+
+```{r eval=TRUE}
+
+# We can adjust the layout easily
+
+library(lattice)
+
+xyplot(mpg~wt|factor(cyl),data = mtcars,layout=c(3,1))
+
+# the conveniences afforded by lattice graphics work with other lattice functions
+
+histogram(~mpg, data = mtcars, main = "MPG for all groups")
+
+histogram(~mpg | factor(cyl), data = mtcars, layout = c(3,1))
+
+# here we can use the auto.key argument to create a legend automatically.
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), type=c("p","g"),
+       main="MPG vs. Wt", auto.key=TRUE)
+
+# OK
+
+
+xyplot(mpg~wt, data=mtcars, groups=cyl, main="MPG vs. Wt", auto.key=TRUE)
+
+
+# the auto.key argument supports a list structure that allows for customization
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), 
+       main="MPG vs. Wt", 
+       auto.key=list(title="Transmission Type",cex=0.6,columns=2))
+
+# The legend can grow and grow
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), main="MPG vs. Wt", pch=19,
+       auto.key = list(title="Transmission Type",
+                       cex=0.6,columns=2,space="right"))
+
+# here we tell lattice where to put the legend explicitly
+
+xyplot(mpg~wt, data=mtcars, groups=factor(am), main="MPG vs. Wt", 
+       pch=19, type=c("p","g"),
+       auto.key = list(title="Transmission Type", cex=0.6, columns=2,
+       corner=c(1,1)))
+
+
+xyplot(mpg ~ wt | factor(cyl), data=mtcars, 
+        pch=16,layout=c(3,1), main="MPG vs Wt per Cylinder",
+        type=c("p","g"))
+
+
+xyplot(mpg ~ wt | factor(cyl), data=mtcars, 
+       pch=16,layout=c(3,1),
+       groups = factor(am,labels=c("Auto","Manual")),
+       type=c("p","g"),auto.key = TRUE)
+
+xyplot(mpg ~ wt | factor(cyl), data=mtcars, 
+        main = "MPG vs Wt per cylinder Group",
+        groups = factor(am), pch=21, type=c("p","g"), 
+        layout = c(1,3), auto.key=list(columns=2))
+
+```
+***

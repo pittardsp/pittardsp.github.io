@@ -1,0 +1,215 @@
+---
+title: "BIOS 545 Spring 2017 Homework 1"
+subtitle: "Due 11:59 PM on January 30, 2017"
+output: pdf_document
+---
+
+# Instructions
+
+There are 20 questions at 5 points each. Send responses via email in a file named using the convention of `BIOS545_LastName_FirstName_HW1.R`. You should use RStudio to create the file. Email to BOTH `dvandom@emory.edu` and `wsp@emory.edu`. Submissions arriving after the indicated due date and time will incur a 10 percent penalty for each day late. 
+
+All of these problems can be solved using material presented in class and in the labs. Unless otherwise indicated in the problem, you may use other R functions to help you find a solution although you cannot download additional packages to solve a problem. In some cases you might have to use the help mechanisms described in Week 1 to locate an appropriate function. We will run your R commands at the R console to verify the statements. 
+
+\newpage
+
+# Problems
+
+**1)** Create a vector called `x1` that contains every 5th number between 1 and 101, i.e. 1, 6, ... , 96, 101.
+
+```{r, eval = FALSE, echo = FALSE}
+x2 <- seq(1, 101, 5)
+```
+
+**2)** Create a vector called `x2` that contains the sum of the squares of all even numbers/integers between -50 and 50
+
+```{r, eval = FALSE, echo = FALSE}
+x2 <- sum(((-50:50)[(-50:50) %% 2 == 0])^2)
+```
+
+
+**3)** Execute the following commands that will generate 100 numbers between 0 and 10. Some of the numbers will be repeated more than once. Write a one line R statement that will present the percentage associated with the most frequently occurring number. Your answer will be a character string such as "19%". It might be helpful to review lecture notes for functions that relate to tabulation. Also recall that in R it is encouraged to use composite functions which makes it easy to do something on one line. 
+
+```{r}
+set.seed(123)
+(myr <- rpois(100,4))
+```
+
+```{r, eval = FALSE, echo = FALSE}
+paste(max(table(myr)/sum(table(myr)))*100,"%",sep="")
+```
+
+**4)** A codon is a sequence of three nucleotides that appear together and typically serve a particular biological purpose. The typical start codon is ATG and one possible  stop codon is TAA. Create a 4-element vector of character strings called `dna2`, where each element is a 3-nucleotide codon. Create the vector so that it starts with the start codon, has GAA and CAC in the middle, and ends with the stop codon.
+
+```{r, eval = FALSE, echo = FALSE}
+dna2 <- c("ATG", "GAA", "CAC", "TAA")
+```
+
+**5-7)** Run the code below to generate a single character string containing a sequence of 100 nucleotides.
+
+```{r, eval = FALSE, echo = TRUE}
+dna3 <- paste(sample(c("A", "C", "G", "T"), 100, replace = T), collapse = "")
+```
+
+**5)** Create a new version of the ``dna3`` vector called ``dna3.expanded`` that is a 100-element character vector with each element either A, C, G, or T.
+
+```{r, eval = FALSE, echo = FALSE}
+dna3.expanded <- strsplit(dna3, "")[[1]]
+```
+
+**6)** Because we sampled A, C, G, and T with equal probabilities, each should appear roughly 25 times in our sequence. Use an R function to tabulate the actual frequencies of each nucleotide.
+
+**7)** Drop the first 50 nucleotides in ``dna3.expanded`` and then convert the remaining nucleotides back to compressed format, in a variable named ``dna3.subset``.
+
+**8-11)** The `quantmod` package allows you to download stock market prices from Yahoo! Finance. Run the code below to download `quantmod` from CRAN and load 10 years of stock prices for Apple, then answer the following questions. 
+
+```{r, eval = FALSE, echo = TRUE}
+install.packages("quantmod")
+library(quantmod)
+apple.prices <- as.matrix(getSymbols("AAPL", from = "2007-01-20", to = "2017-01-20", 
+                                     auto.assign = FALSE))
+```
+
+**8)** If you run `head(apple.prices)` you will see the structure of the matrix. The last column, labeled AAPL.adjusted, has the adjusted closing price for each trading day. Use bracket notation to extract the closing price for the first and last trading day. Save these values into variables called `first.price` and `last.price`.
+
+```{r, eval = FALSE, echo = FALSE}
+first.price <- apple.prices[1, 6]
+last.price <- apple.prices[nrow(apple.prices), 6]
+```
+
+**9)** Calculate the total percent return over the 10-year period by dividing `last.price` by `first.price`, subtracting 1, and then multiplying by 100. Notice that it's extremely high; regret not investing in Apple 10 years ago; and then move on to the next question.
+
+```{r, eval = FALSE, echo = FALSE}
+(last.price / first.price - 1) * 100
+```
+
+**10)** Notice that the `apple.prices` matrix has dates for row names. Using a certain function covered in lecture, extract these row names into a vector called `apple.dates`. 
+
+```{r, eval = FALSE, echo = FALSE}
+apple.dates <- rownames(apple.prices)
+```
+
+**11** If you run `class(apple.dates)`, you will see that despite looking like dates, R is treating them like character strings. Convert the `apple.dates` vector to date class, and call it `apple.realdates`.
+
+```{r, eval = FALSE, echo = FALSE}
+class(apple.dates)
+apple.realdates <- as.Date(apple.dates)
+```
+
+**12)** Determine the highest closing price for Apple over the last 10 years, on what date that price was achieved, and how many calendar days have passed from then until today (use Jan. 20, 2017 for "today").
+
+```{r, eval = FALSE, echo = FALSE}
+loc.max <- which.max(apple.prices[, 6])
+apple.prices[loc.max, 6]
+apple.realdates[loc.max]
+as.Date("2017-01-20") - apple.realdates[loc.max]
+```
+
+**13)** Notice that the `apple.prices` matrix also gives the highest and lowest price that the stock reached on each day. Using vector arithmetic, calculate the differences between the high and low price for each day, and save these values into a vector named ``daily.swing``. Calculate the mean, median, and standard deviation for the values in this vector. 
+
+```{r, eval = FALSE, echo = FALSE}
+daily.swing <- apple.prices[, 2] - apple.prices[, 1]
+mean(daily.swing)
+median(daily.swing)
+sd(daily.swing)
+```
+
+
+
+\vspace{0.2in}
+
+
+
+
+**14)** Normal theory tells us that if a variable follows a normal distribution, then approximately 68\% of values fall within one standard deviation of the mean. Suppose we want a more precise estimate, and we can't find a z-table. Generate 1 million values from a standard normal distribution, store them in a vector called ``x.normal``, and calculate the percent that are in the interval (-1, 1). (Note: the true value is 68.27\%)
+
+```{r, eval = FALSE, echo = FALSE}
+x.normal <- rnorm(n = 1000000)
+mean(x.normal > -1 & x.normal < 1)
+```
+
+
+
+\vspace{0.2in}
+
+
+
+**15-17)** Bike sharing is a relatively new idea whereby people can rent out city bikes from various stations around a city, ride them around for a few hours, and then return the bike to the same station or a different one. The bike share program in San Francisco actually has a website with data on the trips people take.
+
+Go to http://www.bayareabikeshare.com/open-data and click YEAR 1 DATA to download a zip file. Unzip it and move the file named `201402_trip_data.csv` to your working directory in R. Then load it into R by running:
+
+```{r, eval = FALSE, echo = TRUE}
+read.csv("201402_trip_data.csv")
+```
+
+**15)** write R code to print the 3 most common start stations.
+
+```{r, eval = FALSE, echo = FALSE}
+setwd("C:/Users/Dane/Google Drive/Documents/TAing/R_Spring2017")
+bike.data <- read.csv("201402_trip_data.csv")
+sort(table(bike.data[, 4]), decreasing = T)[1: 3]
+```
+
+**16)** Determine the total number of trips summarized in this dataset, and how many of the trips had duration less than 120 minutes.
+
+```{r, eval = FALSE, echo = FALSE}
+nrow(bike.data)
+sum(bike.data[, 2] < 120)
+```
+
+**17)** Create a vector called ``start.dates`` that has the dates indicated by Start.Date, but stored as a date/time object. Calculate the range of dates included in this bike share dataset.
+
+```{r, eval = FALSE, echo = FALSE}
+start.dates <- strptime(bike.data[, 3], format = "%m/%d/%Y %H:%M")
+range(start.dates)
+```
+
+
+
+\vspace{0.2in}
+
+
+
+
+**18-19)** Body mass index is calculated as body weight in kilograms divided by squared height in meters. Run the following code to generate some made-up weight and height values for a group of people.
+
+```{r, eval = FALSE, echo = TRUE}
+height <- c(1.63, 1.84, 1.49, 1.73, 1.80)
+weight <- c(80.1, 83.0, 62.4, 69.3, 74.2)
+```
+
+**18)** Create a vector called ``bmi`` that contains the BMI values for each of the five subjects. 
+
+```{r, eval = FALSE, echo = FALSE}
+bmi <- weight / height^2
+```
+
+**19)** Create a logical vector called ``overweight`` that is TRUE for participants with BMI greater than 25 and FALSE otherwise. Calculate the number that are overweight.
+
+```{r, eval = FALSE, echo = FALSE}
+overweight <- bmi > 25
+```
+
+
+
+\vspace{0.2in}
+
+
+
+
+**20)** Create the matrix J so that $$J_{i,j}$$ is equal to -1 where i + j < 8 and zero otherwise
+
+$$\mathbf{J} = \left[\begin{array}
+{rrrrr}
+-1 & -1 & -1 & -1 & -1\\
+-1 & -1 & -1 & -1 & -1\\
+-1 & -1 & -1 & -1 & 0\\
+-1 & -1 & -1 & 0 & 0 \\
+-1 & -1 & 0 & 0 & 0
+\end{array}\right]
+$$
+
+```{r echo=FALSE}
+J <- matrix(rep(0,25),5,5)
+J[row(J) + col(J) < 8] <- -1
+```
+

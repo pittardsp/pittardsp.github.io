@@ -1,0 +1,400 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  18 NOV 2013 16:07
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Sweave-test-1.tex
+(./Sweave-test-1.tex
+LaTeX2e <2011/06/27>
+Babel <3.9f> and hyphenation patterns for 78 languages loaded.
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/a4wide/a4wide.sty
+Package: a4wide 1994/08/30
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/ntgclass/a4.sty
+Package: a4 2004/04/15 v1.2g A4 based page layout
+))
+
+! LaTeX Error: File `Sweave.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+No file Sweave-test-1.aux.
+\openout1 = `Sweave-test-1.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
+LaTeX Font Info:    ... okay on input line 11.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 13.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 13.
+
+! LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.16 \begin{Schunk}
+                   
+? 
+
+! LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.17 \begin{Soutput}
+                    
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19 \end{Soutput}
+                  
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.20 \end{Schunk}
+                 
+? 
+
+! LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.23 \begin{Schunk}
+                   
+? 
+
+! LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.24 \begin{Sinput}
+                   
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.26 \end{Sinput}
+                 
+? 
+
+! LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.27 \begin{Soutput}
+                    
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.29 \end{Soutput}
+                  
+? 
+
+! LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.30 \begin{Sinput}
+                   
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.32 \end{Sinput}
+                 
+? 
+
+! LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.33 \begin{Soutput}
+                    
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35 \end{Soutput}
+                  
+? 
+
+! LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.36 \begin{Sinput}
+                   
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.38 \end{Sinput}
+                 
+? 
+
+! LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.39 \begin{Soutput}
+                    
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.41 \end{Soutput}
+                  
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42 \end{Schunk}
+                 
+? 
+
+! LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.46 \begin{Schunk}
+                   
+? 
+
+! LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47 \begin{Soutput}
+                    
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.52 \end{Soutput}
+                  
+? 
+
+! LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.53 \begin{Soutput}
+                    
+? 
+
+Overfull \hbox (20.4149pt too wide) in paragraph at lines 48--55
+[]\OT1/cmr/m/n/10 [1] -1.27765990 1.04877098 0.54781550 0.13952790 0.29569507 0
+.14126576 [7] -1.06710280 0.60805119
+ []
+
+
+Overfull \hbox (7.6371pt too wide) in paragraph at lines 48--55
+\OT1/cmr/m/n/10 -0.45220917 -0.60301973 -0.50591058 0.42399709 [13] -0.04686908
+ 0.79185007 -0.18944091 0.51920896
+ []
+
+
+! LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 \end{Soutput}
+                  
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.65 \end{Schunk}
+                 
+? 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 68.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 68.
+
+! LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.75 \begin{Schunk}
+                   
+? 
+
+! LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.76 \begin{Sinput}
+                   
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.79 \end{Sinput}
+                 
+? 
+
+! LaTeX Error: Environment Soutput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.80 \begin{Soutput}
+                    
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Soutput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.92 \end{Soutput}
+                  
+? 
+
+! LaTeX Error: \begin{document} ended by \end{Schunk}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.93 \end{Schunk}
+                 
+? 
+
+! LaTeX Error: Environment Schunk undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.98 \begin{Schunk}
+                   
+? 
+
+! LaTeX Error: Environment Sinput undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.99 \begin{Sinput}
+                   
+? 
+
+! LaTeX Error: \begin{center} on input line 97 ended by \end{Sinput}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <r

@@ -1,0 +1,422 @@
+BIOS545 Week 3 Lab 2: Data Frames and Control Structures
+============================================================
+Pittard wsp@emory.edu
+
+
+## DataFrames Part 2
+
+Practice 1.0) Merging Data Frames
+```{r eval=FALSE}
+df1  <- data.frame(indiv_id = 1:4, snp1 = c(1,1,0,1), snp2 = c(1,1,0,0)) 
+
+df2 <- data.frame(indiv_id = c(1,3,4,6), cov1 = c(1.14,4.50,0.80,1.39), 
+                                          cov2 = c(74.6,79.4,48.2,68.1))
+
+merge(tb1, tb2, by="indiv_id", all=TRUE)  # Brings in all data from both data frames
+
+# Excludes indiv_id rows from tb2 that don't also appear in tb1
+
+merge(tb1, tb2, by="indiv_id", all.x=T)   
+
+# Excludes indiv_id rows from tb1 that don't also appear in tb2
+
+merge(tb1, tb2, by="indiv_id", all.y=T)
+
+# Let's change the names in tb2
+
+names(tb2) <- c("id","cov1","cov2")
+
+# Let's do a merge wherein we specify "keys" from tb1 and tb2
+
+merge(tb1,tb2,by.x="indiv_id",by.y="id",all=TRUE)
+```
+
+***
+
+1.1) Let's use the split function on mtcars to split it up by cylinder groups
+
+```{r eval=FALSE}
+
+# This will create a list, (hold), wherein each element is a data frame. 
+
+hold <- split(mtcars, mtcars$cyl) 
+
+# The name of each element comes from the unique values taken by the "cyl" variable
+
+names(hold)
+
+# Once we have things stashed in the list we can use sapply (or lapply) to 
+# loop over each element and apply some function 
+
+sapply(hold,nrow)
+
+hold <- split(mtcars,mtcars$cyl) 
+
+sapply(hold, function(x) mean(x$mpg))
+
+```
+
+***
+
+1.2) We can also sort a data frame although we can't use the sort command directly as we would with a single vectors.
+
+```{r eval=FALSE}
+
+# We use the order function to get back row numbers in the order of MPG from lowest to highest
+
+order(mtcars$mpg) # Returns row numbers representing lowest to highest MPG
+
+mtcars[15,]  # The Cadillac has the worst gas mileage
+
+mtcars[20,]  # The Corolla has the best gas mileage
+
+head(newdata)
+
+newdata <- mtcars[order(mtcars$mpg),] # Sortson MPG from low to hi
+
+head(newdata)
+
+newdata <- mtcars[rev(order(mtcars$mpg)),]  # Sorts on MPG from hi to lo
+
+head(newdata)
+
+newdata <- mtcars[order(-mtcars$mpg),] # Same as above
+
+# We can also sort by two or more keys. Like first by cylinder then MPG
+
+newdata <- mtcars[order(mtcars$cyl,mtcars$mpg),] # Cyl: low to hi, MPG low to hi
+
+newdata <- mtcars[order(mtcars$cyl,-mtcars$mpg),] # Cyl: low to hi, MPG hi to lo
+
+
+```
+
+***
+
+1.3) Sampling from a dataframe can be done also. We have to figure out the
+number of rows and use that as input to the sample function
+
+```{r eval=FALSE}
+
+my_records <- sample(1:nrow(mtcars), 10, replace = FALSE)
+
+my_records  # Random row numbers from mtcars
+
+sample_of_ten <- mtcars[my_records,] # Use my_records as input to brackets
+
+sample_of_ten
+
+```
+
+***
+
+## Control Structures
+
+2.0) for loops are for processing elements of vectors, matrices, and lists 
+
+```{r eval=FALSE}
+
+# for loops are simple
+
+for (ii in 1:3) {
+  print(ii)
+}
+
+x <- rnorm(3)
+for (ii in 1:length(x)) {    # We start with the last element number
+   print(x[ii])
+}
+
+# Here we will loop over some x values to get some y values to plot
+
+y <- vector()  # A blank vector
+
+x <- 1:6
+
+for (ii in 1:length(x)) {
+  y[ii] <- x[ii]^2
+}
+
+plot(x,y,main="Super Cool Data Plot",type="b",pch=19,col="red")
+
+
+```
+
+***
+
+2.1) We can use for loops to do calculations
+
+```{r eval=FALSE}
+
+set.seed(188)
+
+x <- rnorm(1000)  # 1,000 random elements from a N(20,4)
+
+# Set mymin to the first value in x. Then use the for loop to 
+# compare it to all other values in x. If we find a value that is less
+# than the current mymin then we set mymin to it.
+
+mymin <- x[1] 
+
+for (ii in 1:length(x)) {
+  if (x[ii] < mymin) {
+     mymin <- x[ii]
+  }
+}
+
+mymin
+
+```
+
+***
+
+2.2) This approach can be applied to processing data frames like mtcars
+
+```{r eval=FALSE}
+
+mpgsum = 0
+
+for (ii in 1:nrow(mtcars)) {
+  mpgsum <- mpgsum + mtcars[ii,"mpg"]
+}
+
+mpgmean <- mpgsum/nrow(mtcars)   # Divide the sum by the # of records
+
+cat("Mean MPG for all cars is:",mpgmean,"\n")
+
+```
+
+***
+
+2.3) We can use the for loop in conjunction with the split function to process list elements
+
+```{r eval=FALSE}
+
+mysplit <- split(mtcars,mtcars$cyl)
+
+for (ii in 1:length(mysplit)) {
+   print(nrow(mysplit[[ii]]))
+}
+
+# This is equivalent to doing the following
+
+sapply(mysplit, nrow)
+
+```
+
+***
+
+2.4) We can access the list element names and values as we loop
+
+```{r eval=FALSE}
+
+mysplit <- split(mtcars,mtcars$cyl)
+
+for (ii in 1:length(mysplit)) {
+   splitname <- names(mysplit[ii])
+   cat("mean for",splitname,"cylinders is",mean(mysplit[[ii]]$mpg),"\n")
+}
+
+# This is basically equivalent to 
+
+sapply(mysplit, function(x) mean(x$mpg))
+
+
+```
+
+***
+
+2.5) Looping over matrices is easy with for loops. However we have to use two of them. One for rows and one for columns
+
+```{r eval=FALSE}
+set.seed(123)
+
+mymat <- matrix(round(rnorm(6),2),3,2)
+
+for (ii in 1:nrow(mymat)) {
+    cat("The sum of row",ii,"is",sum(mymat[ii,]),"\n")
+}
+
+# The sum of row 1 is -0.49 
+# The sum of row 2 is -0.1 
+# The sum of row 3 is 3.28 
+
+# This will generate the sum of all columns
+
+for (ii in 1:ncol(mymat)) {
+    cat("The sum of col",ii,"is",sum(mymat[,ii]),"\n")
+}
+
+# The sum of col 1 is 0.77 
+# The sum of col 2 is 1.92 
+
+```
+
+***
+
+### if statements
+
+3.0) If statements allow us to make decisions based on the value of a vector, list, or matrix element.
+
+```{r eval=FALSE}
+
+some.num <- 3               
+
+if (some.num < 3) {        # A more involved if statement
+     print("Less than 3")
+} else if (some.num > 3) {
+     print("Greater than 3")
+} else {
+     print("Must be equal to 3")
+}
+
+# if statements are frequently used for error checking
+
+x <- 4 ; y <- 5
+
+if (!is.numeric(x) | !is.numeric(y)) {
+   stop("I need numeric values to do this")
+} else {
+   if (x == y) {
+       print("Equal")
+   } else {
+      print("Not equal")
+   }
+}
+```
+
+***
+
+3.1) the ifelse statement is useful for processing vectors
+
+```{r eval=FALSE}
+some.data <- rnorm(10000,0,2)
+
+colors <- ifelse(some.data < 0,"RED","GREEN")
+
+plot(some.data,col=colors)
+
+# 
+
+mtcars$rating <- ifelse(mtcars$mpg >= mean(mtcars$mpg), "blue", "red")
+
+plot(mtcars$mpg~mtcars$wt,col=mtcars$rating,pch=19, main="MPG vs wt")
+
+grid()
+
+legend("topright", c("> mean","< mean"), pch=19,
+        col=c("blue","red"),title="Legend",cex=0.7)
+
+```
+
+***
+
+3.2) for and if loops are frequently found together in the same structure
+
+```{r eval=FALSE}
+
+gradevec <- vector()  # Initialize an empty vector to containt the grades
+
+score <- c(74,68,98,90,100,67,59)
+
+for (ii in 1:length(score)) {
+  if (score[ii] == 100) {
+      gradevec[ii] <- "A+"
+  } else if (score[ii] >= 90 & score[ii] <= 99) {
+      gradevec[ii] <- "A"
+  } else if (score[ii] >= 80 & score[ii] <= 89) {
+      gradevec[ii] <- "B"
+  } else if (score[ii] >= 70 & score[ii] <= 79) {
+      gradevec[ii] <- "C"
+  } else if (score[ii] >= 60 & score[ii] <= 69) {
+      gradevec[ii] <- "D"
+  }
+  else {
+    gradevec[ii] <- "F"
+  }
+}
+gradevec
+
+```
+
+***
+
+3.3) We can use the for loop / if statement approach to process vectors
+
+```{r eval=FALSE}
+set.seed(123)
+
+x <- round(runif(10,1,20))
+
+for (ii in 1:length(x)) {
+    if (x[ii] %% 2 == 0) {
+        print(TRUE)
+    }
+    else {
+        print(FALSE)
+    }
+}
+
+# We can mimic the bracket notation by processing elements and storing computations in a vector
+
+set.seed(123)
+
+x <- round(runif(10,1,20))
+
+logvec <- vector()            # Setup an empty vector
+
+for (ii in 1:length(x)) {
+    if (x[ii] %% 2 == 0) {
+        logvec[ii] <- TRUE
+    }
+    else {
+        logvec[ii] <- FALSE
+    }
+}
+
+logvec
+
+x[logvec]
+
+
+```
+
+***
+
+### while loops
+
+3.4) The while loop exists when you might not know in advance how many times you need to iterate
+
+```{r eval=FALSE}
+sum <- 0 
+n <- 1000
+i <- 1
+while (i <= n) {
+    sum <- sum + i
+    i <- i + 1
+}
+
+sum
+
+# Example of convergence. Take the square root of a number, say 13, and then
+# take the square root of that , and so on. This will converge to 1. Here is
+# how we could this with a while loop.
+
+num <- 13
+sqrtval <- sqrt(num)
+
+# Loop until the sqrt value becomes equal to 1
+
+while ( sqrtval != 1)  {    
+  sqrtval <- sqrt(sqrtval)
+
+# sprintf allows us to format a variable according to a pattern
+# See http://www.cookbook-r.com/Strings/Creating_strings_from_variables/
+# We want to see the value of sqrtval to 12 digits of precision
+
+  print(sprintf("%2.12f",sqrtval))
+}
+
+```
+
+***

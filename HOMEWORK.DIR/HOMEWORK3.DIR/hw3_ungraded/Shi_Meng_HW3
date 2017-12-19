@@ -1,0 +1,88 @@
+### Problem 1
+mpg.wt = function(Num=1) {
+   if (Num==1){var=mtcars$mpg} else
+   if (Num==2){var=mtcars$wt} else
+   stop("Choose the number of graph between 1 and 2")
+   
+   var1=cut(var,breaks=quantile(var),labels=c("1","2","3","4"),include.lowest=T)
+   mtcars.new=cbind(mtcars,var1)
+   colvec=c()
+   for (i in 1:nrow(mtcars)){
+      if (as.numeric(mtcars.new$var1[i])==1) { 
+          colvec[i]="black"} else
+      if (as.numeric(mtcars.new$var1[i])==2) { 
+         colvec[i]="red"} else
+      if (as.numeric(mtcars.new$var1[i])==3) { 
+         colvec[i]="green"} else
+      if (as.numeric(mtcars.new$var1[i])==4) { 
+         colvec[i]="blue"} 
+   }
+
+   Q=quantile(var)
+
+   plot(mtcars$wt,mtcars$mpg,main="MPG vs. Weight",xlab="Weight/1,000", ylab="MPG",col=colvec,pch=16)
+
+   lnames=c("0-25","25-50","50-75","75-100")
+   lcol=c("black","red","green","blue")
+   a=0.2
+   b=0
+   qnames=c("0%","25%","50%","75%","100%")
+   
+   if (Num==1) {
+      for (j in 1:5){
+         abline(h=Q[[j]],lty=i,col="grey")
+         text(4.75,Q[[j]],paste(qnames[j]),pos=2)
+      }
+   legend(3.75,33.6,inset=a,bg="grey90",lnames,title="Quantiles",col=lcol,pch=16,y.intersp=0.7)
+   
+   } else {
+   for (j in 1:5){
+      abline(v=Q[[j]],lty=i,col="grey")
+      mtext(round(Q[[j]],1),3,at=Q[[j]])
+   }
+   
+   legend("topright",inset=b,bg="grey90",lnames,title="Quantiles",col=lcol,pch=16,y.intersp=0.7)}
+  
+}
+
+### Problem 2a
+Wt.Observer=function(){
+   url = "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/Sparrows.txt"
+   sparrows = read.table(url,header=T)
+   obs=split(sparrows,sparrows$Observer)
+   mycols = colorRampPalette(c("aliceblue","blue"))(length(obs))
+   boxplot(Wt~Observer,main="Sparrow Weight by Observer",data=sparrows,notch=TRUE,xlab="Observer Number",ylab="Sparrow Weight",varwidth=TRUE,col=mycols)
+   
+   nrow=sapply(obs,nrow)
+   mtext(at=1:length(obs),text=nrow,col="red")
+   grid(lty=2,col="grey")
+
+}
+
+### Problem 2b
+myd=function(){
+   url = "http://steviep42.bitbucket.org/bios560rs2014/DATA.DIR/my.diamonds.csv"
+   myd = read.csv(url,header=T,sep=",")
+   library(lattice)
+   xyplot(price ~ carat|color, data = myd, pch = 19,
+        main = "Diamond Price vs Carat Size", xlab="carat",ylab="price",groups=factor(myd$cut),auto.key=list(title="Diamond Quality",corner=c(0.8,1),cex=1),type=c("p","g"),layout=c(3,3))
+}
+
+### Problem 3
+plot.ci=function(matrix.int=sci,mu=smean){
+   fail.int=c()
+   plot(1,xlim=c(min(matrix.int[,1]),max(matrix.int[,2])),ylim=c(0.5,nrow(matrix.int)+0.5),xlab="",ylab="",type="n",main="Confidence Intervals",yaxt="n")
+   for(i in 1:nrow(matrix.int)){
+      segments(matrix.int[i,1],i,matrix.int[i,2],col=ifelse(mu>matrix.int[i,1] & mu<matrix.int[i,2],"blue","red"))
+      if (mu<=matrix.int[i,1] | mu>=matrix.int[i,2]) {fail.int=append(fail.int,i)}
+   }
+   abline(v=mu)
+   return(fail.int)
+}
+
+
+
+
+
+
+

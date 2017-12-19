@@ -1,0 +1,84 @@
+---
+title: "test"
+author: "Steve Pittard"
+date: "February 12, 2016"
+output: pdf_document
+---
+
+The purpose of this exercise is to plot some information relating to the Indometh data set which is provided to you as part of R. Here is a breakdown of the variables contained in the data set. 
+
+```{r eval=FALSE}
+Indometh               package:datasets                R Documentation
+
+Pharmacokinetics of Indomethacin
+
+Description:
+
+     The ‘Indometh’ data frame has 66 rows and 3 columns of data on the
+     pharmacokinetics of indometacin (or, older spelling,
+     ‘indomethacin’).
+
+Usage:
+
+     Indometh
+
+Format:
+
+     An object of class ‘c("nfnGroupedData", "nfGroupedData",
+     "groupedData", "data.frame")’ containing the following columns:
+
+     Subject an ordered factor with containing the subject codes.  The
+          ordering is according to increasing maximum response.
+
+     time a numeric vector of times at which blood samples were drawn
+          (hr).
+
+     conc a numeric vector of plasma concentrations of indometacin
+          (mcg/ml).
+
+Details:
+
+     Each of the six subjects were given an intravenous injection of
+     indometacin.
+
+```
+
+You will be writing a function that does a line plot of the concentration of Indometacin observed in the blood over time. Each line will represent a different subject (and color) thus you will need a legend so users of your function can distinguish between the lines. You will also allow users of your function to specify a ``log'' argument that, if TRUE, would first take the of the concentration before making the plot. This helps make the decline in concentrations over time more apparent. Here are two ways that your function could be called.
+
+```{r echo=FALSE}
+plot.indometh <- function(mydf=Indometh,log=FALSE,colors=rainbow(6)) {
+  
+  my.length <- length(levels(mydf$Subject))
+  if (log) {
+    mydf$conc <- log(mydf$conc)
+    ylab <- "Log Concentrations of Indometacin (mcg/ml)"
+  } else {
+    ylab <- "Concentrations of Indometacin (mcg/ml)"
+  }
+  
+  plot(mydf$conc ~ mydf$time,
+       main="Pharmacokinetics of Indomethicin",
+       type="n",
+       xlab="Time at which blood was drawn",
+       ylab = ylab)
+  
+  col <- colors       # Get some colors
+  temp <- split(mydf,mydf$Subject)
+  for (ii in 1:length(temp)) {
+    points(temp[[ii]]$conc ~ temp[[ii]]$time,col=col[ii],type="l",lwd=2)
+  }
+  legend("topright",paste("Subject",names(temp),sep="_"),col=col,pch=15,cex=0.9)
+  grid()
+}
+
+```
+
+```{r}
+plot.indometh()
+
+```
+
+```{r}
+plot.indometh(log=TRUE,col=terrain.colors(6))
+```
+

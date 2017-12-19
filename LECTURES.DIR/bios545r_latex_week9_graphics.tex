@@ -1,0 +1,146 @@
+% \documentclass{beamer}
+\documentclass[xcolor=table]{beamer}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{verbatim}
+\usepackage{tabularx}
+\usepackage{colortbl}
+% \usetheme{Warsaw}
+\usetheme{Boadilla}
+\usepackage{Sweave}
+\begin{document}
+\input{bios545r_latex_week9_graphics-concordance}
+% \input{datatable-concordance}
+
+% Slide 01 - Title Slide
+
+\title{Introduction to Graphics}
+\subtitle{Steve Pittard wsp@emory.edu}
+
+\maketitle
+
+
+
+% Slide 02
+
+\begin{frame}[fragile]
+\frametitle{Introduction to Graphics}
+\begin{itemize}
+\item R has a poweful environment for visualization of scientific data
+\item It offers publication quality graphics which can be programmed
+\item Easily reproducibe across platforms (OSX, Windows, Linux)
+\item Full LaTeX and Sweave support
+\item Many add-on packages and functions with built-in graphics support 
+\item Can easily save to PDF, JPEG, PNG, and SVG
+\end{itemize}
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+\frametitle{Some sources for Information}
+\begin{itemize}
+\item R graph gallery \url{http://gallery.r-enthusiasts.com/}
+\item R Graphical Manual \url{http://bit.ly/1ULffYH}
+\item Lattice Graphics \url{http://bit.ly/1Od8fOQ}
+\item ggplot2 \url{http://ggplot2.org/}
+\end{itemize}
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+\frametitle{History}
+R graphics can be confusing because there are four different systems that get mentioned in textbooks and online manuals for R. 
+
+I will list them here and talk about briefly about each.
+
+\begin{itemize}
+\item Low Level Capability
+\begin{itemize}
+\item Base Graphics (Has Low and High Level functions)
+\item Grid Graphics (We don't get into this package)
+\end{itemize}
+\item High Level Capability
+\begin{itemize}
+\item{Lattice Graphics}
+\item{ggplot2}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+\frametitle{Base Graphics}
+\begin{itemize}
+\item Oldest and most commonly used (although that might be changing)
+\item Uses a ``pen on paper'' model
+\begin{itemize}
+ \item You can only draw on top of what has already been drawn/plotted
+ \item Cannot erase, modify, or move existing plot objects
+ \item Easy to start over if you make mistakes
+\end{itemize}
+
+\item Has both high and low level plotting routines
+\item Very fast
+\item Can build complex plots in steps 
+\item Can easily write functions to do plotting 
+\item Lots of documentation and ``Google'' support
+\end{itemize}
+
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+\frametitle{Grid Graphics}
+\begin{itemize}
+\item Developed in 2000 by Paul Murrell
+\item Provides a rich set of graphics primitive
+\item Uses a system of objects and view ports to make plotting complex objects easier
+\item You almost never use this directly unless you want to do low level programming (mostly true)
+\item Both the \textbf{lattice} and \textbf{ggplot2} packages use Grid
+\item We will not be learning about this package in this class beyond this slide
+\item Manual is at \url{https://stat.ethz.ch/R-manual/R-devel/library/grid/doc/grid.pdf}
+\end{itemize}
+
+\end{frame}
+
+%
+
+\begin{frame}[fragile]
+\frametitle{Lattice Graphics}
+\begin{itemize}
+\item Developed by Deepayan Sarkar 
+\item Insipred by Trellis graphics and the book "Visualizing Data" by William Cleveland
+\item Easy to create conditioned plots and panelled plots (aka Trellis plots)
+\item Easy to do grouping of data within a single panel 
+\item Legends, annotations, and axes are automatically created
+\item Is a separate package but it comes with any installation of R
+\item See \url{http://lmdvr.r-forge.r-project.org/figures/figures.html}
+\end{itemize}
+\footnotesize
+\begin{verbatim}
+library(lattice)
+xyplot(mpg ~ wt | factor(am, labels=c("Auto","Manual)),data = mtcars)
+\end{verbatim}
+
+\end{frame}
+
+%
+
+%
+
+\begin{frame}[fragile]
+\frametitle{Lattice Graphics}
+\begin{center}
+\includegraphics{xyplot.png}
+\end{center}
+\end{frame}
+
+
+%%
+%%
+%% End of Doc
+\end{document}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>BIOS 560</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Le styles -->
+  <link href="../css/bootstrap.css" rel="stylesheet">
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+  </style>
+  <link href="../css/bootstrap-responsive.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon"
+  href="http://twitter.github.com/bootstrap/assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed"
+  href="http://twitter.github.com/bootstrap/assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+
+<div class="navbar-inner">
+
+<div class="container">
+<a class="btn btn-navbar"><span class="icon-bar"></span> <span
+class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand"
+href="/BIOS560R">BIOS 560R</a> 
+
+<div class="nav-collapse collapse">
+<ul class="nav">
+  <li class="active"><a href="#rstudio">Rstudio</a></li>
+</ul>
+</div>
+<!--/.nav-collapse -->
+</div>
+</div>
+</div>
+
+<div class="container">
+<h2><a href="#2">Vectors and the Normal Distribution</a></h2>
+<hr>
+<p>To illustrate the power and convenience of vectors let's generate a sequence of data from -3 to 3. We'll also use each point as input into
+the Normal function. Our ultimate goal is to draw the classic bell curve that everyone knows.
+So here we start out with the x values:</p>
+<pre>
+x = seq(-3, 3, by=0.05) # The "by argument let's specify a "step" or "interval" value
+
+x
+  [1] -3.00 -2.95 -2.90 -2.85 -2.80 -2.75 -2.70 -2.65 -2.60 -2.55 -2.50 -2.45
+ [13] -2.40 -2.35 -2.30 -2.25 -2.20 -2.15 -2.10 -2.05 -2.00 -1.95 -1.90 -1.85
+ [25] -1.80 -1.75 -1.70 -1.65 -1.60 -1.55 -1.50 -1.45 -1.40 -1.35 -1.30 -1.25
+ [37] -1.20 -1.15 -1.10 -1.05 -1.00 -0.95 -0.90 -0.85 -0.80 -0.75 -0.70 -0.65
+ [49] -0.60 -0.55 -0.50 -0.45 -0.40 -0.35 -0.30 -0.25 -0.20 -0.15 -0.10 -0.05
+ [61]  0.00  0.05  0.10  0.15  0.20  0.25  0.30  0.35  0.40  0.45  0.50  0.55
+ [73]  0.60  0.65  0.70  0.75  0.80  0.85  0.90  0.95  1.00  1.05  1.10  1.15
+ [85]  1.20  1.25  1.30  1.35  1.40  1.45  1.50  1.55  1.60  1.65  1.70  1.75
+ [97]  1.80  1.85  1.90  1.95  2.00  2.05  2.10  2.15  2.20  2.25  2.30  2.35
+[109]  2.40  2.45  2.50  2.55  2.60  2.65  2.70  2.75  2.80  2.85  2.90  2.95
+[121]  3.00
+
+# Next we generate the corresponding y values
+
+y = dnorm(x)
+
+# Now we plot the data 
+
+par(mfrow=c(1,2))   # Get one row and two columns
+
+plot(x, y, xlim=c(-3,3), ylim=c(0,0.4), main="Normal Curve", col="blue") # Plot 1
+
+plot(x,y,xlim=c(-3,3),ylim=c(0,0.4),main="Normal Curve",col="blue",type="l") # Plot 2
+
+</pre>
+
+<center><img src="../img/normal_curve1.png"></center>
+
+<p>Note that we could have generated the X values using the rnorm function and sorting the results.
+If we call the rnorm function without specifying a mean and a standard deviation we get back
+values from a Normal distribution of mean 0 and standard deviation 1. So we could have done the following. Note that this approach results
+in less "coverage" in the tails but we still get a comparable result.</p>
+<br>
+<pre>
+xvals = rnorm(120)
+par(mfrow=c(1,1))
+plot(sort(xvals), y= dnorm(sort(xvals)), main="Normal Curve",col="blue")
+</pre>
+
+<p>Next let's pull out all the x values that are less than -2 or greater than 2. We are
+in effect looking a the "tails" of the distribution here. Using the bracket notation with
+vectors is a powerful way to interrogate the data and extract only that which you need.
+Look how easy this is. In other languages you would have to write a for-loop that uses
+if statements.
+<pre>
+tmp = x[(x < -2) | (x > 2)]
+
+par(mfrow=c(1,2))
+
+plot(tmp,dnorm(tmp),xlim=c(-3,3),ylim=c(0,0.4),main="Normal Curve - The Tails",col="blue") # Plot 1
+</pre>
+<br>
+<p>As mentioned previously newcomers to R often want to write a loop structure to pull out this data.
+You could certainly do this with R but it would be overlooking the power of vectors. Still, let's see
+what would be involved to extract the information above using the for loop approach. </p>
+<br>
+<pre>
+hold = vector()
+for (ii in 1:length(x)) {
+    if ( (x[ii] < -2) | (x[ii] > 2) ) {
+       hold[ii] = x[ii]
+    }
+}
+</pre>
+
+<p>Okay well this is doable but it doesn't generalize very well if at all since we basically
+have to customize this loop based on what comparisons we want to do. It might be better to put
+this into a function although it is far better to use the bracket notation available with 
+vectors.
+<hr>
+<p>Now let's also pull out the x values that complement the above set. That is let's get all
+the x values that are greater than -2 and less than 2. We'll plot these along side the previous
+plot.</p>
+
+<pre>
+tmp2 = x[ (x > -2) & (x < 2) ]
+
+plot(tmp2,dnorm(tmp2),xlim=c(-3,3),ylim=c(0,0.4),main="Normal Curve - Without Tails",col="blue") # Plot 2
+
+</pre>
+
+<center><img src="../img/normal_curve2.png"></center>
+<br>
+<p>So let's reconsider the example where we used the for loop. Aside from being more complex
+and less general it also performs much worse than the bracket notation - especially as the size
+of the vector grows. Let's regenerate our x values from -3 to 3 but this time we will pick a very
+small step size which will result in a vector with many more values. So we are still generating
+values from -3 to 3 but many more than before:</p>
+
+<pre>
+x = seq(-3,3,by=0.0001)
+
+length(x)     # We have 60,001 elements. 
+[1] 60001
+
+par(mfrow=c(1,1))
+plot(x,dnorm(x))   # Convince yourself that it still plots the Normal curve.
+</pre>
+<br>
+<p> Now we will evaluate each x value by plugging it in to the dnorm function except we 
+will use the for loop approach. To make it easier to time we will put it into a function</p>
+<pre>
+my.func <- function(x) {
+   hold = vector()
+   for (ii in 1:length(x)) {
+     if ( (x[ii] < -2) | (x[ii] > 2) ) {
+        hold[ii] = x[ii]
+     }
+   }
+   return(hold)
+}
+
+# So for each x let's get the corresponding y value using this function. Let's time it.
+
+system.time( my.func(x) )   # system.time function does what it's name suggests
+   user  system elapsed 
+  2.120   0.287   2.406 
+ 
+ # So is this good / bad ? Let's compare it to the bracket notation
+ 
+system.time( x[ (x < -2) | (x > 2) ])
+   user  system elapsed 
+  0.003   0.001   0.003 
+
+</pre>
+<br>
+<p>Wow. So the bracket notation is much faster. For vectors of smaller length the difference
+isn't so large. But as the size of x grows so does the time it takes to process it. To drive
+this point home let's look at a larger x vector and see how it performs as compared to the
+bracket notation</p>
+<pre>
+x = seq(-3,3,by=0.00005)
+
+length(x)
+[1] 120001
+
+system.time( my.func(x) )
+   user  system elapsed 
+  6.363   2.640   8.998 
+
+system.time( x[ (x < -2) | (x > 2) ])
+   user  system elapsed 
+  0.006   0.000   0.006 
+  
+# Wow - the bracket notation really does provide much better performance. 
+</pre>
+<br>
+<p>Not to put too fine a point on it - let's do some benchmarking and plot the results so
+we can get a visual representation of the performance of the two approaches. First we'll
+generate three different versions of the x vector. They have different lengths</p>
+<pre>
+
+hold = lapply(c(0.01,0.001,0.0001), function(x) {
+                                        return(seq(-3,3,by=x))
+                                     }
+)
+
+</div>
+<!-- /container -->
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="js/jquery.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-transition.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-alert.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-modal.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-dropdown.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-scrollspy.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-tab.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-tooltip.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-popover.js">
+</script>
+<script type="text/javascript" src="js/bootstrap-button.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-collapse.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-carousel.js">
+</script>
+<script type="text/javascript"
+src="js/bootstrap-typeahead.js">
+</script>
+</body>
+</html>
