@@ -1,5 +1,5 @@
 
-url <- "http://steviep42.bitbucket.org/YOUTUBE.DIR/table_7_3.csv"
+url <- "http://pittardsp.github.io/YOUTUBE.DIR/hsb2.csv"
 
 engine <- read.table(url, sep = ",", header=TRUE)
 engine <- engine[,-1]
